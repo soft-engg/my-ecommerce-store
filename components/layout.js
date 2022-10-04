@@ -16,22 +16,28 @@ export default function Layout({ title, children }) {
         <header>
           <nav className="flex h-12 justify-between shadow-md items-center px-4">
             <Link href={'/'}>
-              <a className="text-lg font-bold bg-clip-text text-blue-600">
-                MyECommerceApp{' '}
+              <a className="text-xl font-extrabold bg-clip-text text-amber-400 ">
+                MyECommerceApp
               </a>
             </Link>
-            <div>
+            <div className=" text-lg font-semibold">
               <Link href={'/cart'}>
-                <a className="p-2 text-bold">Cart</a>
+                <a className="p-2 hover:underline hover:decoration-amber-400  ">
+                  Cart
+                </a>
               </Link>
 
               <Link href={'/Login'}>
-                <a className="p-2 text-bold">Login</a>
+                <a className="p-2 hover:underline hover:decoration-amber-400">
+                  Login
+                </a>
               </Link>
             </div>
           </nav>
         </header>
-        <main className="container m-auto mt-4  bg-blue-400">{children}</main>
+
+        <main className="container m-auto mt-4  ">{children}</main>
+
         <footer className="flex justify-center items-center h-10 shadow-inner">
           <p className="text-sm">copyright Ⓒ 2022 MyECommerceStore</p>
         </footer>
