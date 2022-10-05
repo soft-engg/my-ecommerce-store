@@ -1,7 +1,9 @@
 import Head from 'next/head';
 import Link from 'next/link';
+import { useSelector } from 'react-redux';
 
 export default function Layout({ title, children }) {
+  const cartState = useSelector((state) => state.cart);
   return (
     <>
       <Head>
@@ -16,19 +18,22 @@ export default function Layout({ title, children }) {
         <header>
           <nav className="flex h-12 justify-between shadow-md items-center px-4">
             <Link href={'/'}>
-              <a className="text-xl font-extrabold bg-clip-text text-amber-400 ">
+              <a className="text-xl font-extrabold bg-clip-text text-amber-500 ">
                 MyECommerceApp
               </a>
             </Link>
-            <div className=" text-lg font-semibold">
+            <div className="flex items-center text-lg font-semibold">
               <Link href={'/cart'}>
-                <a className="p-2 hover:underline hover:decoration-amber-400  ">
+                <a className="p-2 pr-0  hover:underline hover:decoration-amber-400  ">
                   Cart
                 </a>
               </Link>
-
+              <div className="ml-1 h-full px-2 rounded-full bg-red-600 font-extrabold text-white  ">
+                {cartState.cart.length}
+              </div>
+              <p className="py-2 px-1 text-gray-300 font-thin">|</p>
               <Link href={'/Login'}>
-                <a className="p-2 hover:underline hover:decoration-amber-400">
+                <a className=" p-2 hover:underline hover:decoration-amber-400">
                   Login
                 </a>
               </Link>

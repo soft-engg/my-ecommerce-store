@@ -1,20 +1,30 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { useContext } from 'react';
+import React from 'react';
 import Layout from '../../components/layout';
 import data from '../../utils/data';
-import { Store } from '../../utils/store';
 
+import { AddToCart } from '../../utils/redux/slices/cartSlice';
+import { useDispatch } from 'react-redux';
 export default function ProductScreen() {
+  //const itemsInCart = useSelector((state) => state.cart.cart);
+  // varable to store the query data from path
   const { query } = useRouter();
+  // getting the slug part from the query
   const { slug } = query;
+  //finding the query product from data available
   const product = data.products.find((x) => x.slug === slug);
-  const { state, dispatch } = useContext(Store);
+  //getting the dispatch function to dispatch an action
+  const dispatch = useDispatch();
+  // handle the onclick function of add to cart
   function addToCartHandler() {
-    dispatch({ type: 'CART_ADD_ITEM', payload: { ...product, quantity: 1 } });
+    // dispatching the add to cart action
+    dispatch(AddToCart(product));
   }
+  // if the product not exist then return this
   if (!product) return <div>product not found</div>;
+  //else return this
   return (
     <Layout title={product.name}>
       <div className="pb-2 text-lg text-blue-500 tracking-tighter hover:underline hover:text-blue-600 active:text-blue-700">
@@ -33,7 +43,7 @@ export default function ProductScreen() {
         <div>
           <ul>
             <li>
-              <h1 className="text-lg">product.name</h1>
+              <h1 className="text-lg">{product.name}</h1>
             </li>
             <li>Category: {product.category}</li>
             <li>Brand: {product.brand}</li>
@@ -57,7 +67,6 @@ export default function ProductScreen() {
               className="primary-button w-full"
               onClick={addToCartHandler}
             >
-              {' '}
               Add to Cart
             </button>
           </div>
