@@ -6,9 +6,9 @@ import Layout from '../../components/layout';
 import data from '../../utils/data';
 
 import { AddToCart } from '../../utils/redux/slices/cartSlice';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 export default function ProductScreen() {
-  //const itemsInCart = useSelector((state) => state.cart.cart);
+  const itemsInCart = useSelector((state) => state.cart.cart);
   // varable to store the query data from path
   const { query } = useRouter();
   // getting the slug part from the query
@@ -20,7 +20,10 @@ export default function ProductScreen() {
   // handle the onclick function of add to cart
   function addToCartHandler() {
     // dispatching the add to cart action
-    dispatch(AddToCart(product));
+    const existItem = itemsInCart.find((item) => item.slug == product.slug);
+    existItem
+      ? dispatch(AddToCart({ ...product, quantity: existItem.quantity + 1 }))
+      : dispatch(AddToCart({ ...product, quantity: 1 }));
   }
   // if the product not exist then return this
   if (!product) return <div>product not found</div>;
