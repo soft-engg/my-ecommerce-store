@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useSelector } from 'react-redux';
 
 export default function Layout({ title, children }) {
-  const cartState = useSelector((state) => state.cart);
+  const itemsInCart = useSelector((state) => state.cart.cart);
   return (
     <>
       <Head>
@@ -28,8 +28,8 @@ export default function Layout({ title, children }) {
                   Cart
                 </a>
               </Link>
-              <div className="ml-1 h-full px-2 rounded-full bg-red-600 font-extrabold text-white  ">
-                {cartState.cart.length}
+              <div className="ml-1 h-full px-2 rounded-full bg-red-500 font-extrabold text-white  ">
+                {itemsInCart.reduce((i, c) => (i += c.quantity), 0)}
               </div>
               <p className="py-2 px-1 text-gray-300 font-thin">|</p>
               <Link href={'/Login'}>
