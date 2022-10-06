@@ -1,0 +1,23 @@
+name: deploying project
+on: [push]
+jobs:
+  build-app:
+    runs-on: ubuntu-latest
+    env:
+      VERCEL_PROJECT_ID: ${{secrets.VERCEL_PROJECT_ID}}
+      VERCEL_ORG_ID: ${{secrets.VERCEL_ORG_ID}}
+      VERCEL_TOKEN: ${{secrets.VERCEL_TOKEN}}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - run: npm install
+      - run: |
+          mkdir .vercel
+          cd .vercel
+          touch project.json
+          echo '{"projectId":"$VERCEL_PROJECT_ID" 
+          , "orgId":"VERCEL_ORG_ID" }' > project.json
+      - name: deploying th project
+        run: npm run deploy
