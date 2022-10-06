@@ -4,9 +4,9 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import Layout from '../../components/layout';
 import data from '../../utils/data';
-
 import { AddToCart } from '../../utils/redux/slices/cartSlice';
 import { useDispatch, useSelector } from 'react-redux';
+
 export default function ProductScreen() {
   const itemsInCart = useSelector((state) => state.cart.cart);
   // varable to store the query data from path
@@ -21,9 +21,11 @@ export default function ProductScreen() {
   function addToCartHandler() {
     // dispatching the add to cart action
     const existItem = itemsInCart.find((item) => item.slug == product.slug);
-    existItem
-      ? dispatch(AddToCart({ ...product, quantity: existItem.quantity + 1 }))
-      : dispatch(AddToCart({ ...product, quantity: 1 }));
+    let quantity = 0;
+    existItem ? (quantity = existItem.quantity + 1) : (quantity = 1);
+    product.countInStock < quantity
+      ? alert(existItem.name + ' stock is not available ')
+      : dispatch(AddToCart({ ...product, quantity: quantity }));
   }
   // if the product not exist then return this
   if (!product) return <div>product not found</div>;
@@ -41,6 +43,7 @@ export default function ProductScreen() {
             width={640}
             height={640}
             layout="responsive"
+            className="object-contain"
           ></Image>
         </div>
         <div>
@@ -57,21 +60,24 @@ export default function ProductScreen() {
           </ul>
         </div>
         <div>
-          <div className="card p-5">
-            <div className="mb-2 flex justify-between">
+          <div className=" border rounded-md shadow p-4">
+            <div className="mb-2 flex justify-evenly md:justify-between">
               <div>Price</div>
               <div>${product.price}</div>
             </div>
-            <div className="mb-2 flex justify-between">
+
+            <div className="mb-2 flex justify-evenly md:justify-between">
               <div>Status</div>
               <div>{product.countInStock > 0 ? 'In Stock' : 'Unavailable'}</div>
             </div>
-            <button
-              className="primary-button w-full"
-              onClick={addToCartHandler}
-            >
-              Add to Cart
-            </button>
+            <div className="flex  justify-center">
+              <button
+                className="primary-button  md:w-full w-1/2"
+                onClick={addToCartHandler}
+              >
+                Add to Cart
+              </button>
+            </div>
           </div>
         </div>
       </div>

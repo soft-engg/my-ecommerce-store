@@ -1,23 +1,26 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React from 'react';
 
 export default function ProductItem({ product }) {
+  const router = useRouter();
+  function goToProdctScreen() {
+    router.push(`/product/${product.slug}`);
+  }
+
   return (
     <div className="card ">
-      <div className="flex-grow">
-        <Link href={`/product/${product.slug}`}>
-          <a>
-            <img
-              src={product.image}
-              alt={product.name}
-              className="object-contain max-h-[300px]"
-            ></img>
-          </a>
-        </Link>
+      <div>
+        <img
+          src={product.image}
+          alt={product.name}
+          className="object-contain h-[330px] bg-clip-border cursor-pointer hover:scale-105 duration-0 ease-in-out  transition-transform  "
+          onClick={goToProdctScreen}
+        ></img>
       </div>
 
-      <div className=" flex flex-col items-center justify-center p-5">
+      <div className="flex flex-col items-center justify-center p-5">
         <Link href={`/product/${product.slug}`}>
           <h2 className="text-lg cursor-pointer"> a{product.name}</h2>
         </Link>
