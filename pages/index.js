@@ -1,6 +1,6 @@
 import Layout from '../components/layout';
 import data from '../utils/data';
-import ProductItem from '../components/productItem';
+import ProductItem from '../components/ProductItem';
 import { useSelector } from 'react-redux';
 export default function Home() {
   const cartItems = useSelector((state) => state.cart.cart);
