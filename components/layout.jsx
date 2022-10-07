@@ -28,7 +28,7 @@ export default function Layout({ title, children }) {
                   Cart
                 </a>
               </Link>
-              <div className="ml-1 h-full px-2 rounded-full bg-red-500  text-white  ">
+              <div className="ml-1 text-base text-center min-w-[25px] px-2 font-mono rounded-full bg-red-500  text-white  ">
                 {itemsInCart.reduce((i, c) => (i += c.quantity), 0)}
               </div>
               <p className="py-2 px-1 text-gray-300 font-thin">|</p>

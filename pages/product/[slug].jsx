@@ -24,7 +24,7 @@ export default function ProductScreen() {
     let quantity = 0;
     existItem ? (quantity = existItem.quantity + 1) : (quantity = 1);
     product.countInStock < quantity
-      ? alert(existItem.name + ' stock is not available ')
+      ? alert(`sorry ${existItem.name} is not available`)
       : dispatch(AddToCart({ ...product, quantity: quantity }));
   }
   // if the product not exist then return this

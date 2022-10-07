@@ -15,7 +15,7 @@ export default function ProductItem({ product }) {
         <img
           src={product.image}
           alt={product.name}
-          className="object-contain h-[330px] bg-clip-border cursor-pointer hover:scale-105 duration-0 ease-in-out  transition-transform  "
+          className="object-contain h-[330px]  cursor-pointer hover:scale-110 duration-300 ease-in-out"
           onClick={goToProdctScreen}
         ></img>
       </div>
