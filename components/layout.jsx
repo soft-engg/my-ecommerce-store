@@ -1,9 +1,14 @@
 import Head from 'next/head';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 export default function Layout({ title, children }) {
   const itemsInCart = useSelector((state) => state.cart.cart);
+  const [cartItemCount, setCartItemCount] = useState(0);
+  useEffect(() => {
+    setCartItemCount(itemsInCart.reduce((i, c) => (i += c.quantity), 0));
+  }, [itemsInCart]);
   return (
     <>
       <Head>
@@ -29,7 +34,7 @@ export default function Layout({ title, children }) {
                 </a>
               </Link>
               <div className="ml-1 text-base text-center min-w-[25px] px-2 font-mono rounded-full bg-red-500  text-white  ">
-                {itemsInCart.reduce((i, c) => (i += c.quantity), 0)}
+                {cartItemCount}
               </div>
               <p className="py-2 px-1 text-gray-300 font-thin">|</p>
               <Link href={'/Login'}>

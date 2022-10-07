@@ -2,7 +2,8 @@ import Layout from '../components/layout';
 import ItemInCart from '../components/ItemInCart';
 import { useSelector } from 'react-redux';
 import Link from 'next/link';
-export default function Cart() {
+import dynamic from 'next/dynamic';
+function Cart() {
   const items = useSelector((state) => state.cart.cart);
 
   const quantity =
@@ -58,3 +59,4 @@ export default function Cart() {
     </Layout>
   );
 }
+export default dynamic(() => Promise.resolve(Cart), { ssr: false });
