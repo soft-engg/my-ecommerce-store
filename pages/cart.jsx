@@ -1,5 +1,5 @@
 import Layout from '../components/layout';
-import ItemInCart from '../components/itemInCart';
+import ItemInCart from '../components/ItemInCart';
 import { useSelector } from 'react-redux';
 import Link from 'next/link';
 export default function Cart() {
