@@ -10,12 +10,12 @@ export default function ProductItem({ product }) {
   }
 
   return (
-    <div className="card ">
+    <div className="card mx-2 md:mx-0 ">
       <div>
         <img
           src={product.image}
           alt={product.name}
-          className="object-contain h-[330px]  cursor-pointer hover:scale-110 duration-300 ease-in-out"
+          className="object-contain h-[330px]  cursor-pointer "
           onClick={goToProdctScreen}
         ></img>
       </div>

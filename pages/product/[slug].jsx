@@ -32,8 +32,8 @@ export default function ProductScreen() {
   //else return this
   return (
     <Layout title={product.name}>
-      <div className="pb-2 text-lg text-blue-500 tracking-tighter hover:underline hover:text-blue-600 active:text-blue-700">
-        <Link href="/">{' Back to products'}</Link>
+      <div className="p-1 font-bold rounded hover:text-gray-500 hover:ring-amber-300 hover:ring-1 mb-2  text-gray-500 border w-fit tracking-tighter  hover:text-blue-600 active:text-blue-700">
+        <Link href="/"> Back to products</Link>
       </div>
       <div className="grid md:grid-cols-4 md:gap-3">
         <div className="md:col-span-2">
@@ -46,7 +46,8 @@ export default function ProductScreen() {
             className="object-contain"
           ></Image>
         </div>
-        <div>
+        {/* discription section */}
+        <div className="flex justify-center md:block">
           <ul>
             <li>
               <h1 className="text-lg">{product.name}</h1>
@@ -59,8 +60,9 @@ export default function ProductScreen() {
             <li>{product.desription}</li>
           </ul>
         </div>
-        <div>
-          <div className=" border rounded-md shadow p-4">
+        {/* price card */}
+        <div className="flex justify-center mt-2 md:mt-0 md:block">
+          <div className=" border rounded-md shadow p-4 w-1/2 md:w-auto">
             <div className="mb-2 flex justify-evenly md:justify-between">
               <div>Price</div>
               <div>${product.price}</div>
@@ -72,7 +74,7 @@ export default function ProductScreen() {
             </div>
             <div className="flex  justify-center">
               <button
-                className="primary-button  md:w-full w-1/2"
+                className="primary-button  md:w-full "
                 onClick={addToCartHandler}
               >
                 Add to Cart

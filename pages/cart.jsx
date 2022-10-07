@@ -12,23 +12,26 @@ export default function Cart() {
       ? items.reduce((i, c) => (i += c.quantity * c.price), 0)
       : 0;
   return (
-    <Layout title="Cart">
+    <Layout title="Cart ">
       <div>
-        <Link href={'/'}>
-          <h1 className="text-gray-600 cursor-pointer font-bold border w-fit my-2 py-1 px-6 hover:border-black rounded">
-            Go to Home
+        <div className="flex flex-col pl-1">
+          <Link href={'/'}>
+            <div className="p-1 font-bold rounded hover:text-gray-500 hover:ring-amber-300 hover:ring-1 mb-2  text-gray-500 border w-fit tracking-tighter  hover:text-blue-600 active:text-blue-700">
+              <Link href="/"> Back to products</Link>
+            </div>
+          </Link>
+          <h1 className="font-semibold text-gray-700 pb-2 text-lg">
+            Shopping cart
           </h1>
-        </Link>
-        <h1 className="font-semibold text-gray-700 pb-2 text-lg">
-          Shopping cart
-        </h1>
-        <div className="flex ">
-          <div className="flex flex-grow flex-col ">
+        </div>
+        {/* this is div for cart and  subtotal div */}
+        <div className="flex flex-col items-center md:flex-row w-full">
+          <div className="flex flex-grow flex-col w-full p-1">
             <div className="flex pb-2 font-semibold mr-2 border-b-2 border-gray-300 ">
-              <h2 className="w-2/5">Item</h2>
-              <h2 className="w-1/5">Quantity</h2>
-              <h2 className="w-1/5">Price</h2>
-              <h2 className="w-1/5">Action</h2>
+              <h2 className="w-2/5 ">Item</h2>
+              <h2 className="w-1/5 text-center">Quantity</h2>
+              <h2 className="w-1/5 text-center">Price</h2>
+              <h2 className="w-1/5 text-center">Action</h2>
             </div>
             {items.length > 0 ? (
               items.map((item) => (
@@ -40,7 +43,8 @@ export default function Cart() {
               </div>
             )}
           </div>
-          <div className="flex flex-grow-0 flex-col w-fit gap-4 rounded border p-4">
+          {/* this is subtotal div */}
+          <div className="flex h-fit mb-2 flex-grow-0 w-80 flex-col w-fit gap-4 rounded border p-4">
             <div className="flex text-lg">
               Subtotal ( {quantity} ) :
               <span className="tex-lg font-bold pl-1 "> $ {subTotal}</span>

@@ -4,6 +4,7 @@ import { AddToCart, RemoveFromCart } from '../utils/redux/slices/cartSlice';
 export default function ItemInCart({ item }) {
   const dispatch = useDispatch();
   const itemsInCart = useSelector((state) => state.cart.cart);
+
   function removeFromCart() {
     dispatch(RemoveFromCart(item));
   }
@@ -26,7 +27,7 @@ export default function ItemInCart({ item }) {
       : dispatch(AddToCart({ ...item, quantity: quantity }));
   }
   return (
-    <div className="flex py-2  mr-2  ">
+    <div className="flex py-2 w-full  md:mr-2  ">
       <div className="w-2/5 flex">
         <Link href={`/product/${item.slug}`}>
           <img
@@ -36,34 +37,34 @@ export default function ItemInCart({ item }) {
           />
         </Link>
         <Link href={`/product/${item.slug}`}>
-          <div className="ml-2 cursor-pointer font-bold hover:text-amber-400">
+          <div className="ml-2 text-center cursor-pointer font-bold hover:text-gray-700">
             {item.name}
           </div>
         </Link>
       </div>
-      <div className="w-1/5 flex justify-between">
+      <div className="w-1/5 p-0 flex justify-between h-1/6 items-start">
         <button
           onClick={decreaseProduct}
-          className="px-2 text-center text-4xl leading-none h-1/2  shadow text-red-700 hover:scale-110 active:scale-125"
+          className="text-center md:text-xl leading-none  border w-8  shadow text-red-700 hover:scale-110 active:scale-125"
         >
           -
         </button>
         <div>{item.quantity}</div>
         <button
           onClick={increaseProduct}
-          className="px-2 text-center text-4xl leading-none  h-1/2  shadow text-green-700 hover:scale-110 active:text-green-900 active:scale-125"
+          className="text-center border md:text-xl leading-none  w-8 shadow text-green-700 hover:scale-110 active:text-green-900 active:scale-125"
         >
           +
         </button>
       </div>
 
-      <h2 className="w-1/5">${item.price}</h2>
-      <div className="w-1/5">
+      <h2 className="w-1/5 text-center">${item.price}</h2>
+      <div className="w-1/5 flex justify-center">
         <button
-          className=" w-3/4 h-1/2 font-bold bg-red-500 hover:bg-red-600 active:bg-red-700 rounded text-white"
+          className=" w-2/5 h-1/2 font-bold bg-red-500 hover:bg-red-600 active:bg-red-700 rounded text-white"
           onClick={removeFromCart}
         >
-          remove
+          x
         </button>
       </div>
     </div>
