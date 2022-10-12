@@ -24,7 +24,7 @@ function Cart() {
       <main>
         <div className="flex flex-col pl-1">
           <Link href={'/'}>
-            <div className="p-1 font-bold rounded hover:text-gray-500 hover:ring-amber-300 hover:ring-1 mb-2  text-gray-500 border w-fit tracking-tighter  hover:text-blue-600 active:text-blue-700">
+            <div className="p-1 font-bold rounded hover:text-gray-500 hover:ring-amber-300 hover:ring-1 mb-2  text-gray-500 border w-fit tracking-tighter  hover:text-grey-600 active:text-grey-700">
               <Link href="/"> Back to products</Link>
             </div>
           </Link>
