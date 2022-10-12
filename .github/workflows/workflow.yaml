@@ -21,7 +21,8 @@ jobs:
           echo '{"projectId":"$VERCEL_PROJECT_ID" 
           , "orgId":"VERCEL_ORG_ID" }' > project.json
       - run: |
+          cd ..
           touch .env
-          echo 'MONGODB_URI=$MONGODB_URI'
+          echo 'MONGODB_URI=$MONGODB_URI' > .env
       - name: deploying th project
         run: npm run deploy
