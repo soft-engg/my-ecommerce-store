@@ -27,12 +27,14 @@ export default function ProductScreen() {
       ? alert(`sorry ${existItem.name} is not available`)
       : dispatch(AddToCart({ ...product, quantity: quantity }));
   }
+
   // if the product not exist then return this
   if (!product) return <div>product not found</div>;
+
   //else return this
   return (
     <Layout title={product.name}>
-      <div className="p-1 font-bold rounded hover:text-gray-500 hover:ring-amber-300 hover:ring-1 mb-2  text-gray-500 border w-fit tracking-tighter  hover:text-blue-600 active:text-blue-700">
+      <div className="p-1 font-bold rounded hover:text-gray-500 hover:ring-amber-300 hover:ring-1 mb-2  text-gray-500 border w-fit tracking-tighter  hover:text-gray-600 active:text-gray-800">
         <Link href="/"> Back to products</Link>
       </div>
       <div className="grid md:grid-cols-4 md:gap-3">
