@@ -20,5 +20,6 @@ jobs:
           touch project.json
           echo '{"projectId":"$VERCEL_PROJECT_ID" 
           , "orgId":"VERCEL_ORG_ID" }' > project.json
+      - run: pwd
       - name: deploying th project
         run: npm run deploy
