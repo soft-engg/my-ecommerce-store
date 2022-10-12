@@ -22,7 +22,7 @@ async function connect() {
   }
 
   // this is fired when the connection is not available
-  // here we are connecting to the database
+  // here we are connecting to the databaseasda
   const db = await mongoose.connect(process.env.MONGODB_URI);
   // here we are storing the connection state to connection variable
   connection.isConnected = db.connections[0].readyState;
