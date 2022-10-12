@@ -1,32 +1,70 @@
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Layout from '../components/layout';
+import { signIn, useSession } from 'next-auth/react';
+import { toast, ToastContainer } from 'react-toastify';
 
+import { useRouter } from 'next/router';
+import 'react-toastify/dist/ReactToastify.css';
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const router = useRouter();
 
-  function loginHandler(e) {
+  const { data: session } = useSession();
+
+  const { redirect } = router.query;
+  console.log(router.query);
+  useEffect(() => {
+    if (session?.user) {
+      router.push(redirect || '/');
+    }
+  }, [router, session, redirect]);
+
+  // the function that handle login
+  async function loginHandler(e) {
     e.preventDefault();
+    // this is pattern to check email
     const pattern = new RegExp(
       "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"
     );
-    pattern.test(email)
-      ? password.length > 6
-        ? console.log(email, password)
-        : alert('Enter the valid password')
-      : console.log('enter the valid email');
+
+    if (pattern.test(email)) {
+      if (password.length > 6) {
+        // here we are signing in the user using credentials
+        try {
+          const result = await signIn('credentials', {
+            redirect: false,
+            email,
+            password,
+          });
+          // if signin fails we are going to show error
+          if (result.error) {
+            toast.error(result.error);
+          }
+        } catch (error) {
+          // if any error signing in we are going to show error
+          toast.error(error);
+        }
+      }
+      // this triggers when password is less then 6 characters
+      else alert('Enter the valid password');
+    }
+    // this triggers if the password is greater than 6 characters
+    else console.log('enter the valid email');
   }
+  // here we are returning the actual page
   return (
     <Layout title={'Login'}>
+      <ToastContainer position="bottom-center" limit={1}></ToastContainer>
       <form
         className="p-4 md:w-1/2 md:m-auto"
         onSubmit={(e) => loginHandler(e)}
       >
-        <div class="mb-2">
+        <div className="mb-2">
           <label
-            for="email"
-            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+            htmlFor="email"
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
           >
             Your email
           </label>
@@ -50,10 +88,10 @@ export default function Login() {
             </p>
           )}
         </div>
-        <div class="mb-2">
+        <div className="mb-2">
           <label
-            for="password"
-            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+            htmlFor="password"
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
           >
             Your password
           </label>
@@ -62,7 +100,7 @@ export default function Login() {
             id="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            class="peer bg-gray-50 font-bold border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-amber-500 focus:border-amber-500 block w-full p-2.5 dark:bg-gray-400 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-amber-500 dark:focus:border-amber-500"
+            className="peer bg-gray-50 font-bold border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-amber-500 focus:border-amber-500 block w-full p-2.5 dark:bg-gray-400 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-amber-500 dark:focus:border-amber-500"
             required
           />
           {password === '' ? (
@@ -75,19 +113,19 @@ export default function Login() {
             </p>
           ) : null}
         </div>
-        <div class="flex items-start mb-2">
-          <div class="flex items-center h-5">
+        <div className="flex items-start mb-2">
+          <div className="flex items-center h-5">
             <input
               id="remember"
               type="checkbox"
               value=""
-              class="w-4 h-4 accent-amber-400 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-amber-300 dark:bg-gray-400 dark:border-gray-600 dark:focus:ring-amber-600 dark:ring-offset-gray-500"
+              className="w-4 h-4 accent-amber-400 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-amber-300 dark:bg-gray-400 dark:border-gray-600 dark:focus:ring-amber-600 dark:ring-offset-gray-500"
               required
             />
           </div>
           <label
-            for="remember"
-            class="ml-2 text-sm font-medium   text-gray-900 dark:text-gray-300"
+            htmlFor="remember"
+            className="ml-2 text-sm font-medium   text-gray-900 dark:text-gray-300"
           >
             Remember me
           </label>
@@ -102,7 +140,7 @@ export default function Login() {
         </p>
         <button
           type="submit"
-          class="text-white font-bold bg-amber-400 hover:bg-amber-500 focus:ring-4 focus:outline-none focus:ring-amber-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-amber-600 dark:hover:bg-amber-400 dark:focus:ring-amber-500"
+          className="text-white font-bold bg-amber-400 hover:bg-amber-500 focus:ring-4 focus:outline-none focus:ring-amber-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-amber-600 dark:hover:bg-amber-400 dark:focus:ring-amber-500"
         >
           Login
         </button>

@@ -11,6 +11,7 @@ export default function ProductScreen() {
   const itemsInCart = useSelector((state) => state.cart.cart);
   // varable to store the query data from path
   const { query } = useRouter();
+  console.log(query);
   // getting the slug part from the query
   const { slug } = query;
   //finding the query product from data available

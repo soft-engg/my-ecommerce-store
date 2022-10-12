@@ -16,7 +16,7 @@ function Cart() {
   }, [itemsInCart]);
 
   function checkoutHandler() {
-    router.push('login?redirect=/shipping');
+    router.push('/login?redirect=/shipping');
   }
 
   return (

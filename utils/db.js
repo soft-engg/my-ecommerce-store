@@ -1,12 +1,13 @@
 import mongoose from 'mongoose';
 const connection = {};
-
+// this is function to connect ot db
 async function connect() {
   // if connected then use previous and return
   if (connection.isConnected) {
     console.log('already connected');
     return;
   }
+
   // checking if connections availavble
   if (mongoose.connections.length > 0) {
     // saving the connection state information to connection variable
@@ -19,13 +20,14 @@ async function connect() {
     // if not connected properly then disconnect
     await mongoose.disconnect();
   }
+
   // this is fired when the connection is not available
   // here we are connecting to the database
   const db = await mongoose.connect(process.env.MONGODB_URI);
   // here we are storing the connection state to connection variable
   connection.isConnected = db.connections[0].readyState;
 }
-
+// this is function to disconnect from db
 async function disconnect() {
   if (connection.isConnected) {
     if (process.env.NODE_ENV === 'production') {

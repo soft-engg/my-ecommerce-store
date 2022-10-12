@@ -1,14 +1,19 @@
+import { useSession } from 'next-auth/react';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 export default function Layout({ title, children }) {
+  const { status, data: session } = useSession();
+
   const itemsInCart = useSelector((state) => state.cart.cart);
   const [cartItemCount, setCartItemCount] = useState(0);
+
   useEffect(() => {
     setCartItemCount(itemsInCart.reduce((i, c) => (i += c.quantity), 0));
   }, [itemsInCart]);
+
   return (
     <>
       <Head>
@@ -37,11 +42,18 @@ export default function Layout({ title, children }) {
                 {cartItemCount}
               </div>
               <p className="py-2 px-1 text-gray-300 font-thin">|</p>
-              <Link href={'/login'}>
-                <a className=" p-2 hover:underline hover:decoration-amber-400">
-                  Login
-                </a>
-              </Link>
+
+              {status === 'loading' ? (
+                'loading'
+              ) : session?.user ? (
+                session.user.name
+              ) : (
+                <Link href="/login">
+                  <a className=" p-2 hover:underline hover:decoration-amber-400">
+                    Login
+                  </a>
+                </Link>
+              )}
             </div>
           </nav>
         </header>
