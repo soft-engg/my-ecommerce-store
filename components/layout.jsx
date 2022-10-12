@@ -37,7 +37,7 @@ export default function Layout({ title, children }) {
                 {cartItemCount}
               </div>
               <p className="py-2 px-1 text-gray-300 font-thin">|</p>
-              <Link href={'/Login'}>
+              <Link href={'/login'}>
                 <a className=" p-2 hover:underline hover:decoration-amber-400">
                   Login
                 </a>

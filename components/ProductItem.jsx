@@ -2,9 +2,24 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
-
+import { useSelector, useDispatch } from 'react-redux';
+import { AddToCart } from '../utils/redux/slices/cartSlice';
 export default function ProductItem({ product }) {
+  const itemsInCart = useSelector((state) => state.cart.cart);
+  const dispatch = useDispatch();
   const router = useRouter();
+
+  // function to handle add to cart
+  function addToCartHandler() {
+    // dispatching the add to cart action
+    const existItem = itemsInCart.find((item) => item.slug == product.slug);
+    let quantity = 0;
+    existItem ? (quantity = existItem.quantity + 1) : (quantity = 1);
+    product.countInStock < quantity
+      ? alert(`sorry ${existItem.name} is not available`)
+      : dispatch(AddToCart({ ...product, quantity: quantity }));
+  }
+  // function to tranfer to product screen
   function goToProdctScreen() {
     router.push(`/product/${product.slug}`);
   }
@@ -25,7 +40,11 @@ export default function ProductItem({ product }) {
           <h2 className="text-lg cursor-pointer"> a{product.name}</h2>
         </Link>
         <p className="mb-2">{product.brand}</p>
-        <button className="primary-button" type="button">
+        <button
+          onClick={addToCartHandler}
+          className="primary-button"
+          type="button"
+        >
           Add To Cart
         </button>
       </div>

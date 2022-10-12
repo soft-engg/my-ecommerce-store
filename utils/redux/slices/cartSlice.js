@@ -20,7 +20,6 @@ export const cartslice = createSlice({
       } else {
         state.cart.push(newItem);
       }
-      console.log('items are ', state.cart);
       Cookies.set('cart', JSON.stringify(state.cart));
     },
     RemoveFromCart: (state, action) => {
