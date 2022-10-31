@@ -28,7 +28,7 @@ export default function Layout({ title, children }) {
         <header>
           <nav className="flex h-12 justify-between shadow-md items-center px-4">
             <Link href={'/'}>
-              <a className="text-xl font-extrabold bg-clip-text text-amber-300 ">
+              <a className="text-2xl text-gray-700 font-black bg-clip-text ">
                 MyECommerceApp
               </a>
             </Link>

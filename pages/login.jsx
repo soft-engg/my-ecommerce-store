@@ -7,6 +7,9 @@ import { toast, ToastContainer } from 'react-toastify';
 import { useRouter } from 'next/router';
 import 'react-toastify/dist/ReactToastify.css';
 export default function Login() {
+  const pattern = new RegExp(
+    "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"
+  );
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const router = useRouter();
@@ -25,9 +28,6 @@ export default function Login() {
   async function loginHandler(e) {
     e.preventDefault();
     // this is pattern to check email
-    const pattern = new RegExp(
-      "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"
-    );
 
     if (pattern.test(email)) {
       if (password.length > 6) {
@@ -74,7 +74,7 @@ export default function Login() {
             pattern="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className=" peer bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-amber-500 focus:border-amber-500 block w-full p-2.5 dark:bg-gray-400 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-amber-500 dark:focus:border-amber-500"
+            className=" peer focus:bg-blue-100 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-amber-500 focus:border-amber-500 block w-full p-2.5 dark:bg-gray-400 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-amber-500 dark:focus:border-amber-500"
             placeholder="example@gmail.com"
             required
           />
@@ -82,9 +82,9 @@ export default function Login() {
             <p className="text-red-600 text-sm peer-valid:invisible peer-invalid:visible">
               please enter an email !!!
             </p>
-          ) : (
+          ) : pattern.test(email) ? null : (
             <p className="text-red-600 text-sm peer-valid:invisible peer-invalid:visible">
-              enter a valid email !!!
+              enter a valid email !!
             </p>
           )}
         </div>
@@ -100,7 +100,7 @@ export default function Login() {
             id="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="peer bg-gray-50 font-bold border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-amber-500 focus:border-amber-500 block w-full p-2.5 dark:bg-gray-400 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-amber-500 dark:focus:border-amber-500"
+            className="peer focus:bg-blue-100 bg-gray-50 font-bold border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-amber-500 focus:border-amber-500 block w-full p-2.5 dark:bg-gray-400 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-amber-500 dark:focus:border-amber-500"
             required
           />
           {password === '' ? (
@@ -133,14 +133,14 @@ export default function Login() {
         <p className="mb-2 ">
           Dont have a account yet?
           <Link href={'/register'}>
-            <a className="text-blue-700 ml-2 italic font-semibold hover:underline">
+            <a className="text-blue-200 ml-2 italic font-semibold hover:underline">
               Register now
             </a>
           </Link>
         </p>
         <button
           type="submit"
-          className="text-white font-bold bg-amber-400 hover:bg-amber-500 focus:ring-4 focus:outline-none focus:ring-amber-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-amber-600 dark:hover:bg-amber-400 dark:focus:ring-amber-500"
+          className="text-black font-bold bg-amber-400 hover:bg-amber-500 focus:ring-4 focus:outline-none focus:ring-amber-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-amber-600 dark:hover:bg-amber-400 dark:focus:ring-amber-500"
         >
           Login
         </button>
