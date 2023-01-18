@@ -10,8 +10,7 @@ body {
 }
 
 a {
-  color: inherit;
-  text-decoration: none;
+  @apply text-blue-600 hover:text-blue-800;
 }
 
 * {
@@ -25,4 +24,7 @@ a {
 }
 * {
   font-family: 'Montserrat', sans-serif;
+}
+.dropdown-link {
+  @apply flex p-2 hover:bg-gray-200;
 }

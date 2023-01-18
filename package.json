@@ -10,6 +10,7 @@
     "deploy": " vc --prod --yes --token=$VERCEL_TOKEN "
   },
   "dependencies": {
+    "@headlessui/react": "^1.7.7",
     "@reduxjs/toolkit": "^1.8.5",
     "auth": "^0.0.9",
     "bcrypt": "^5.1.0",

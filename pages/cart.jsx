@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 function Cart() {
   const itemsInCart = useSelector((state) => state.cart.cart);
+
   const [quantity, setQuantity] = useState(0);
   const [subTotal, setSubtotal] = useState(0);
   const router = useRouter();
@@ -21,22 +22,26 @@ function Cart() {
 
   return (
     <Layout title="Cart ">
-      <main>
-        <div className="flex flex-col pl-1">
+      <main className="md:px-1">
+        <div className="flex flex-col">
           <Link href={'/'}>
             <div className="p-1 font-bold rounded hover:text-gray-500 hover:ring-amber-300 hover:ring-1 mb-2  text-gray-500 border w-fit tracking-tighter  hover:text-grey-600 active:text-grey-700">
               <Link href="/"> Back to products</Link>
             </div>
           </Link>
-          <h1 className="font-semibold text-gray-700 pb-2 text-lg">
+          <h1 className="font-semibold text-amber-400 pb-2 text-lg">
             Shopping cart
           </h1>
         </div>
         {/* this is div for cart and  subtotal div */}
-        <div className="flex flex-col itemsInCart-center md:flex-row w-full">
-          <div className="flex flex-grow flex-col w-full p-1">
-            <div className="flex pb-2 font-semibold mr-2 border-b-2 border-gray-300 ">
-              <h2 className="w-2/5 ">Item</h2>
+        <div className="flex flex-col items-center md:flex-row w-full">
+          {/* this is div for the item table*/}
+          <div className="flex flex-grow w-full md:w-fit flex-shrink-0 flex-col p-1">
+            <div
+              className="flex pb-2 font-semibold  border-b-2
+             border-gray-300 "
+            >
+              <h2 className="w-2/5 text-center ">Item(s)</h2>
               <h2 className="w-1/5 text-center">Quantity</h2>
               <h2 className="w-1/5 text-center">Price</h2>
               <h2 className="w-1/5 text-center">Action</h2>
@@ -52,17 +57,19 @@ function Cart() {
             )}
           </div>
           {/* this is subtotal div */}
-          <div className="flex h-fit mb-2 flex-grow-0 w-80 flex-col w-fit gap-4 rounded border p-4">
-            <div className="flex text-lg">
-              Subtotal ( {quantity} ) :
-              <span className="tex-lg font-bold pl-1 "> $ {subTotal}</span>
+          <div className="flex self-start justify-center max-h-fit items-center">
+            <div className="flex h-fit mb-2 flex-grow-0 w-80 flex-col w-fit gap-4 rounded border p-4">
+              <div className="flex text-lg">
+                Subtotal ( {quantity} ) :
+                <span className="tex-lg font-bold pl-1 "> $ {subTotal}</span>
+              </div>
+              <button
+                onClick={checkoutHandler}
+                className="bg-amber-400 py-1 px-2 rounded hover:bg-amber-500 active:bg-amber-600"
+              >
+                Check Out
+              </button>
             </div>
-            <button
-              onClick={checkoutHandler}
-              className="bg-amber-400 py-1 px-2 rounded hover:bg-amber-500 active:bg-amber-600"
-            >
-              Check Out
-            </button>
           </div>
         </div>
       </main>

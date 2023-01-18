@@ -31,7 +31,6 @@ export default NextAuth({
         await db.disconnect();
         // here we are matching users from credential to the user from database
         if (user && bcrypt.compareSync(credentials.password, user.password)) {
-          console.log('first in provider');
           //user and passoword id correct
           return {
             _id: user._id,

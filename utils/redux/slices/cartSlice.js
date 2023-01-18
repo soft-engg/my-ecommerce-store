@@ -4,7 +4,10 @@ import Cookies from 'js-cookie';
 export const cartslice = createSlice({
   name: 'cart',
   initialState: {
-    cart: Cookies.get('cart') ? JSON.parse(Cookies.get('cart')) : [],
+    cart: Cookies.get('cart') ? JSON.parse(Cookies.get('cart')).cart : [],
+    ShippingAddress: Cookies.get('cart')
+      ? JSON.parse(Cookies.get('cart')).ShippingAddress
+      : [],
   },
   reducers: {
     AddToCart: (state, action) => {
@@ -27,8 +30,36 @@ export const cartslice = createSlice({
       state.cart = state.cart.filter((item) => item.slug !== dItem.slug);
       Cookies.set('cart', JSON.stringify(state.cart));
     },
+    CartReset: (state) => {
+      state = {
+        ...state,
+        cart: {
+          cartItems: [],
+          shippingAddress: { Location: {} },
+          paymentMethod: '',
+        },
+      };
+      Cookies.set('cart', JSON.stringify(state.cart));
+    },
+    SaveShippingAddress: (state, action) => {
+      state = {
+        ...state,
+        cart: {
+          ShippingAddress: {
+            ...state.cart.ShippingAddress,
+            ...action.payload,
+          },
+        },
+      };
+    },
   },
 });
 
-export const { AddToCart, RemoveFromCart, IncreaseProduct } = cartslice.actions;
+export const {
+  AddToCart,
+  RemoveFromCart,
+  IncreaseProduct,
+  CartReset,
+  SaveShippingAddress,
+} = cartslice.actions;
 export default cartslice.reducer;

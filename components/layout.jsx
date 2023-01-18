@@ -1,14 +1,21 @@
-import { useSession } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import { Menu } from '@headlessui/react';
 import { useSelector } from 'react-redux';
+import DropdownLink from './dropdownLink';
+import Cookies from 'js-cookie';
 
 export default function Layout({ title, children }) {
   const { status, data: session } = useSession();
 
   const itemsInCart = useSelector((state) => state.cart.cart);
   const [cartItemCount, setCartItemCount] = useState(0);
+  const logoutClickHandler = () => {
+    Cookies.remove('cart');
+    signOut({ callbackUrl: '/login' });
+  };
 
   useEffect(() => {
     setCartItemCount(itemsInCart.reduce((i, c) => (i += c.quantity), 0));
@@ -28,9 +35,7 @@ export default function Layout({ title, children }) {
         <header>
           <nav className="flex h-12 justify-between shadow-md items-center px-4">
             <Link href={'/'}>
-              <a className="text-2xl text-gray-700 font-black bg-clip-text ">
-                MyECommerceApp
-              </a>
+              <a className="text-lg text-blue-500 font-black">MyECommerceApp</a>
             </Link>
             <div className="flex items-center text-lg font-semibold">
               <Link href={'/cart'}>
@@ -46,7 +51,35 @@ export default function Layout({ title, children }) {
               {status === 'loading' ? (
                 'loading'
               ) : session?.user ? (
-                session.user.name
+                <Menu as="div" className="relative inline-block">
+                  <Menu.Button className="text-amber-500 hover:text-blue-800 mr-2">
+                    {session.user.name}
+                  </Menu.Button>
+                  <Menu.Items className="absolute bg-white text-base  right-0 w-40 rounded-md origin-top-right shadow-lg">
+                    <Menu.Item>
+                      <DropdownLink className="dropdown-link" href="/profile">
+                        Profile
+                      </DropdownLink>
+                    </Menu.Item>
+                    <Menu.Item>
+                      <DropdownLink
+                        className="dropdown-link"
+                        href="/order-history"
+                      >
+                        Order History
+                      </DropdownLink>
+                    </Menu.Item>
+                    <Menu.Item>
+                      <a
+                        className="dropdown-link"
+                        href="#"
+                        onClick={logoutClickHandler}
+                      >
+                        Log out
+                      </a>
+                    </Menu.Item>
+                  </Menu.Items>
+                </Menu>
               ) : (
                 <Link href="/login">
                   <a className=" p-2 hover:underline hover:decoration-amber-400">
