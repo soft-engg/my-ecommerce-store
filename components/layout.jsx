@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { Menu } from '@headlessui/react';
 import { useSelector } from 'react-redux';
-import DropdownLink from './dropdownLink';
+import DropdownLink from './DropdownLink';
 import Cookies from 'js-cookie';
 
 export default function Layout({ title, children }) {
