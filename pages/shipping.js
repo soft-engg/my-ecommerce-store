@@ -4,6 +4,8 @@ import Layout from '../components/layout';
 import { useDispatch, useSelector } from 'react-redux';
 import { SaveShippingAddress } from '../utils/redux/slices/cartSlice';
 import Cookies from 'js-cookie';
+import { useRouter } from 'next/router';
+
 export default function ShippingScreen() {
   const dispatch = useDispatch();
   const [address, setAddress] = useState('');
@@ -11,20 +13,23 @@ export default function ShippingScreen() {
   const [postalCode, setPostalCode] = useState('');
   const [city, setCity] = useState('');
   const [country, setCountry] = useState('');
+  const router = useRouter();
   const cart = useSelector((state) => state.cart);
   useEffect(() => {
-    console.log(cart.ShippingAddress.address);
     setAddress(cart.ShippingAddress.address);
     setFullName(cart.ShippingAddress.fullName);
     setCity(cart.ShippingAddress.city);
     setCountry(cart.ShippingAddress.country);
     setPostalCode(cart.ShippingAddress.postalCode);
   }, [cart.ShippingAddress]);
+
+  // handling the submit functions
   function submitHandler(e) {
     e.preventDefault();
     dispatch(
       SaveShippingAddress({ fullName, address, postalCode, city, country })
     );
+
     Cookies.set(
       'cart',
       JSON.stringify({
@@ -32,7 +37,10 @@ export default function ShippingScreen() {
         ShippingAddress: { fullName, address, postalCode, city, country },
       })
     );
+    router.push('/payment');
   }
+
+  // the body code
   return (
     <Layout title="Shipping address">
       <CheckoutWizard activeStep="1" />
@@ -55,6 +63,7 @@ export default function ShippingScreen() {
             type="Name"
             id="Full Name"
             value={fullName}
+            autoFocus
             onChange={(e) => setFullName(e.target.value)}
             className=" peer focus:bg-blue-100 bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-amber-500 focus:border-amber-500 block w-full p-2.5 dark:bg-gray-400 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-amber-500 dark:focus:border-amber-500"
             placeholder="example@gmail.com"
@@ -159,13 +168,13 @@ export default function ShippingScreen() {
             </p>
           ) : null}
         </div>
-        <button
-          type="submit"
-          className="text-black transition ease-in-out duration-500s hover:ring-2 hover:ring-yellow-900 border-spacing-x-12 bg-amber-400 font-extrabold hover:bg-amber-500 focus:ring-2 focus:outline-none focus:ring-black-300 focus:bg-amber-600 font-medium rounded-lg  w-full sm:w-auto px-5 py-2.5 text-center dark:bg-amber-600 dark:hover:bg-amber-400 dark:focus:ring-white"
-        >
-          submit
+        <button type="submit" className="primary-button">
+          Next
         </button>
       </form>
     </Layout>
   );
 }
+
+// making the screen authorization protected
+ShippingScreen.auth = true;

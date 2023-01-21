@@ -44,13 +44,19 @@ export const cartslice = createSlice({
     SaveShippingAddress: (state, action) => {
       state = {
         ...state,
-        cart: {
-          ShippingAddress: {
-            ...state.cart.ShippingAddress,
-            ...action.payload,
-          },
+        ShippingAddress: {
+          ...state.cart.ShippingAddress,
+          ...action.payload,
         },
       };
+      console.log(state);
+    },
+    SavePaymentMethod: (state, action) => {
+      state = {
+        ...state,
+        PaymenMethod: action.payload,
+      };
+      console.log('state after payment method', state);
     },
   },
 });
@@ -61,5 +67,6 @@ export const {
   IncreaseProduct,
   CartReset,
   SaveShippingAddress,
+  SavePaymentMethod,
 } = cartslice.actions;
 export default cartslice.reducer;

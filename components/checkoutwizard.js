@@ -9,7 +9,7 @@ export default function CheckoutWizard({ activeStep = 0 }) {
             className={`flex-1 border-b-2 text-center font-medium 
           ${
             index <= activeStep
-              ? 'border-indigo-500 text-indigo-500'
+              ? 'border-amber-500 text-amber-500'
               : 'border-gray-400 text-gray-400'
           }`}
             key={step}
