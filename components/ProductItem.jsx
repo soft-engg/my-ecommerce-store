@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { AddToCart } from '../utils/redux/slices/cartSlice';
 export default function ProductItem({ product, toast }) {
-  const itemsInCart = useSelector((state) => state.cart.cartItems);
+
   const dispatch = useDispatch();
   const router = useRouter();
   const [quantity, setQuantity] = useState(1);
