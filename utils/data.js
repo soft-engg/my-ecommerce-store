@@ -24,8 +24,10 @@ const data = {
       brand: 'Nike',
       rating: 4.5,
       numReviews: 8,
-      countInStock: 20,
+      countInStock: 2,
       desription: 'A Popular shirt',
+      size: ['xl', '2xl', 'small'],
+      color: ['red', 'green'],
     },
     {
       name: 'fit Shirts',
@@ -38,6 +40,8 @@ const data = {
       numReviews: 8,
       countInStock: 20,
       desription: 'A good Shirt',
+      size: ['xl', '2xl', 'small'],
+      color: ['red', 'green'],
     },
     {
       name: 'new Shirts',
@@ -50,6 +54,8 @@ const data = {
       numReviews: 8,
       countInStock: 20,
       desription: 'A good Shirt',
+      size: ['xl', '2xl', 'small'],
+      color: ['red', 'green'],
     },
     {
       name: 'casual Shirts',
@@ -62,6 +68,8 @@ const data = {
       numReviews: 8,
       countInStock: 20,
       desription: 'A great casual Shirt',
+      size: ['xl', '2xl', 'small'],
+      color: ['red', 'green'],
     },
     {
       name: 'casual Pant',
@@ -74,6 +82,8 @@ const data = {
       numReviews: 8,
       countInStock: 20,
       desription: 'A great casual Pant',
+      size: ['xl', '2xl', 'small'],
+      color: ['red', 'green'],
     },
     {
       name: 'fit Pant',
@@ -86,6 +96,8 @@ const data = {
       numReviews: 8,
       countInStock: 20,
       desription: 'A great casual Pant',
+      size: ['xl', '2xl', 'small'],
+      color: ['red', 'green'],
     },
     {
       name: 'Golf Pant',
@@ -98,6 +110,8 @@ const data = {
       numReviews: 8,
       countInStock: 20,
       desription: 'A great casual Pant',
+      size: ['xl', '2xl', 'small'],
+      color: ['red', 'green'],
     },
     {
       name: 'ladies Pant',
@@ -110,6 +124,8 @@ const data = {
       numReviews: 8,
       countInStock: 20,
       desription: 'A great casual Pant',
+      size: ['xl', '2xl', 'small'],
+      color: ['red', 'green'],
     },
   ],
 };

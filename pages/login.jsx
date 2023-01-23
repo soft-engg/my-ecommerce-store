@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import Layout from '../components/layout';
 import { signIn, useSession } from 'next-auth/react';
 import { toast, ToastContainer } from 'react-toastify';
-
 import { useRouter } from 'next/router';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -34,11 +33,18 @@ export default function Login() {
       if (password.length > 6) {
         // here we are signing in the user using credentials
         try {
-          const result = await signIn('credentials', {
-            redirect: false,
-            email,
-            password,
-          });
+          const result = await toast.promise(
+            signIn('credentials', {
+              redirect: false,
+              email,
+              password,
+            }),
+            {
+              pending: 'Logging in....',
+
+              error: 'Unable to Login...',
+            }
+          );
           // if signin fails we are going to show error
           if (result.error) {
             toast.error(result.error);
@@ -49,15 +55,26 @@ export default function Login() {
         }
       }
       // this triggers when password is less then 6 characters
-      else alert('Enter the valid password');
+      else toast.error('Enter the valid password');
     }
     // this triggers if the password is greater than 6 characters
-    else console.log('enter the valid email');
+    else toast.error('enter the valid email');
   }
   // here we are returning the actual page
   return (
     <Layout title={'Login'}>
-      <ToastContainer position="bottom-center" limit={1}></ToastContainer>
+      <ToastContainer
+        position="bottom-center"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
       <form
         className="p-4 md:w-1/2 md:m-auto"
         onSubmit={(e) => loginHandler(e)}

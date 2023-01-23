@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AddToCart, RemoveFromCart } from '../utils/redux/slices/cartSlice';
 export default function ItemInCart({ item }) {
   const dispatch = useDispatch();
-  const itemsInCart = useSelector((state) => state.cart.cart);
+
+  const itemsInCart = useSelector((state) => state.cart.cartItems);
 
   function removeFromCart() {
     dispatch(RemoveFromCart(item));
@@ -26,6 +27,7 @@ export default function ItemInCart({ item }) {
       ? alert(`sorry ${existItem.name} is not available`)
       : dispatch(AddToCart({ ...item, quantity: quantity }));
   }
+
   return (
     <div className="flex py-2 w-full  md:mr-2  ">
       <div className="w-2/5 flex">
@@ -43,29 +45,33 @@ export default function ItemInCart({ item }) {
         </Link>
       </div>
       <div className="w-1/5 p-0 flex justify-between h-1/6 items-start">
-        <button
+        <div
           onClick={decreaseProduct}
-          className="text-center md:text-xl leading-none  border w-8  shadow text-red-700 hover:scale-110 active:scale-125"
+          className="bg-transparent flex justify-center items-center font-bold text-center border-2
+           md:text-2xl border-gray-400 rounded-lg leading-none 
+           border w-6 h-6  shadow text-red-700 hover:scale-110 active:scale-125"
         >
-          -
-        </button>
+          <p>-</p>
+        </div>
         <div>{item.quantity}</div>
         <button
           onClick={increaseProduct}
-          className="text-center border md:text-xl leading-none  w-8 shadow text-green-700 hover:scale-110 active:text-green-900 active:scale-125"
+          className="bg-transparent flex justify-center items-center font-bold text-center border-2
+          md:text-2xl border-gray-400 rounded-lg leading-none 
+          border w-6 h-6  shadow text-blue-700 hover:scale-110 active:scale-125"
         >
           +
         </button>
       </div>
 
-      <h2 className="w-1/5 text-center">${item.price}</h2>
+      <h2 className="w-1/5 text-center">Rs : {item.price}</h2>
       <div className="w-1/5 flex justify-center">
-        <button
-          className=" w-2/5 h-1/2 font-bold bg-red-500 hover:bg-red-600 active:bg-red-700 rounded text-white"
-          onClick={removeFromCart}
-        >
-          x
-        </button>
+        <img
+          src="/icons/bin.png"
+          alt=""
+          className="h-7 w-7 hover:scale-105 active:scale-110 cursor-pointer"
+          onClick={() => removeFromCart()}
+        />
       </div>
     </div>
   );

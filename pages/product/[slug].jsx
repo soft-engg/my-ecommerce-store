@@ -6,12 +6,17 @@ import Layout from '../../components/layout';
 import data from '../../utils/data';
 import { AddToCart } from '../../utils/redux/slices/cartSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import { useState } from 'react';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function ProductScreen() {
-  const itemsInCart = useSelector((state) => state.cart.cart);
+  const [givenSize, setGivenSize] = useState();
+  const [givenColor, setGivenColor] = useState();
+  const itemsInCart = useSelector((state) => state.cart.cartItems);
+
   // varable to store the query data from path
   const { query } = useRouter();
-  console.log(query);
   // getting the slug part from the query
   const { slug } = query;
   //finding the query product from data available
@@ -20,13 +25,20 @@ export default function ProductScreen() {
   const dispatch = useDispatch();
   // handle the onclick function of add to cart
   function addToCartHandler() {
-    // dispatching the add to cart action
-    const existItem = itemsInCart.find((item) => item.slug == product.slug);
-    let quantity = 0;
-    existItem ? (quantity = existItem.quantity + 1) : (quantity = 1);
-    product.countInStock < quantity
-      ? alert(`sorry ${existItem.name} is not available`)
-      : dispatch(AddToCart({ ...product, quantity: quantity }));
+    if (!givenSize && !givenColor) {
+      toast.error('please select both size & color');
+    } else {
+      // dispatching the add to cart action
+      const existItem = itemsInCart.find((item) => item.slug == product.slug);
+      let quantity = 0;
+      existItem ? (quantity = existItem.quantity + 1) : (quantity = 1);
+      if (product.countInStock < quantity) {
+        toast.error('sorry Item is out of stock for now!!');
+      } else {
+        dispatch(AddToCart({ ...product, quantity: quantity }));
+        toast.success('Product added to the cart!!');
+      }
+    }
   }
 
   // if the product not exist then return this
@@ -35,7 +47,19 @@ export default function ProductScreen() {
   //else return this
   return (
     <Layout title={product.name}>
-      <div className="p-1 font-bold rounded hover:text-gray-500 hover:ring-amber-300 hover:ring-1 mb-2  text-gray-500 border w-fit tracking-tighter  hover:text-gray-600 active:text-gray-800">
+      <ToastContainer
+        position="bottom-center"
+        autoClose={1000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
+      <div className="default-button w-fit mb-2 font-bold text-sm">
         <Link href="/"> Back to products</Link>
       </div>
       <div className="grid md:grid-cols-4 md:gap-3">
@@ -60,6 +84,44 @@ export default function ProductScreen() {
             <li>
               {product.rating} of {product.numReviews}
             </li>
+            <li>
+              <div className="flex">
+                Sizes:{' '}
+                {product.size.map((size) => (
+                  <div key={size} className="ml-1">
+                    <input
+                      type="radio"
+                      id={size}
+                      className="p-2 outline-none focus:ring-0"
+                      checked={givenSize === size}
+                      onChange={() => setGivenSize(size)}
+                    />
+                    <label htmlFor={size} className="p-1">
+                      {size}
+                    </label>
+                  </div>
+                ))}{' '}
+              </div>
+            </li>
+            <li>
+              <div className="flex">
+                Color:{' '}
+                {product.color.map((color) => (
+                  <div key={color} className="ml-1">
+                    <input
+                      type="radio"
+                      id={color}
+                      className="p-2 outline-none focus:ring-0"
+                      checked={givenColor === color}
+                      onChange={() => setGivenColor(color)}
+                    />
+                    <label htmlFor={color} className="p-1">
+                      {color}
+                    </label>
+                  </div>
+                ))}{' '}
+              </div>
+            </li>
             <li>{product.desription}</li>
           </ul>
         </div>
@@ -68,11 +130,11 @@ export default function ProductScreen() {
           <div className=" border rounded-md shadow p-4 w-1/2 md:w-auto">
             <div className="mb-2 flex justify-evenly md:justify-between">
               <div>Price</div>
-              <div>${product.price}</div>
+              <div>Rs :{product.price}</div>
             </div>
 
             <div className="mb-2 flex justify-evenly md:justify-between">
-              <div>Status</div>
+              <div>Status</div>``
               <div>{product.countInStock > 0 ? 'In Stock' : 'Unavailable'}</div>
             </div>
             <div className="flex  justify-center">

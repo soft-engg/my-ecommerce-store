@@ -10,7 +10,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
       <Provider store={store}>
         {Component.auth ? (
           <Auth>
-            <Component {...pageProps} />
+            <Component {...pageProps}></Component>
           </Auth>
         ) : (
           <Component {...pageProps} />

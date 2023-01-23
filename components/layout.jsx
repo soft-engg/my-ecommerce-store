@@ -10,7 +10,7 @@ import Cookies from 'js-cookie';
 export default function Layout({ title, children }) {
   const { status, data: session } = useSession();
 
-  const itemsInCart = useSelector((state) => state.cart.cart);
+  const itemsInCart = useSelector((state) => state.cart.cartItems);
   const [cartItemCount, setCartItemCount] = useState(0);
   const logoutClickHandler = () => {
     Cookies.remove('cart');
@@ -35,15 +35,19 @@ export default function Layout({ title, children }) {
         <header>
           <nav className="flex h-12 justify-between shadow-md items-center px-4">
             <Link href={'/'}>
-              <a className="text-lg text-blue-500 font-black">MyECommerceApp</a>
+              <a className="text-lg text-blue-500 font-black">MySports</a>
             </Link>
             <div className="flex items-center text-lg font-semibold">
               <Link href={'/cart'}>
                 <a className="p-2 pr-0  hover:underline hover:decoration-amber-400  ">
-                  Cart
+                  <img
+                    src="/icons/shoppingCart.png"
+                    alt="cart"
+                    className="w-8 h-8"
+                  ></img>
                 </a>
               </Link>
-              <div className="ml-1 text-base text-center min-w-[25px] px-2 font-mono rounded-full bg-red-500  text-white  ">
+              <div className="ml-1 text-base text-center min-w-[25px] px-2 font-mono rounded-full bg-blue-500  text-white  ">
                 {cartItemCount}
               </div>
               <p className="py-2 px-1 text-gray-300 font-thin">|</p>
@@ -52,8 +56,16 @@ export default function Layout({ title, children }) {
                 'loading'
               ) : session?.user ? (
                 <Menu as="div" className="relative inline-block">
-                  <Menu.Button className="text-amber-500 hover:text-blue-800 mr-2">
-                    {session.user.name}
+                  <Menu.Button className="text-blue-500 font-bold hover:text-black mr-2">
+                    <div className="flex items-center">
+                      {' '}
+                      <img
+                        src="/icons/user.png"
+                        alt=""
+                        className="w-7 h-7 m-1 "
+                      />{' '}
+                      {session.user.name}
+                    </div>
                   </Menu.Button>
                   <Menu.Items className="absolute bg-white text-base  right-0 w-40 rounded-md origin-top-right shadow-lg">
                     <Menu.Item>

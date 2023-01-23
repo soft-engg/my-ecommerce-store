@@ -4,59 +4,71 @@ import Cookies from 'js-cookie';
 export const cartslice = createSlice({
   name: 'cart',
   initialState: {
-    cart: Cookies.get('cart') ? JSON.parse(Cookies.get('cart')).cart : [],
+    cartItems: Cookies.get('cart')
+      ? JSON.parse(Cookies.get('cart')).cartItems
+      : [],
     ShippingAddress: Cookies.get('cart')
       ? JSON.parse(Cookies.get('cart')).ShippingAddress
-      : [],
+      : {},
+    PaymenMethod: Cookies.get('cart')
+      ? JSON.parse(Cookies.get('cart')).PaymenMethod
+      : '',
   },
   reducers: {
     AddToCart: (state, action) => {
+      console.log('payload', action.payload);
       const newItem = action.payload;
-      const newItemExist = state.cart.find(
+      const newItemExist = state.cartItems.find(
         (item) => item.slug === newItem.slug
       );
       if (newItemExist) {
-        const newCart = state.cart.map((item) =>
+        const newCart = state.cartItems.map((item) =>
           item.name === newItem.name ? newItem : item
         );
-        state.cart = newCart;
+        state.cartItems = newCart;
       } else {
-        state.cart.push(newItem);
+        state.cartItems.push(newItem);
       }
-      Cookies.set('cart', JSON.stringify(state.cart));
+      Cookies.set('cart', JSON.stringify(state));
+      return state;
     },
     RemoveFromCart: (state, action) => {
+      console.log('in remove payload is', action.payload);
       const dItem = action.payload;
-      state.cart = state.cart.filter((item) => item.slug !== dItem.slug);
-      Cookies.set('cart', JSON.stringify(state.cart));
+      state.cartItems = state.cartItems.filter(
+        (item) => item.slug !== dItem.slug
+      );
+      Cookies.set('cart', JSON.stringify(state));
+      return state;
     },
     CartReset: (state) => {
       state = {
         ...state,
-        cart: {
-          cartItems: [],
-          shippingAddress: { Location: {} },
-          paymentMethod: '',
-        },
+        cartItems: [],
+        shippingAddress: { Location: {} },
+        paymentMethod: '',
       };
-      Cookies.set('cart', JSON.stringify(state.cart));
+      Cookies.set('cart', JSON.stringify(state));
+      return state;
     },
+    // save shipping address reducer
     SaveShippingAddress: (state, action) => {
       state = {
         ...state,
-        ShippingAddress: {
-          ...state.cart.ShippingAddress,
-          ...action.payload,
-        },
+        ShippingAddress: { ...state.ShippingAddress, ...action.payload },
       };
-      console.log(state);
+      Cookies.set('cart', JSON.stringify(state));
+      return state;
     },
+    // sav paymen reducer
     SavePaymentMethod: (state, action) => {
       state = {
         ...state,
         PaymenMethod: action.payload,
       };
-      console.log('state after payment method', state);
+
+      Cookies.set('cart', JSON.stringify(state));
+      return state;
     },
   },
 });
