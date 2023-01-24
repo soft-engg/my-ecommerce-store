@@ -6,7 +6,6 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { AddToCart } from '../utils/redux/slices/cartSlice';
 export default function ProductItem({ product, toast }) {
-
   const dispatch = useDispatch();
   const router = useRouter();
   const [quantity, setQuantity] = useState(1);
@@ -33,12 +32,18 @@ export default function ProductItem({ product, toast }) {
         ></img>
       </div>
 
-      <div className="flex flex-col items-center justify-center p-2">
+      <div
+        className="flex text-gray-700 flex-col
+       items-center justify-center pb-3  w-full"
+      >
         <Link href={`/product/${product.slug}`}>
-          <h2 className="text-lg cursor-pointer"> a{product.name}</h2>
+          <h2 className="text-lg font-medium cursor-pointer ">
+            {' '}
+            {product.name}
+          </h2>
         </Link>
-        <p className="mb-2">
-          <span className="text-blue-700 font-bold">{product.price}</span> Rs{' '}
+        <p className="">
+          <span className="text-blue-700 font-bold ">{product.price}</span> Rs{' '}
         </p>
         {/* start */}
         <div className=" p-1 flex justify-between items-start ">
@@ -70,7 +75,7 @@ export default function ProductItem({ product, toast }) {
         {/* END */}
         <button
           onClick={addToCartHandler}
-          className="primary-button font-semibold"
+          className="primary-button font-medium"
           type="button"
         >
           Add To Cart

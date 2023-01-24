@@ -8,7 +8,7 @@ export default function Home() {
     <Layout title={'Home'}>
       <ToastContainer
         position="bottom-center"
-        autoClose={1500}
+        autoClose={500}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick

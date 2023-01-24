@@ -59,16 +59,16 @@ export default function ProductScreen() {
         pauseOnHover
         theme="colored"
       />
-      <div className="default-button w-fit mb-2 font-bold text-sm">
+      <div className="default-button w-fit mb-2 font-semibold mx-2 text-sm">
         <Link href="/"> Back to products</Link>
       </div>
       <div className="grid md:grid-cols-4 md:gap-3">
-        <div className="md:col-span-2">
+        <div className="md:col-span-2 ">
           <Image
             src={product.image}
             alt={product.image}
-            width={640}
-            height={640}
+            width={500}
+            height={500}
             layout="responsive"
             className="object-contain"
           ></Image>
@@ -126,7 +126,7 @@ export default function ProductScreen() {
           </ul>
         </div>
         {/* price card */}
-        <div className="flex justify-center mt-2 md:mt-0 md:block">
+        <div className="flex justify-center mt-2 sm:justify-center md:mt-0 md:block">
           <div className=" border rounded-md shadow p-4 w-1/2 md:w-auto">
             <div className="mb-2 flex justify-evenly md:justify-between">
               <div>Price</div>

@@ -25,7 +25,7 @@ function Cart() {
       <main className="md:px-1">
         <div className="flex flex-col">
           <Link href={'/'}>
-            <div className="default-button w-fit text-sm font-bold">
+            <div className="default-button w-fit mb-2 font-semibold mx-2 text-sm">
               <Link href="/"> Back to products</Link>
             </div>
           </Link>
