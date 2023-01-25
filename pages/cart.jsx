@@ -19,7 +19,7 @@ function Cart() {
   }, [itemsInCart]);
 
   function checkoutHandler() {
-    if (quantity === 0) toast.error('Please add items in cart to checkout..');
+    if (quantity === 0) toast.error('Please add items in cart ');
     else router.push('/login?redirect=/shipping');
   }
 
@@ -49,9 +49,12 @@ function Cart() {
           </h1>
         </div>
         {/* this is div for cart and  subtotal div */}
-        <div className="flex flex-col   items-center md:flex-row w-full">
+        <div
+          className="flex flex-col 
+         justify-center items-center md:flex-row w-full"
+        >
           {/* this is div for the item table*/}
-          <div className="flex flex-grow w-3/4/ flex-shrink-0 flex-col p-1">
+          <div className="flex flex-grow sm:w-3/4 flex-shrink-0 flex-col w-full">
             <div
               className="flex pb-2 font-semibold  border-b-2
              border-gray-300 "
@@ -76,7 +79,10 @@ function Cart() {
             )}
           </div>
           {/* this is subtotal div */}
-          <div className="flex self-start justify-center w-1/4 shadow-lg  max-h-fit items-center">
+          <div
+            className="flex self-center sm:self-start justify-center
+           sm:w-1/4 shadow-lg  max-h-fit items-center"
+          >
             <div
               className="flex h-fit mb-2 flex-grow-0 w-80 flex-col w-full gap-4 
             rounded border p-4"
