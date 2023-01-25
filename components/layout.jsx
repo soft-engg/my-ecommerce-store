@@ -41,7 +41,7 @@ export default function Layout({ title, children }) {
               <Link href={'/cart'}>
                 <a className="p-2 pr-0  hover:underline hover:decoration-amber-400  ">
                   <img
-                    src="/icons/shoppingCart.png"
+                    src="/icons/carts.png"
                     alt="cart"
                     className="w-8 h-8"
                   ></img>
@@ -58,16 +58,19 @@ export default function Layout({ title, children }) {
                 <Menu as="div" className="relative inline-block">
                   <Menu.Button className="text-blue-500 font-bold hover:text-black mr-2">
                     <div className="flex items-center">
-                      {' '}
                       <img
                         src="/icons/user.png"
                         alt=""
                         className="w-7 h-7 m-1 "
-                      />{' '}
-                      {session.user.name}
+                      />
                     </div>
                   </Menu.Button>
-                  <Menu.Items className="absolute bg-white text-base  right-0 w-40 rounded-md origin-top-right shadow-lg">
+                  <Menu.Items className="absolute  bg-white text-base  right-0 w-40 rounded-md origin-top-right shadow-lg">
+                    <Menu.Item>
+                      <p className="dropdown-link rounded text-gray-700 text-lg bg-blue-200 hover:bg-blue-200 hover:cursor-default">
+                        {session.user.name}
+                      </p>
+                    </Menu.Item>
                     <Menu.Item>
                       <DropdownLink className="dropdown-link" href="/profile">
                         Profile

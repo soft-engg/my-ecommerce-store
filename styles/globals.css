@@ -25,6 +25,9 @@ a {
 .default-button {
   @apply text-black rounded bg-gray-300 py-2 px-4 rounded shadow outline-none hover:bg-gray-400 active:bg-gray-500;
 }
+.default-link {
+  @apply text-black rounded w-fit mb-2 font-semibold mx-2 text-sm  py-2 px-4 rounded shadow outline-none hover:bg-gray-200 active:bg-gray-300;
+}
 * {
   font-family: 'Montserrat', sans-serif;
 }

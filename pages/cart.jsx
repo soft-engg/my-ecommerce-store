@@ -5,6 +5,8 @@ import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 function Cart() {
   const itemsInCart = useSelector((state) => state.cart.cartItems);
 
@@ -22,10 +24,22 @@ function Cart() {
 
   return (
     <Layout title="Cart ">
-      <main className="md:px-1">
+      <ToastContainer
+        position="bottom-center"
+        autoClose={1000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
+      <main className="md:px-1  ">
         <div className="flex flex-col">
           <Link href={'/'}>
-            <div className="default-button w-fit mb-2 font-semibold mx-2 text-sm">
+            <div className="default-link">
               <Link href="/"> Back to products</Link>
             </div>
           </Link>
@@ -34,9 +48,9 @@ function Cart() {
           </h1>
         </div>
         {/* this is div for cart and  subtotal div */}
-        <div className="flex flex-col items-center md:flex-row w-full">
+        <div className="flex flex-col   items-center md:flex-row w-full">
           {/* this is div for the item table*/}
-          <div className="flex flex-grow w-full md:w-fit flex-shrink-0 flex-col p-1">
+          <div className="flex flex-grow w-3/4/ flex-shrink-0 flex-col p-1">
             <div
               className="flex pb-2 font-semibold  border-b-2
              border-gray-300 "
@@ -48,7 +62,11 @@ function Cart() {
             </div>
             {itemsInCart.length > 0 ? (
               itemsInCart.map((item) => (
-                <ItemInCart key={item.name} item={item}></ItemInCart>
+                <ItemInCart
+                  key={item.name}
+                  item={item}
+                  toast={toast}
+                ></ItemInCart>
               ))
             ) : (
               <div className="w-full text-center mt-5">
@@ -57,9 +75,12 @@ function Cart() {
             )}
           </div>
           {/* this is subtotal div */}
-          <div className="flex self-start justify-center max-h-fit items-center">
-            <div className="flex h-fit mb-2 flex-grow-0 w-80 flex-col w-fit gap-4 rounded border p-4">
-              <div className="flex text-lg">
+          <div className="flex self-start justify-center w-1/4 shadow-lg  max-h-fit items-center">
+            <div
+              className="flex h-fit mb-2 flex-grow-0 w-80 flex-col w-full gap-4 
+            rounded border p-4"
+            >
+              <div className="flex text-lg w-full">
                 Subtotal ( {quantity} ) :
                 <span className="tex-lg  pl-1 ">
                   {' '}
@@ -68,7 +89,8 @@ function Cart() {
               </div>
               <button
                 onClick={checkoutHandler}
-                className="bg-amber-400 py-1 px-2 rounded hover:bg-amber-500 active:bg-amber-600"
+                className="bg-amber-400 py-1 px-2 w-50
+                rounded hover:bg-amber-500 active:bg-amber-600"
               >
                 Check Out
               </button>

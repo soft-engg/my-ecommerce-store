@@ -1,26 +1,27 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import React from 'react';
 import Layout from '../../components/layout';
-import data from '../../utils/data';
 import { AddToCart } from '../../utils/redux/slices/cartSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import db from '../../utils/db';
+import Product from '../../models/prodcut';
 
-export default function ProductScreen() {
+export default function ProductScreen(props) {
+  const { product } = props;
   const [givenSize, setGivenSize] = useState();
   const [givenColor, setGivenColor] = useState();
   const itemsInCart = useSelector((state) => state.cart.cartItems);
 
-  // varable to store the query data from path
-  const { query } = useRouter();
-  // getting the slug part from the query
-  const { slug } = query;
-  //finding the query product from data available
-  const product = data.products.find((x) => x.slug === slug);
+  // // varable to store the query data from path
+  // const { query } = useRouter();
+  // // getting the slug part from the query
+  // const { slug } = query;
+  // //finding the query product from data available
+  // const product = data.products.find((x) => x.slug === slug);
   //getting the dispatch function to dispatch an action
   const dispatch = useDispatch();
   // handle the onclick function of add to cart
@@ -42,7 +43,12 @@ export default function ProductScreen() {
   }
 
   // if the product not exist then return this
-  if (!product) return <div>product not found</div>;
+  if (!product)
+    return (
+      <Layout title="product not found">
+        <div>product not found</div>
+      </Layout>
+    );
 
   //else return this
   return (
@@ -59,8 +65,8 @@ export default function ProductScreen() {
         pauseOnHover
         theme="colored"
       />
-      <div className="default-button w-fit mb-2 font-semibold mx-2 text-sm">
-        <Link href="/"> Back to products</Link>
+      <div className="default-link">
+        <Link href="/">Back to products</Link>
       </div>
       <div className="grid md:grid-cols-4 md:gap-3">
         <div className="md:col-span-2 ">
@@ -134,7 +140,7 @@ export default function ProductScreen() {
             </div>
 
             <div className="mb-2 flex justify-evenly md:justify-between">
-              <div>Status</div>``
+              <div>Status</div>
               <div>{product.countInStock > 0 ? 'In Stock' : 'Unavailable'}</div>
             </div>
             <div className="flex  justify-center">
@@ -150,4 +156,16 @@ export default function ProductScreen() {
       </div>
     </Layout>
   );
+}
+export async function getServerSideProps(context) {
+  const { params } = context;
+  const { slug } = params;
+  await db.connect();
+  const product = await Product.findOne({ slug }).lean();
+  await db.disconnect();
+  return {
+    props: {
+      product: product ? db.convertDocToObj(product) : null,
+    },
+  };
 }

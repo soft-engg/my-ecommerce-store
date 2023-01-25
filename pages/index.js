@@ -1,9 +1,11 @@
 import Layout from '../components/layout';
-import data from '../utils/data';
 import ProductItem from '../components/ProductItem';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-export default function Home() {
+import db from '../utils/db';
+import Product from '../models/prodcut';
+
+export default function Home({ products }) {
   return (
     <Layout title={'Home'}>
       <ToastContainer
@@ -19,7 +21,7 @@ export default function Home() {
         theme="dark"
       />
       <div className="grid grid-cols-1 md:gap-4 md:grid-cols-4 lg:grid-col-4">
-        {data.products.map((product) => (
+        {products.map((product) => (
           <ProductItem
             product={product}
             toast={toast}
@@ -29,4 +31,15 @@ export default function Home() {
       </div>
     </Layout>
   );
+}
+
+export async function getServerSideProps() {
+  await db.connect();
+  const products = await Product.find().lean();
+  await db.disconnect();
+  return {
+    props: {
+      products: products.map((product) => db.convertDocToObj(product)),
+    },
+  };
 }

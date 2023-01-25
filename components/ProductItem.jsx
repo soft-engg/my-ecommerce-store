@@ -56,7 +56,7 @@ export default function ProductItem({ product, toast }) {
             }}
             className="bg-transparent flex justify-center items-center font-bold text-center border-2
            md:text-2xl border-gray-400 rounded-lg leading-none 
-           border w-6 h-6  shadow text-red-700 hover:scale-110 active:scale-125"
+           border w-6 h-6  shadow text-gray-700 hover:scale-110 active:scale-125"
           >
             <p>-</p>
           </div>
@@ -67,19 +67,24 @@ export default function ProductItem({ product, toast }) {
             }}
             className="bg-transparent flex justify-center items-center font-bold text-center border-2
           md:text-2xl border-gray-400 rounded-lg leading-none 
-          border w-6 h-6  shadow text-blue-700 hover:scale-110 active:scale-125"
+          border w-6 h-6  shadow text-gray-700 hover:scale-110 active:scale-125"
           >
             +
           </button>
         </div>
         {/* END */}
-        <button
+        <div
           onClick={addToCartHandler}
-          className="primary-button font-medium"
+          className="primary-button font-medium flex items-center"
           type="button"
         >
+          <img
+            src="/icons/shoppingCart.png"
+            alt="cart"
+            className="w-6 h-6 mr-1"
+          />
           Add To Cart
-        </button>
+        </div>
       </div>
     </div>
   );
