@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
 import { AddToCart, RemoveFromCart } from '../utils/redux/slices/cartSlice';
+import axios from 'axios';
 export default function ItemInCart({ item, toast }) {
   const dispatch = useDispatch();
 
@@ -19,12 +20,13 @@ export default function ItemInCart({ item, toast }) {
       : dispatch(AddToCart({ ...item, quantity: quantity }));
   }
 
-  function increaseProduct() {
+  async function increaseProduct() {
     const existItem = itemsInCart.find((i) => i.slug == item.slug);
     let quantity = 0;
     existItem ? (quantity = existItem.quantity + 1) : (quantity = 1);
-    item.countInStock < quantity
-      ? toast.error(`sorry ${existItem.name} is not available`)
+    const { data } = await axios.get(`/api/products/${item._id}`);
+    data.countInStock < quantity
+      ? toast.error(`sorry ${existItem.name} is out of stock...`)
       : dispatch(AddToCart({ ...item, quantity: quantity }));
   }
 
@@ -39,7 +41,7 @@ export default function ItemInCart({ item, toast }) {
           />
         </Link>
         <Link href={`/product/${item.slug}`}>
-          <div className="ml-2 text-center cursor-pointer font-bold hover:text-gray-700">
+          <div className="ml-2 text-center cursor-pointer font-bold text-blue-600 hover:text-gray-700">
             {item.name}
           </div>
         </Link>

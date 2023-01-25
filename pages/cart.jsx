@@ -19,7 +19,8 @@ function Cart() {
   }, [itemsInCart]);
 
   function checkoutHandler() {
-    router.push('/login?redirect=/shipping');
+    if (quantity === 0) toast.error('Please add items in cart to checkout..');
+    else router.push('/login?redirect=/shipping');
   }
 
   return (

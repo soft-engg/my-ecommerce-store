@@ -9,13 +9,14 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import db from '../../utils/db';
 import Product from '../../models/prodcut';
+import axios from 'axios';
 
 export default function ProductScreen(props) {
   const { product } = props;
   const [givenSize, setGivenSize] = useState();
   const [givenColor, setGivenColor] = useState();
   const itemsInCart = useSelector((state) => state.cart.cartItems);
-
+  const [givenQuantity, setQuantity] = useState(1);
   // // varable to store the query data from path
   // const { query } = useRouter();
   // // getting the slug part from the query
@@ -25,22 +26,25 @@ export default function ProductScreen(props) {
   //getting the dispatch function to dispatch an action
   const dispatch = useDispatch();
   // handle the onclick function of add to cart
-  function addToCartHandler() {
+  const addToCartHandler = async () => {
     if (!givenSize && !givenColor) {
       toast.error('please select both size & color');
     } else {
       // dispatching the add to cart action
       const existItem = itemsInCart.find((item) => item.slug == product.slug);
       let quantity = 0;
-      existItem ? (quantity = existItem.quantity + 1) : (quantity = 1);
-      if (product.countInStock < quantity) {
-        toast.error('sorry Item is out of stock for now!!');
+      existItem
+        ? (quantity = existItem.quantity + givenQuantity)
+        : (quantity = givenQuantity);
+      const { data } = await axios.get(`/api/products/${product._id}`);
+      if (data.countInStock < quantity) {
+        toast.error('Sorry given number of item is not available..');
       } else {
         dispatch(AddToCart({ ...product, quantity: quantity }));
         toast.success('Product added to the cart!!');
       }
     }
-  }
+  };
 
   // if the product not exist then return this
   if (!product)
@@ -83,16 +87,23 @@ export default function ProductScreen(props) {
         <div className="flex justify-center md:block">
           <ul>
             <li>
-              <h1 className="text-lg">{product.name}</h1>
+              <h1 className="text-2xl  text-blue-700">{product.name}</h1>
             </li>
-            <li>Category: {product.category}</li>
-            <li>Brand: {product.brand}</li>
             <li>
-              {product.rating} of {product.numReviews}
+              {' '}
+              <span className="font-semibold">Category : </span>
+              {product.category}
+            </li>
+            <li>
+              <span className="font-semibold">Brand : </span> {product.brand}
+            </li>
+            <li>
+              <span className="font-semibold">Rating : </span> {product.rating}{' '}
+              of {product.numReviews}
             </li>
             <li>
               <div className="flex">
-                Sizes:{' '}
+                <span className="font-semibold">Size(s) : </span>
                 {product.size.map((size) => (
                   <div key={size} className="ml-1">
                     <input
@@ -111,7 +122,7 @@ export default function ProductScreen(props) {
             </li>
             <li>
               <div className="flex">
-                Color:{' '}
+                <span className="font-semibold">Colors(s)</span>
                 {product.color.map((color) => (
                   <div key={color} className="ml-1">
                     <input
@@ -128,6 +139,37 @@ export default function ProductScreen(props) {
                 ))}{' '}
               </div>
             </li>
+            {/* start */}
+            <span className="font-semibold">Quantity :</span>
+            <div className=" p-1 flex justify-between items-start w-2/5 ">
+              <div
+                onClick={() => {
+                  setQuantity((quantity) => {
+                    if (quantity >= 2) return quantity - 1;
+                    return (quantity = 1);
+                  });
+                }}
+                className="bg-transparent flex justify-center items-center font-bold text-center border-2
+           md:text-2xl border-gray-400 rounded-lg leading-none 
+           border w-6 h-6  shadow text-gray-700 hover:scale-110 active:scale-125"
+              >
+                <p>-</p>
+              </div>
+              <div className="mx-2 p-0 flex items-center  text-xl">
+                {givenQuantity}
+              </div>
+              <button
+                onClick={() => {
+                  setQuantity((quantity) => quantity + 1);
+                }}
+                className="bg-transparent flex justify-center items-center font-bold text-center border-2
+          md:text-2xl border-gray-400 rounded-lg leading-none 
+          border w-6 h-6  shadow text-gray-700 hover:scale-110 active:scale-125"
+              >
+                +
+              </button>
+            </div>
+            {/* END */}
             <li>{product.desription}</li>
           </ul>
         </div>

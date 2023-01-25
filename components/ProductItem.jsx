@@ -1,21 +1,34 @@
 /* eslint-disable @next/next/no-img-element */
+import axios from 'axios';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { AddToCart } from '../utils/redux/slices/cartSlice';
+
 export default function ProductItem({ product, toast }) {
   const dispatch = useDispatch();
   const router = useRouter();
-  const [quantity, setQuantity] = useState(1);
-  // function to handle add to cart
-  function addToCartHandler() {
-    // dispatching the add to cart action
+  const [givenQuantity, setQuantity] = useState(1);
+  const itemsInCart = useSelector((state) => state.cart.cartItems);
 
-    dispatch(AddToCart({ ...product, quantity: quantity }));
-    toast.success(product.name + ' added to cart');
-  }
+  // function to handle add to cart
+  const addToCartHandler = async () => {
+    // dispatching the add to cart action
+    const existItem = itemsInCart.find((item) => item.slug == product.slug);
+    let quantity = 0;
+    existItem
+      ? (quantity = existItem.quantity + givenQuantity)
+      : (quantity = givenQuantity);
+    const { data } = await axios.get(`/api/products/${product._id}`);
+    if (data.countInStock < quantity) {
+      toast.error('Sorry given number of item is not available..');
+    } else {
+      dispatch(AddToCart({ ...product, quantity: quantity }));
+      toast.success('Product added to the cart!!');
+    }
+  };
   // function to tranfer to product screen
   function goToProdctScreen() {
     router.push(`/product/${product.slug}`);
@@ -46,7 +59,7 @@ export default function ProductItem({ product, toast }) {
           <span className="text-blue-700 font-bold ">{product.price}</span> Rs{' '}
         </p>
         {/* start */}
-        <div className=" p-1 flex justify-between items-start ">
+        <div className=" p-1 flex justify-between items-start w-2/5 ">
           <div
             onClick={() => {
               setQuantity((quantity) => {
@@ -60,7 +73,9 @@ export default function ProductItem({ product, toast }) {
           >
             <p>-</p>
           </div>
-          <div className="mx-2 p-0 flex items-center  text-xl">{quantity}</div>
+          <div className="mx-2 p-0 flex items-center  text-xl">
+            {givenQuantity}
+          </div>
           <button
             onClick={() => {
               setQuantity((quantity) => quantity + 1);
