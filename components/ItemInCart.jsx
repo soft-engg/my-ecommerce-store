@@ -8,31 +8,51 @@ export default function ItemInCart({ item, toast }) {
   const itemsInCart = useSelector((state) => state.cart.cartItems);
 
   function removeFromCart() {
-    dispatch(RemoveFromCart(item));
+    dispatch(RemoveFromCart({ ...item, size: item.size, color: item.color }));
   }
 
   function decreaseProduct() {
-    const existItem = itemsInCart.find((i) => i.slug == item.slug);
+    const existItem = itemsInCart.find(
+      (i) =>
+        i.slug === item.slug && i.size === item.size && i.color === item.color
+    );
     let quantity = 0;
     existItem ? (quantity = item.quantity - 1) : (quantity = 1);
     quantity < 1
       ? toast.info(`to delete item click remove`)
-      : dispatch(AddToCart({ ...item, quantity: quantity }));
+      : dispatch(
+          AddToCart({
+            ...item,
+            quantity: quantity,
+            size: item.size,
+            color: item.color,
+          })
+        );
   }
 
   async function increaseProduct() {
-    const existItem = itemsInCart.find((i) => i.slug == item.slug);
+    const existItem = itemsInCart.find(
+      (i) =>
+        i.slug === item.slug && i.size === item.size && i.color === item.color
+    );
     let quantity = 0;
     existItem ? (quantity = existItem.quantity + 1) : (quantity = 1);
     const { data } = await axios.get(`/api/products/${item._id}`);
     data.countInStock < quantity
       ? toast.error(`sorry ${existItem.name} is out of stock...`)
-      : dispatch(AddToCart({ ...item, quantity: quantity }));
+      : dispatch(
+          AddToCart({
+            ...item,
+            quantity: quantity,
+            size: item.size,
+            color: item.color,
+          })
+        );
   }
 
   return (
-    <div className="flex py-2 w-full md:mr-2  ">
-      <div className="w-2/5 flex">
+    <div className="flex justify-between py-2 w-full md:mr-2  ">
+      <div className="w-3/12 flex flex-wrap">
         <Link href={`/product/${item.slug}`}>
           <img
             src={item.image}
@@ -46,7 +66,7 @@ export default function ItemInCart({ item, toast }) {
           </div>
         </Link>
       </div>
-      <div className="w-1/5 p-0 flex justify-between h-1/6 items-start">
+      <div className="w-2/12 p-0 flex justify-between h-1/6 items-start">
         <div
           onClick={decreaseProduct}
           className="bg-transparent grow-0  
@@ -57,7 +77,7 @@ export default function ItemInCart({ item, toast }) {
            md:text-2xl border-gray-400 rounded-lg leading-none 
            border-2 items-center md:text-2xl border-gray-400 
            rounded-lg leading-none  shadow text-gray-700 hover:scale-110 
-           active:scale-125  w-6 h-6"
+           active:scale-125  w-4 h-4 md:w-6 md:h-6 "
           >
             -
           </p>
@@ -66,26 +86,28 @@ export default function ItemInCart({ item, toast }) {
         <div
           onClick={increaseProduct}
           className="w-1/4 bg-transparent grow-0  
-           border shadow-lg"
+           border shadow-lg font-bold"
         >
           <p
             className="flex justify-center font-bold text-center
            md:text-2xl border-gray-400 rounded-lg leading-none 
            border-2 items-center md:text-2xl border-gray-400 
            rounded-lg leading-none  shadow text-gray-700 hover:scale-110 
-           active:scale-125  w-6 h-6"
+           active:scale-125   w-4 h-4 md:w-6 md:h-6  "
           >
             +
           </p>
         </div>
       </div>
 
-      <h2 className="w-1/5 text-center">Rs : {item.price}</h2>
-      <div className="w-1/5 flex justify-center">
+      <h2 className="w-3/12 text-center">{item.price}Rs</h2>
+      <h2 className="w-2/12 text-center"> {item.size}</h2>
+      <h2 className="w-2/12 text-center  "> {item.color}</h2>
+      <div className="w-1/12   flex justify-center">
         <img
           src="/icons/bin.png"
           alt=""
-          className="h-6 w-6 hover:scale-105 active:scale-110 cursor-pointer"
+          className="h-5 w-5 hover:scale-105 active:scale-110 cursor-pointer"
           onClick={() => removeFromCart()}
         />
       </div>

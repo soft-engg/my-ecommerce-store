@@ -25,7 +25,7 @@ export default function Home({ products }) {
           <ProductItem
             product={product}
             toast={toast}
-            key={product.slug}
+            key={product.slug + product.color + product.size}
           ></ProductItem>
         ))}
       </div>

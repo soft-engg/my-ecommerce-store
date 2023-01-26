@@ -1,0 +1,220 @@
+import axios from 'axios';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { CartReset } from '../utils/redux/slices/cartSlice';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import CheckoutWizard from '../components/checkoutwizard';
+import Layout from '../components/layout';
+import { getError } from '../utils/getError';
+import Cookies from 'js-cookie';
+
+export default function PlaceOrderScreen() {
+  const { cartItems, ShippingAddress } = useSelector((state) => state.cart);
+  const newPaymentMethod = useSelector((state) => {
+    return state.cart.PaymenMethod;
+  });
+
+  const [selectedPaymentMethod] = useState(newPaymentMethod || '');
+  const [loading, setLoading] = useState(false);
+  const cart = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
+  const router = useRouter();
+  const round2 = (num) => Math.round(num * 100 + Number.EPSILON) / 100;
+
+  const subtotalPrice = round2(
+    cartItems.reduce((i, c) => (i += c.quantity * c.price), 0)
+  );
+
+  const shippingPrice = subtotalPrice > 2000 ? 0 : 300;
+  const totalPrice = subtotalPrice + shippingPrice;
+
+  const placeOrderHanldler = async () => {
+    try {
+      setLoading(true);
+      // const { data } =
+      await axios.post('/api/order', {
+        orderItems: cartItems,
+        shippingAddress: ShippingAddress,
+        paymentMethod: selectedPaymentMethod,
+        subtotalPrice,
+        shippingPrice,
+        totalPrice,
+      });
+      setLoading(false);
+      dispatch(CartReset());
+      Cookies.set(
+        'cart',
+        JSON.stringify({
+          ...cart,
+          cartItems: [],
+        })
+      );
+      toast.success('order placed');
+      // router.push(`order/${data._id}`);
+    } catch (err) {
+      setLoading(false);
+      toast.error(getError(err));
+    }
+  };
+
+  useEffect(() => {
+    console.log('in payment method useeffect', selectedPaymentMethod);
+    if (!selectedPaymentMethod) {
+      router.push('/payment');
+    }
+  });
+
+  return (
+    <Layout title="Place Order">
+      <ToastContainer
+        position="bottom-center"
+        autoClose={500}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
+      <CheckoutWizard activeStep={3} />
+      <h1 className="mx-3 sm:mx-0 mb-4 text-xl">Place Order</h1>
+      {cartItems.length === 0 ? (
+        <div>
+          cart is empty <Link href="/">Go shopping</Link>
+        </div>
+      ) : (
+        <div className="flex flex-col md:flex-row ">
+          <div className="w-full md:w-3/4">
+            {/* div for shipping address */}
+            <div
+              className="overflow-x-auto md:col-span-3 flex flex-col p-4 
+           shadow-lg shadow-amber-400  rounded-lg"
+            >
+              <h2 className="mb-2 text-lg">Shipping Address</h2>
+              <div className="mb-1">
+                {ShippingAddress.fullName},{ShippingAddress.address},
+                {ShippingAddress.city},{ShippingAddress.postalCode},
+                {ShippingAddress.country}
+              </div>
+              <div className="font-medium">
+                <Link href="/shipping">Edit</Link>
+              </div>
+            </div>
+            {/* div for payment Method */}
+            <div
+              className="overflow-x-auto md:col-span-3 flex flex-col p-4 
+           shadow-lg shadow-amber-400  rounded-lg"
+            >
+              <h2 className="mb-2 text-lg">paymentMethod</h2>
+              <div className="mb-1">
+                {selectedPaymentMethod ? selectedPaymentMethod : 'no'}
+              </div>
+              <div className="font-medium">
+                <Link href="/payment">Edit</Link>
+              </div>
+            </div>
+            {/* div for items table */}
+            <div
+              className="overflow-x-hidden  w-full  flex flex-col p-4 
+             shadow-md shadow-amber-400  rounded-lg"
+            >
+              <h2 className="mb-2 text-lg">Order items</h2>
+              <div
+                className="flex w-full pb-2 mb-1 font-semibold  border-b-2
+             border-gray-300 "
+              >
+                <div className="text-center  w-2/12 ">
+                  <p>Item(s)</p>
+                </div>
+                <div className=" text-center w-2/12 ">
+                  <p>Quantity</p>
+                </div>
+                <div className="text-center w-2/12">
+                  <p>Price</p>
+                </div>
+                <div className=" text-center w-2/12">
+                  <p>color</p>
+                </div>
+                <div className="text-center  w-2/12 ">size</div>
+                <div className=" text-center w-2/12">Subtotal</div>
+              </div>
+
+              {cartItems.map((item) => (
+                <div
+                  key={item.name + item.size + item.color}
+                  className="flex w-full border-b pb-2  "
+                >
+                  <div className=" flex w-2/12  ">
+                    <Link href={`/product/${item.slug}`}>
+                      <img
+                        src={item.image}
+                        alt={item.name}
+                        className="h-12 w-12 object-contain cursor-pointer ease-in-out duration-300 hover:scale-125"
+                      />
+                    </Link>
+                    <Link href={`/product/${item.slug}`}>
+                      <div className="ml-2 text-center cursor-pointer font-bold text-blue-600 hover:text-gray-700">
+                        {item.name}
+                      </div>
+                    </Link>
+                  </div>
+
+                  <div className=" w-2/12 text-center  ">
+                    <p>{item.quantity}</p>
+                  </div>
+                  <div className=" w-2/12 text-center">
+                    <p>{item.price} Rs</p>
+                  </div>
+                  <div className="w-2/12 text-center ">
+                    <p>{item.color}</p>
+                  </div>
+                  <div className=" text-center w-2/12">
+                    <p>{item.size}</p>
+                  </div>
+
+                  <div className="text-center w-2/12">
+                    <p>{item.quantity * item.price} Rs</p>
+                  </div>
+                </div>
+              ))}
+
+              <div className="font-medium font-bold mt-2">
+                <Link href="/cart">Edit</Link>
+              </div>
+            </div>
+          </div>
+          <div className="md:w-1/4   mx-2 px-3 py-2 rounded-lg border-2 h-fit ">
+            <h2 className="text-lg font-bold text-blue-500">Order Summary</h2>
+            <div className="flex justify-between">
+              <p className="font-semibold">Subtotal :</p>
+              <p>{subtotalPrice}</p>
+            </div>
+            <div className="flex justify-between border-b-2 ">
+              <p className="font-semibold">Shipping :</p>
+              <p>{shippingPrice}</p>
+            </div>
+            <div className="flex justify-between border-b-2 mb-2 ">
+              <p className="font-semibold">total :</p>
+              <p>{totalPrice}</p>
+            </div>
+            <div className="flex justify-center">
+              <button
+                className="primary-button"
+                disabled={loading}
+                onClick={placeOrderHanldler}
+              >
+                {loading ? 'loading..' : 'Place Order'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </Layout>
+  );
+}
+PlaceOrderScreen.auth = true;

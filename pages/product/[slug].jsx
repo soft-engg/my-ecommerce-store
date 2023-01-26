@@ -31,7 +31,13 @@ export default function ProductScreen(props) {
       toast.error('please select both size & color');
     } else {
       // dispatching the add to cart action
-      const existItem = itemsInCart.find((item) => item.slug == product.slug);
+      const existItem = itemsInCart.find(
+        (item) =>
+          item.slug === product.slug &&
+          item.color === givenColor &&
+          item.size === givenSize
+      );
+
       let quantity = 0;
       existItem
         ? (quantity = existItem.quantity + givenQuantity)
@@ -40,7 +46,14 @@ export default function ProductScreen(props) {
       if (data.countInStock < quantity) {
         toast.error('Sorry given number of item is not available..');
       } else {
-        dispatch(AddToCart({ ...product, quantity: quantity }));
+        dispatch(
+          AddToCart({
+            ...product,
+            quantity: quantity,
+            size: givenSize,
+            color: givenColor,
+          })
+        );
         toast.success('Product added to the cart!!');
       }
     }

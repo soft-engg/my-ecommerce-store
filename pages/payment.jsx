@@ -9,17 +9,21 @@ import { useEffect } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Cookies from 'js-cookie';
+import PlaceOrderScreen from './placeorder';
 
 export default function PaymentScreen() {
-  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('');
-  const cart = useSelector((state) => state.cart);
   const newPaymentMethod = useSelector((state) => {
-    console.log('I am running selector');
-    console.log(state.cart.PaymenMethod);
     return state.cart.PaymenMethod;
   });
+
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(
+    newPaymentMethod || ''
+  );
+  const cart = useSelector((state) => state.cart);
+
   const dispatch = useDispatch();
   const router = useRouter();
+
   function submitHandler(e) {
     e.preventDefault();
     if (!selectedPaymentMethod) {
@@ -43,6 +47,7 @@ export default function PaymentScreen() {
         })
       );
       toast.success('payment method is saved..');
+      router.push('/placeorder');
     }
   }
 
@@ -51,10 +56,10 @@ export default function PaymentScreen() {
       router.push('/shipping');
     }
     if (!selectedPaymentMethod) {
-      setSelectedPaymentMethod(cart.PaymenMethod);
+      setSelectedPaymentMethod(cart.PaymentMethod);
     }
   }, [
-    cart.PaymenMethod,
+    cart.PaymentMethod,
     cart.ShippingAddress,
     newPaymentMethod,
     router,
@@ -119,3 +124,4 @@ export default function PaymentScreen() {
     </Layout>
   );
 }
+PlaceOrderScreen.auth = true;

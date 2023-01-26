@@ -16,27 +16,37 @@ export const cartslice = createSlice({
   },
   reducers: {
     AddToCart: (state, action) => {
-      console.log('payload', action.payload);
       const newItem = action.payload;
+
       const newItemExist = state.cartItems.find(
-        (item) => item.slug === newItem.slug
+        (item) =>
+          item.slug === newItem.slug &&
+          item.color === newItem.color &&
+          item.size === newItem.size
       );
       if (newItemExist) {
         const newCart = state.cartItems.map((item) =>
-          item.name === newItem.name ? newItem : item
+          item.name === newItem.name &&
+          item.size === newItem.size &&
+          item.color === newItem.color
+            ? newItem
+            : item
         );
         state.cartItems = newCart;
       } else {
         state.cartItems.push(newItem);
       }
+
       Cookies.set('cart', JSON.stringify(state));
       return state;
     },
     RemoveFromCart: (state, action) => {
-      console.log('in remove payload is', action.payload);
       const dItem = action.payload;
       state.cartItems = state.cartItems.filter(
-        (item) => item.slug !== dItem.slug
+        (item) =>
+          item.slug !== dItem.slug ||
+          item.color !== dItem.color ||
+          item.size !== dItem.size
       );
       Cookies.set('cart', JSON.stringify(state));
       return state;
@@ -58,6 +68,7 @@ export const cartslice = createSlice({
         ShippingAddress: { ...state.ShippingAddress, ...action.payload },
       };
       Cookies.set('cart', JSON.stringify(state));
+
       return state;
     },
     // sav paymen reducer

@@ -6,7 +6,7 @@ export default function CheckoutWizard({ activeStep = 0 }) {
       {['User Login', 'Shipping Address', 'Payment Method', 'place order'].map(
         (step, index) => (
           <div
-            className={`flex-1 text-sm border-b-2 text-center font-medium 
+            className={`flex-1 border-b-2 text-center font-medium 
           ${
             index <= activeStep
               ? 'border-amber-500 text-amber-500'

@@ -17,7 +17,8 @@ a {
   box-sizing: border-box;
 }
 .card {
-  @apply mb-5 h-[400px]  flex justify-between items-center flex-col rounded-lg border  border-gray-200  shadow-lg;
+  @apply mb-5 h-[400px]  flex justify-between items-center flex-col 
+  rounded-lg border  border-gray-200  shadow-lg;
 }
 .primary-button {
   @apply rounded bg-amber-300 py-2 px-4 shadow outline-none hover:bg-amber-400 active:bg-amber-500;

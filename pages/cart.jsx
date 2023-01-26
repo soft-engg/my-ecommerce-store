@@ -39,12 +39,11 @@ function Cart() {
       />
       <main className="md:px-1  ">
         <div className="flex flex-col">
-          <Link href={'/'}>
-            <div className="default-link">
-              <Link href="/"> Back to products</Link>
-            </div>
-          </Link>
-          <h1 className="font-semibold text-black pb-2 text-lg">
+          <div className="default-link ">
+            <Link href="/"> Back to products</Link>
+          </div>
+
+          <h1 className="font-semibold text-black pb-2 mx-5 text-lg">
             Shopping cart
           </h1>
         </div>
@@ -59,22 +58,27 @@ function Cart() {
               className="flex pb-2 font-semibold  border-b-2
              border-gray-300 "
             >
-              <h2 className="w-2/5 text-center ">Item(s)</h2>
-              <h2 className="w-1/5 text-center">Quantity</h2>
-              <h2 className="w-1/5 text-center">Price</h2>
-              <h2 className="w-1/5 text-center">Action</h2>
+              <h2 className="w-3/12 text-center ">Item(s)</h2>
+              <h2 className="w-2/12 text-center">Quantity</h2>
+              <h2 className="w-3/12 text-center">Price</h2>
+              <h2 className="w-2/12 text-center">Size</h2>
+              <h2 className="w-2/12 text-center">Color</h2>
+              <h2 className="w-1/12 text-center">Action</h2>
             </div>
             {itemsInCart.length > 0 ? (
               itemsInCart.map((item) => (
                 <ItemInCart
-                  key={item.name}
+                  key={item.name + item.color + item.size}
                   item={item}
                   toast={toast}
                 ></ItemInCart>
               ))
             ) : (
               <div className="w-full text-center mt-5">
-                No Items are added to the Cart
+                cart is empty{' '}
+                <span className="font-bold">
+                  <Link href="/">Go shopping</Link>
+                </span>
               </div>
             )}
           </div>

@@ -25,7 +25,14 @@ export default function ProductItem({ product, toast }) {
     if (data.countInStock < quantity) {
       toast.error('Sorry given number of item is not available..');
     } else {
-      dispatch(AddToCart({ ...product, quantity: quantity }));
+      dispatch(
+        AddToCart({
+          ...product,
+          quantity: quantity,
+          color: product.color[0],
+          size: product.size[0],
+        })
+      );
       toast.success('Product added to the cart!!');
     }
   };
