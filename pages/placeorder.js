@@ -82,7 +82,7 @@ export default function PlaceOrderScreen() {
         theme="dark"
       />
       <CheckoutWizard activeStep={3} />
-      <h1 className="mx-3 sm:mx-0 mb-2 text-xl ">Place Order</h1>
+      <h1 className="mx-5 sm:mx-0 mb-2 text-xl ">Place Order</h1>
       {cartItems.length === 0 ? (
         <div>
           cart is empty <Link href="/">Go shopping</Link>

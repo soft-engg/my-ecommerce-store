@@ -41,7 +41,7 @@ export default function ItemInCart({ item, toast }) {
     const { data } = await toast.promise(
       () => axios.get(`/api/products/${item._id}`),
       {
-        loading: 'checking for product availablity',
+        pending: 'checking for product availablity',
         error: 'Some error occured',
       }
     );

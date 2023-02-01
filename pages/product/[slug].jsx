@@ -46,7 +46,7 @@ export default function ProductScreen(props) {
       const { data } = await toast.promise(
         () => axios.get(`/api/products/${product._id}`),
         {
-          loading: 'checking for product availablity',
+          pending: 'checking for product availablity',
           error: 'Some error occured',
         }
       );
