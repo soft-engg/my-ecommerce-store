@@ -37,20 +37,22 @@ function Cart() {
         pauseOnHover
         theme="colored"
       />
-      <main className="md:px-1  ">
+      <main>
         <div className="flex flex-col">
-          <div className="default-link ">
-            <Link href="/"> Back to products</Link>
+          <div className="default-link">
+            <Link href="/">
+              <a>Back to products</a>
+            </Link>
           </div>
 
-          <h1 className="font-semibold text-black pb-2 mx-5 text-lg">
+          <h1 className="font-semibold text-black pb-2 mx-3 text-lg">
             Shopping cart
           </h1>
         </div>
         {/* this is div for cart and  subtotal div */}
         <div
           className="flex flex-col 
-         justify-center items-center md:flex-row w-full"
+         justify-center items-center sm:flex-row w-full"
         >
           {/* this is div for the item table*/}
           <div className="flex flex-grow sm:w-3/4 flex-shrink-0 flex-col w-full">
@@ -58,12 +60,10 @@ function Cart() {
               className="flex pb-2 font-semibold  border-b-2
              border-gray-300 "
             >
-              <h2 className="w-3/12 text-center ">Item(s)</h2>
-              <h2 className="w-2/12 text-center">Quantity</h2>
+              <h2 className="w-4/12 text-center ">Item(s)</h2>
+              <h2 className="w-3/12 text-center">Qty.</h2>
               <h2 className="w-3/12 text-center">Price</h2>
-              <h2 className="w-2/12 text-center">Size</h2>
-              <h2 className="w-2/12 text-center">Color</h2>
-              <h2 className="w-1/12 text-center">Action</h2>
+              <h2 className="w-2/12 text-center">Action</h2>
             </div>
             {itemsInCart.length > 0 ? (
               itemsInCart.map((item) => (
@@ -71,11 +71,11 @@ function Cart() {
                   key={item.name + item.color + item.size}
                   item={item}
                   toast={toast}
-                ></ItemInCart>
+                />
               ))
             ) : (
               <div className="w-full text-center mt-5">
-                cart is empty{' '}
+                cart is empty
                 <span className="font-bold">
                   <Link href="/">Go shopping</Link>
                 </span>
@@ -85,7 +85,7 @@ function Cart() {
           {/* this is subtotal div */}
           <div
             className="flex self-center sm:self-start justify-center
-           sm:w-1/4 shadow-lg  max-h-fit items-center"
+           sm:w-1/4 mx-2  shadow-lg  max-h-fit items-center sm:ml-3"
           >
             <div
               className="flex h-fit mb-2 flex-grow-0 w-80 flex-col w-full gap-4 

@@ -82,20 +82,20 @@ export default function PlaceOrderScreen() {
         theme="dark"
       />
       <CheckoutWizard activeStep={3} />
-      <h1 className="mx-3 sm:mx-0 mb-4 text-xl">Place Order</h1>
+      <h1 className="mx-3 sm:mx-0 mb-2 text-xl ">Place Order</h1>
       {cartItems.length === 0 ? (
         <div>
           cart is empty <Link href="/">Go shopping</Link>
         </div>
       ) : (
-        <div className="flex flex-col md:flex-row ">
+        <div className="flex flex-col md:flex-row mx-1 sm:mx-0.5">
           <div className="w-full md:w-3/4">
             {/* div for shipping address */}
             <div
               className="overflow-x-auto md:col-span-3 flex flex-col p-4 
-           shadow-lg shadow-amber-400  rounded-lg"
+           shadow-lg mb-2 rounded-lg"
             >
-              <h2 className="mb-2 text-lg">Shipping Address</h2>
+              <h2 className="mb-2 text-lg ">Shipping Address</h2>
               <div className="mb-1">
                 {ShippingAddress.fullName},{ShippingAddress.address},
                 {ShippingAddress.city},{ShippingAddress.postalCode},
@@ -108,9 +108,9 @@ export default function PlaceOrderScreen() {
             {/* div for payment Method */}
             <div
               className="overflow-x-auto md:col-span-3 flex flex-col p-4 
-           shadow-lg shadow-amber-400  rounded-lg"
+           shadow-lg mb-2 rounded-lg"
             >
-              <h2 className="mb-2 text-lg">paymentMethod</h2>
+              <h2 className="mb-2 text-lg ">paymentMethod</h2>
               <div className="mb-1">
                 {selectedPaymentMethod ? selectedPaymentMethod : 'no'}
               </div>
@@ -121,26 +121,23 @@ export default function PlaceOrderScreen() {
             {/* div for items table */}
             <div
               className="overflow-x-hidden  w-full  flex flex-col p-4 
-             shadow-md shadow-amber-400  rounded-lg"
+             shadow-lg  rounded-lg"
             >
-              <h2 className="mb-2 text-lg">Order items</h2>
+              <h2 className="mb-2 text-lg ">Order items</h2>
               <div
-                className="flex w-full pb-2 mb-1 font-semibold  border-b-2
+                className="flex w-full pb-2 mb-1   border-b-2
              border-gray-300 "
               >
-                <div className="text-center  w-2/12 ">
+                <div className=" px-1  w-5/12 ">
                   <p>Item(s)</p>
                 </div>
                 <div className=" text-center w-2/12 ">
-                  <p>Quantity</p>
+                  <p>Qty.</p>
                 </div>
-                <div className="text-center w-2/12">
+                <div className="text-center w-3/12">
                   <p>Price</p>
                 </div>
-                <div className=" text-center w-2/12">
-                  <p>color</p>
-                </div>
-                <div className="text-center  w-2/12 ">size</div>
+
                 <div className=" text-center w-2/12">Subtotal</div>
               </div>
 
@@ -149,7 +146,7 @@ export default function PlaceOrderScreen() {
                   key={item.name + item.size + item.color}
                   className="flex w-full border-b pb-2  "
                 >
-                  <div className=" flex w-2/12  ">
+                  <div className=" flex w-5/12  ">
                     <Link href={`/product/${item.slug}`}>
                       <img
                         src={item.image}
@@ -159,7 +156,7 @@ export default function PlaceOrderScreen() {
                     </Link>
                     <Link href={`/product/${item.slug}`}>
                       <div className="ml-2 text-center cursor-pointer font-bold text-blue-600 hover:text-gray-700">
-                        {item.name}
+                        {item.name} {item.color} {item.size}
                       </div>
                     </Link>
                   </div>
@@ -167,14 +164,8 @@ export default function PlaceOrderScreen() {
                   <div className=" w-2/12 text-center  ">
                     <p>{item.quantity}</p>
                   </div>
-                  <div className=" w-2/12 text-center">
+                  <div className=" w-3/12 text-center">
                     <p>{item.price} Rs</p>
-                  </div>
-                  <div className="w-2/12 text-center ">
-                    <p>{item.color}</p>
-                  </div>
-                  <div className=" text-center w-2/12">
-                    <p>{item.size}</p>
                   </div>
 
                   <div className="text-center w-2/12">
@@ -191,15 +182,15 @@ export default function PlaceOrderScreen() {
           <div className="md:w-1/4   mx-2 px-3 py-2 rounded-lg border-2 h-fit ">
             <h2 className="text-lg font-bold text-blue-500">Order Summary</h2>
             <div className="flex justify-between">
-              <p className="font-semibold">Subtotal :</p>
+              <p className="">Subtotal :</p>
               <p>{subtotalPrice}</p>
             </div>
             <div className="flex justify-between border-b-2 ">
-              <p className="font-semibold">Shipping :</p>
+              <p className="">Shipping :</p>
               <p>{shippingPrice}</p>
             </div>
             <div className="flex justify-between border-b-2 mb-2 ">
-              <p className="font-semibold">total :</p>
+              <p className="">total :</p>
               <p>{totalPrice}</p>
             </div>
             <div className="flex justify-center">

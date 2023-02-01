@@ -42,8 +42,20 @@ export default function ProductScreen(props) {
       existItem
         ? (quantity = existItem.quantity + givenQuantity)
         : (quantity = givenQuantity);
-      const { data } = await axios.get(`/api/products/${product._id}`);
-      if (data.countInStock < quantity) {
+
+      const { data } = await toast.promise(
+        () => axios.get(`/api/products/${product._id}`),
+        {
+          loading: 'checking for product availablity',
+          error: 'Some error occured',
+        }
+      );
+      let qInCart = 0;
+      itemsInCart.forEach((item) => {
+        if (item.slug === product.slug) qInCart += item.quantity;
+      });
+      qInCart += givenQuantity;
+      if (data.countInStock < qInCart) {
         toast.error('Sorry given number of item is not available..');
       } else {
         dispatch(
@@ -122,7 +134,7 @@ export default function ProductScreen(props) {
                     <input
                       type="radio"
                       id={size}
-                      className="p-2 outline-none focus:ring-0"
+                      className="p-2 outline-none focus:ring-0 cursor-pointer"
                       checked={givenSize === size}
                       onChange={() => setGivenSize(size)}
                     />
@@ -141,7 +153,7 @@ export default function ProductScreen(props) {
                     <input
                       type="radio"
                       id={color}
-                      className="p-2 outline-none focus:ring-0"
+                      className="p-2 outline-none focus:ring-0 cursor-pointer"
                       checked={givenColor === color}
                       onChange={() => setGivenColor(color)}
                     />
@@ -155,7 +167,7 @@ export default function ProductScreen(props) {
             {/* start */}
             <span className="font-semibold">Quantity :</span>
             <div className=" p-1 flex justify-between items-start w-2/5 ">
-              <div
+              <button
                 onClick={() => {
                   setQuantity((quantity) => {
                     if (quantity >= 2) return quantity - 1;
@@ -167,7 +179,7 @@ export default function ProductScreen(props) {
            border w-6 h-6  shadow text-gray-700 hover:scale-110 active:scale-125"
               >
                 <p>-</p>
-              </div>
+              </button>
               <div className="mx-2 p-0 flex items-center  text-xl">
                 {givenQuantity}
               </div>
@@ -190,8 +202,8 @@ export default function ProductScreen(props) {
         <div className="flex justify-center mt-2 sm:justify-center md:mt-0 md:block">
           <div className=" border rounded-md shadow p-4 w-1/2 md:w-auto">
             <div className="mb-2 flex justify-evenly md:justify-between">
-              <div>Price</div>
-              <div>Rs :{product.price}</div>
+              <p>Price</p>
+              <p className="font-bold">Rs. {product.price}</p>
             </div>
 
             <div className="mb-2 flex justify-evenly md:justify-between">

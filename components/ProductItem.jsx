@@ -21,8 +21,20 @@ export default function ProductItem({ product, toast }) {
     existItem
       ? (quantity = existItem.quantity + givenQuantity)
       : (quantity = givenQuantity);
-    const { data } = await axios.get(`/api/products/${product._id}`);
-    if (data.countInStock < quantity) {
+    const { data } = await toast.promise(
+      () => axios.get(`/api/products/${product._id}`),
+      {
+        loading: 'checking for product availablity',
+        error: 'Some error occured',
+      }
+    );
+    let qInCart = 0;
+    itemsInCart.forEach((item) => {
+      if (item.slug === product.slug) qInCart += item.quantity;
+    });
+    qInCart += givenQuantity;
+
+    if (data.countInStock < qInCart) {
       toast.error('Sorry given number of item is not available..');
     } else {
       dispatch(
@@ -58,16 +70,14 @@ export default function ProductItem({ product, toast }) {
       >
         <Link href={`/product/${product.slug}`}>
           <h2 className="text-lg font-medium cursor-pointer ">
-            {' '}
             {product.name}
           </h2>
         </Link>
-        <p className="">
-          <span className="text-blue-700 font-bold ">{product.price}</span> Rs{' '}
-        </p>
+        <p className="text-black font-semibold ">Rs. {product.price}</p>
         {/* start */}
         <div className=" p-1 flex justify-between items-start w-2/5 ">
-          <div
+          {/* decrease quantity button */}
+          <button
             onClick={() => {
               setQuantity((quantity) => {
                 if (quantity >= 2) return quantity - 1;
@@ -78,16 +88,18 @@ export default function ProductItem({ product, toast }) {
            md:text-2xl border-gray-400 rounded-lg leading-none 
            border w-6 h-6  shadow text-gray-700 hover:scale-110 active:scale-125"
           >
-            <p>-</p>
-          </div>
+            <p className="cursor-pointer">-</p>
+          </button>
           <div className="mx-2 p-0 flex items-center  text-xl">
             {givenQuantity}
           </div>
+          {/* increase quantity button */}
           <button
             onClick={() => {
               setQuantity((quantity) => quantity + 1);
             }}
-            className="bg-transparent flex justify-center items-center font-bold text-center border-2
+            className="bg-transparent flex justify-center 
+            items-center font-bold text-center border-2
           md:text-2xl border-gray-400 rounded-lg leading-none 
           border w-6 h-6  shadow text-gray-700 hover:scale-110 active:scale-125"
           >
@@ -95,18 +107,14 @@ export default function ProductItem({ product, toast }) {
           </button>
         </div>
         {/* END */}
-        <div
+        <button
           onClick={addToCartHandler}
-          className="primary-button font-medium flex items-center"
+          className="primary-button text-black font-medium flex items-center"
           type="button"
         >
-          <img
-            src="/icons/shoppingCart.png"
-            alt="cart"
-            className="w-6 h-6 mr-1"
-          />
+          <img src="/icons/addtocart.png" alt="cart" className="w-4 h-4 mr-1" />
           Add To Cart
-        </div>
+        </button>
       </div>
     </div>
   );
