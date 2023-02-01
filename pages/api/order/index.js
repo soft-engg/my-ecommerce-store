@@ -3,7 +3,6 @@ import Order from '../../../models/Order';
 import db from '../../../utils/db';
 
 const handler = async (req, res) => {
-  console.log('request body is ', req.body);
   const session = await getSession({ req });
   if (!session) {
     return res.status(401).send('signin required');

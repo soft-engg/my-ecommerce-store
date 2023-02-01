@@ -92,7 +92,7 @@ export default function ProductScreen(props) {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        theme="colored"
+        theme="dark"
       />
       <div className="default-link">
         <Link href="/">Back to products</Link>

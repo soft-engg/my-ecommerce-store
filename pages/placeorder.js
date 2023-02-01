@@ -61,7 +61,6 @@ export default function PlaceOrderScreen() {
   };
 
   useEffect(() => {
-    console.log('in payment method useeffect', selectedPaymentMethod);
     if (!selectedPaymentMethod) {
       router.push('/payment');
     }
@@ -82,7 +81,9 @@ export default function PlaceOrderScreen() {
         theme="dark"
       />
       <CheckoutWizard activeStep={3} />
-      <h1 className="mx-5 sm:mx-0 mb-2 text-xl ">Place Order</h1>
+      <h1 className="mx-5  mb-2 text-xl text-blue-500 font-bold">
+        Place Order
+      </h1>
       {cartItems.length === 0 ? (
         <div>
           cart is empty <Link href="/">Go shopping</Link>
@@ -95,7 +96,9 @@ export default function PlaceOrderScreen() {
               className="overflow-x-auto md:col-span-3 flex flex-col p-4 
            shadow-lg mb-2 rounded-lg"
             >
-              <h2 className="mb-2 text-lg ">Shipping Address</h2>
+              <h2 className="mb-2 text-lg text-blue-500 font-bold ">
+                Shipping Address
+              </h2>
               <div className="mb-1">
                 {ShippingAddress.fullName},{ShippingAddress.address},
                 {ShippingAddress.city},{ShippingAddress.postalCode},
@@ -110,7 +113,9 @@ export default function PlaceOrderScreen() {
               className="overflow-x-auto md:col-span-3 flex flex-col p-4 
            shadow-lg mb-2 rounded-lg"
             >
-              <h2 className="mb-2 text-lg ">paymentMethod</h2>
+              <h2 className="mb-2 text-lg text-blue-500 font-bold ">
+                paymentMethod
+              </h2>
               <div className="mb-1">
                 {selectedPaymentMethod ? selectedPaymentMethod : 'no'}
               </div>
@@ -123,7 +128,9 @@ export default function PlaceOrderScreen() {
               className="overflow-x-hidden  w-full  flex flex-col p-4 
              shadow-lg  rounded-lg"
             >
-              <h2 className="mb-2 text-lg ">Order items</h2>
+              <h2 className="mb-2 text-lg text-blue-500 font-bold">
+                Order items
+              </h2>
               <div
                 className="flex w-full pb-2 mb-1   border-b-2
              border-gray-300 "
@@ -155,7 +162,7 @@ export default function PlaceOrderScreen() {
                       />
                     </Link>
                     <Link href={`/product/${item.slug}`}>
-                      <div className="ml-2 text-center cursor-pointer font-bold text-blue-600 hover:text-gray-700">
+                      <div className="ml-2 text-center cursor-pointer font-semibold text-blue-600 hover:text-gray-700">
                         {item.name} {item.color} {item.size}
                       </div>
                     </Link>
