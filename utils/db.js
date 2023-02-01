@@ -3,7 +3,8 @@ const connection = {};
 // this is function to connect ot db
 async function connect() {
   // if connected then use previous and return
-  if (connection.isConnected) {
+  console.log('pervious connection is', connection.isConnected);
+  if (connection.isConnected === 1) {
     console.log('already connected');
     return;
   }
@@ -24,6 +25,7 @@ async function connect() {
   // this is fired when the connection is not available
   // here we are connecting to the databaseasda
   const db = await mongoose.connect(process.env.MONGODB_URI);
+  console.log('new connection');
   // here we are storing the connection state to connection variable
   connection.isConnected = db.connections[0].readyState;
 }
