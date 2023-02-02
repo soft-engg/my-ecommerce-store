@@ -34,8 +34,7 @@ export default function PlaceOrderScreen() {
   const placeOrderHanldler = async () => {
     try {
       setLoading(true);
-      // const { data } =
-      await axios.post('/api/order', {
+      const { data } = await axios.post('/api/order', {
         orderItems: cartItems,
         shippingAddress: ShippingAddress,
         paymentMethod: selectedPaymentMethod,
@@ -53,7 +52,7 @@ export default function PlaceOrderScreen() {
         })
       );
       toast.success('order placed');
-      // router.push(`order/${data._id}`);
+      router.push(`order/${data._id}`);
     } catch (err) {
       setLoading(false);
       toast.error(getError(err));
