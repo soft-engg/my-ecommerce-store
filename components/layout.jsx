@@ -56,7 +56,7 @@ export default function Layout({ title, children }) {
                 'loading'
               ) : session?.user ? (
                 <Menu as="div" className="relative inline-block">
-                  <Menu.Button className="text-blue-500 font-bold hover:text-black mr-2">
+                  <Menu.Button className="text-blue-500  hover:text-black mr-2">
                     <div className="flex items-center">
                       <img
                         src="/icons/user.png"

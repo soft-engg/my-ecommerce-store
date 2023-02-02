@@ -141,16 +141,10 @@ export default function Login() {
               required
             />
           </div>
-          <label
-            htmlFor="remember"
-            className="ml-2 text-sm font-medium   text-gray-900 dark:text-gray-300"
-          >
-            Remember me
-          </label>
         </div>
         <p className="mb-2 ">
           Dont have a account yet?
-          <Link href={'/register'}>
+          <Link href={`/register?redirect=${redirect || '/'}`}>
             <a className="text-blue-600 ml-2 italic font-semibold hover:underline">
               Register now
             </a>
