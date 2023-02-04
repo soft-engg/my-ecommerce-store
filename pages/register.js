@@ -30,7 +30,7 @@ export default function RegisterScreen() {
       if (password.length > 6) {
         // here we are signing in the user using credentials
         try {
-          await toast.promise(
+          const result = await toast.promise(
             axios.post('/api/auth/signup', {
               name,
               email,
@@ -38,27 +38,31 @@ export default function RegisterScreen() {
             }),
             {
               pending: 'Registration in progress...',
-
               error: 'Unable to Register...',
-              success: 'Registration completed',
             }
           );
+          if (result.status === 422) toast.error(result.body.message);
+          else if (result.status === 201) {
+            // logging in after signup
+            await toast.promise(
+              signIn('credentials', {
+                redirect: false,
+                email,
+                password,
+              }),
+              { pending: 'Signing You In!!!' }
+            );
+          }
+          if (result.error) {
+            toast.error(result.error);
+          }
         } catch (error) {
           // if any error signing in we are going to show error
           toast.error(getError(error));
         }
       }
-
-      const result = await signIn('credentials', {
-        redirect: false,
-        email,
-        password,
-      });
-      if (result.error) {
-        toast.error(result.error);
-      }
     } catch (error) {
-      console.log(getError(error));
+      toast.error(getError(error));
     }
   };
 

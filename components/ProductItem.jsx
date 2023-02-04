@@ -10,6 +10,7 @@ import { AddToCart } from '../utils/redux/slices/cartSlice';
 export default function ProductItem({ product, toast }) {
   const dispatch = useDispatch();
   const router = useRouter();
+
   const [givenQuantity, setQuantity] = useState(1);
   const itemsInCart = useSelector((state) => state.cart.cartItems);
 
@@ -59,7 +60,7 @@ export default function ProductItem({ product, toast }) {
         <img
           src={product.image}
           alt={product.name}
-          className="object-contain h-[250px]  cursor-pointer "
+          className="object-contain h-[180px] sm:h-[200px] cursor-pointer "
           onClick={goToProdctScreen}
         ></img>
       </div>
@@ -69,13 +70,13 @@ export default function ProductItem({ product, toast }) {
        items-center justify-center pb-3  w-full"
       >
         <Link href={`/product/${product.slug}`}>
-          <h2 className="text-lg font-medium cursor-pointer ">
+          <h2 className="text-lg font-medium  cursor-pointer ">
             {product.name}
           </h2>
         </Link>
         <p className="text-black font-semibold ">Rs. {product.price}</p>
         {/* start */}
-        <div className=" p-1 flex justify-between items-start w-2/5 ">
+        <div className=" p-1 flex justify-between items-start sm:w-2/5 ">
           {/* decrease quantity button */}
           <button
             onClick={() => {
@@ -85,7 +86,7 @@ export default function ProductItem({ product, toast }) {
               });
             }}
             className="bg-transparent flex justify-center items-center font-bold text-center border-2
-           md:text-2xl border-gray-400 rounded-lg leading-none 
+           text-2xl border-gray-400 rounded-lg leading-none 
            border w-6 h-6  shadow text-gray-700 hover:scale-110 active:scale-125"
           >
             <p className="cursor-pointer">-</p>
@@ -99,8 +100,8 @@ export default function ProductItem({ product, toast }) {
               setQuantity((quantity) => quantity + 1);
             }}
             className="bg-transparent flex justify-center 
-            items-center font-bold text-center border-2
-          md:text-2xl border-gray-400 rounded-lg leading-none 
+            items-center font-bold text-center border-2 text-2xl
+           border-gray-400 rounded-lg leading-none 
           border w-6 h-6  shadow text-gray-700 hover:scale-110 active:scale-125"
           >
             +

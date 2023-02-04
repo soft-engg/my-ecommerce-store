@@ -69,7 +69,7 @@ export default function PlaceOrderScreen() {
     <Layout title="Place Order">
       <ToastContainer
         position="bottom-center"
-        autoClose={500}
+        autoClose={1000}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick
