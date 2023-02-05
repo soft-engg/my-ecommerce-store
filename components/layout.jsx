@@ -73,7 +73,7 @@ export default function Layout({ title, children }) {
                     </Menu.Item>
                     <Menu.Item>
                       <DropdownLink className="dropdown-link" href="/profile">
-                        Profile
+                        <Link href="/orderhistory">Profile</Link>
                       </DropdownLink>
                     </Menu.Item>
                     <Menu.Item>
@@ -81,7 +81,9 @@ export default function Layout({ title, children }) {
                         className="dropdown-link"
                         href="/order-history"
                       >
-                        Order History
+                        <Link href="/orderhistory">
+                          <a>Order History</a>
+                        </Link>
                       </DropdownLink>
                     </Menu.Item>
                     <Menu.Item>

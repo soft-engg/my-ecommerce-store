@@ -75,9 +75,9 @@ function Cart() {
               ))
             ) : (
               <div className="w-full text-center mt-5">
-                cart is empty
+                cart is empty.
                 <span className="font-bold">
-                  <Link href="/">Go shopping</Link>
+                  <Link href="/"> Go shopping</Link>
                 </span>
               </div>
             )}

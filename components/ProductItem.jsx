@@ -85,7 +85,8 @@ export default function ProductItem({ product, toast }) {
                 return (quantity = 1);
               });
             }}
-            className="bg-transparent flex justify-center items-center font-bold text-center border-2
+            className="bg-transparent flex justify-center items-center 
+            font-semibold text-center border-1
            text-2xl border-gray-400 rounded-lg leading-none 
            border w-6 h-6  shadow text-gray-700 hover:scale-110 active:scale-125"
           >
@@ -100,7 +101,7 @@ export default function ProductItem({ product, toast }) {
               setQuantity((quantity) => quantity + 1);
             }}
             className="bg-transparent flex justify-center 
-            items-center font-bold text-center border-2 text-2xl
+            items-center font-semibold text-center border-1 text-2xl
            border-gray-400 rounded-lg leading-none 
           border w-6 h-6  shadow text-gray-700 hover:scale-110 active:scale-125"
           >

@@ -44,7 +44,7 @@ export default function Home({ products }) {
           onSubmit={(e) => searcHandler(e)}
           className="flex justify-center relative sm:justify-start mb-2"
         >
-          \{/* button for showing input */}
+          {/* button for showing input */}
           <input
             value={search}
             onChange={(e) => {
@@ -59,7 +59,7 @@ export default function Home({ products }) {
           {/* div for showing search result */}
           {searchFlag ? (
             <div
-              className={`absolute mt-1 top-8 rounded-lg bg-gray-100 
+              className={`absolute m-1 top-8 rounded-lg bg-gray-100 
             w-80 border-1 border-gray-400 max-h-80 overflow-y-scroll  shadow-lg`}
             >
               {/* div for close button */}
