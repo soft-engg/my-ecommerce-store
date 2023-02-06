@@ -34,25 +34,31 @@ export default function PlaceOrderScreen() {
   const placeOrderHanldler = async () => {
     try {
       setLoading(true);
-      const { data } = await axios.post('/api/order', {
+      const { data, status } = await axios.put('/api/update/stock', {
         orderItems: cartItems,
-        shippingAddress: ShippingAddress,
-        paymentMethod: selectedPaymentMethod,
-        subtotalPrice,
-        shippingPrice,
-        totalPrice,
+        order: true,
       });
-      setLoading(false);
-      dispatch(CartReset());
-      Cookies.set(
-        'cart',
-        JSON.stringify({
-          ...cart,
-          cartItems: [],
-        })
-      );
-      toast.success('order placed');
-      router.push(`order/${data._id}`);
+      if (status == 200 && data === 'sent') {
+        const { data } = await axios.post('/api/order', {
+          orderItems: cartItems,
+          shippingAddress: ShippingAddress,
+          paymentMethod: selectedPaymentMethod,
+          subtotalPrice,
+          shippingPrice,
+          totalPrice,
+        });
+        setLoading(false);
+        dispatch(CartReset());
+        Cookies.set(
+          'cart',
+          JSON.stringify({
+            ...cart,
+            cartItems: [],
+          })
+        );
+        toast.success('order placed');
+        router.push(`order/${data._id}`);
+      } else toast.error('error in placing the order..');
     } catch (err) {
       setLoading(false);
       toast.error(getError(err));

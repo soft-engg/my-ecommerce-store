@@ -7,7 +7,7 @@ const handler = async (req, res) => {
     name: new RegExp('.*' + req.query.search + '*.', 'gi'),
   });
   await db.disconnect();
-  console.log(products);
+
   res.send(products);
 };
 export default handler;
