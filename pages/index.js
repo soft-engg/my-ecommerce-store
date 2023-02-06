@@ -90,7 +90,7 @@ export default function Home({ products }) {
                         <img
                           src={product.image}
                           alt={product.name}
-                          className="object-contain h-16 w-16"
+                          className="object-contain ml-2 h-16 w-16"
                         ></img>
                       </a>
                     </Link>
@@ -98,7 +98,7 @@ export default function Home({ products }) {
                       href={`product/${product.slug}`}
                       className="cursor-pointer "
                     >
-                      <a className="ml-2 w-3/6"> {product.name}</a>
+                      <a className="ml-3 w-3/6"> {product.name}</a>
                     </Link>
                     <p
                       className="font-semibold  ml-2 w-2/6 justify-end flex 

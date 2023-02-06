@@ -131,17 +131,7 @@ export default function Login() {
             </p>
           ) : null}
         </div>
-        <div className="flex items-start mb-2">
-          <div className="flex items-center h-5">
-            <input
-              id="remember"
-              type="checkbox"
-              value=""
-              className="w-4 h-4 accent-amber-400 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-amber-300 dark:bg-gray-400 dark:border-gray-600 dark:focus:ring-amber-600 dark:ring-offset-gray-500"
-              required
-            />
-          </div>
-        </div>
+
         <p className="mb-2 ">
           Dont have a account yet?
           <Link href={`/register?redirect=${redirect || '/'}`}>

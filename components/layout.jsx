@@ -55,7 +55,7 @@ export default function Layout({ title, children }) {
               {status === 'loading' ? (
                 'loading'
               ) : session?.user ? (
-                <Menu as="div" className="relative inline-block">
+                <Menu as="div" className="relative z-20 inline-block">
                   <Menu.Button className="text-blue-500  hover:text-black mr-2">
                     <div className="flex items-center">
                       <img
