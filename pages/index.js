@@ -77,7 +77,7 @@ export default function Home({ products }) {
               {searchData === 'searching' ? (
                 <p>searching please wait....</p>
               ) : searchData.length == 0 ? (
-                <p>No result is found</p>
+                <p className="p-4 font-semibod">No Product is found</p>
               ) : (
                 searchData.map((product) => (
                   <div key={product.slug} className="flex mb-2  ">

@@ -35,3 +35,10 @@ a {
 .dropdown-link {
   @apply flex p-2 hover:bg-gray-200;
 }
+.input-style {
+  @apply bg-gray-50 border border-gray-300 text-gray-900
+                rounded-lg focus:bg-blue-100 focus:ring-amber-500 focus:border-amber-500 
+                block w-full p-2.5 dark:bg-gray-400 dark:border-gray-600
+                 dark:placeholder-gray-400 dark:text-white outline-none
+                  dark:focus:ring-amber-500 dark:focus:border-amber-500;
+}

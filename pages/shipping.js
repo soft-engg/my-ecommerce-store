@@ -69,7 +69,9 @@ export default function ShippingScreen() {
             submitHandler(e);
           }}
         >
-          <h1 className="text-lg text-blue-500 font-bold">Shipping address</h1>
+          <h1 className="text-lg text-blue-500 font-semibold">
+            Shipping address
+          </h1>
 
           <div className="mb-2">
             <label
@@ -84,7 +86,7 @@ export default function ShippingScreen() {
               value={fullName}
               autoFocus
               onChange={(e) => setFullName(e.target.value)}
-              className=" peer focus:bg-blue-100 bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-amber-500 focus:border-amber-500 block w-full p-2.5 dark:bg-gray-400 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-amber-500 dark:focus:border-amber-500"
+              className=" input-style"
               placeholder="Enter your Full Name"
               required
             />
@@ -108,7 +110,7 @@ export default function ShippingScreen() {
               id="address"
               value={address}
               onChange={(e) => setAddress(e.target.value)}
-              className=" peer focus:bg-blue-100 bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-amber-500 focus:border-amber-500 block w-full p-2.5 dark:bg-gray-400 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-amber-500 dark:focus:border-amber-500"
+              className=" input-style"
               placeholder="Enter our address"
               required
             />
@@ -131,7 +133,7 @@ export default function ShippingScreen() {
               id="city"
               value={city}
               onChange={(e) => setCity(e.target.value)}
-              className=" peer focus:bg-blue-100 bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-amber-500 focus:border-amber-500 block w-full p-2.5 dark:bg-gray-400 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-amber-500 dark:focus:border-amber-500"
+              className=" input-style"
               placeholder="Enter City Name"
               required
             />
@@ -154,7 +156,7 @@ export default function ShippingScreen() {
               value={postalCode}
               id="Postal code"
               onChange={(e) => setPostalCode(e.target.value)}
-              className=" peer focus:bg-blue-100 bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-amber-500 focus:border-amber-500 block w-full p-2.5 dark:bg-gray-400 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-amber-500 dark:focus:border-amber-500"
+              className=" input-style"
               placeholder="Enter your Area postal code"
               required
             />
@@ -177,7 +179,7 @@ export default function ShippingScreen() {
               id="country"
               value={country}
               onChange={(e) => setCountry(e.target.value)}
-              className=" peer focus:bg-blue-100 bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-amber-500 focus:border-amber-500 block w-full p-2.5 dark:bg-gray-400 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-amber-500 dark:focus:border-amber-500"
+              className=" input-style"
               placeholder="your area postal code"
               required
             />

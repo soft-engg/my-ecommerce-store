@@ -195,7 +195,7 @@ export default function ProductScreen(props) {
               </button>
             </div>
             {/* END */}
-            <li>{product.desription}</li>
+            <li>{product.description}</li>
           </ul>
         </div>
         {/* price card */}

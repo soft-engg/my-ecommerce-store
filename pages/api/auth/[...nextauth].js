@@ -11,12 +11,12 @@ export default NextAuth({
   callbacks: {
     async jwt({ token, user }) {
       if (user?._id) token._id = user._id;
-      if (user?.isAdmin) token._isAdmin = user._isAdmin;
+      if (user?.isAdmin) token._isAdmin = user.isAdmin;
       return token;
     },
     async session({ session, token }) {
       if (token?._id) session.user._id = token._id;
-      if (token?.isAdmin) session.user.isAdmin = token._isAdmin;
+      if (token?._isAdmin) session.user.isAdmin = token._isAdmin;
       return session;
     },
   },
@@ -37,7 +37,7 @@ export default NextAuth({
             name: user.name,
             email: user.email,
             image: 'f',
-            isAdmin: user.admin,
+            isAdmin: user.isAdmin,
           };
         }
         throw new Error('invalid email or password');
