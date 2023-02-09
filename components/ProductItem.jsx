@@ -58,7 +58,7 @@ export default function ProductItem({ product, toast }) {
     <div className="card mx-2 md:mx-0 ">
       <div>
         <img
-          src={product.image}
+          src={product.image[0]}
           alt={product.name}
           className="object-contain h-[180px] sm:h-[200px] cursor-pointer "
           onClick={goToProdctScreen}

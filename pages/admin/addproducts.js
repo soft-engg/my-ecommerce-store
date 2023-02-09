@@ -8,7 +8,9 @@ import axios from 'axios';
 import { getError } from '../../utils/getError';
 import storage from '../../utils/firebase';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+import { useRouter } from 'next/router';
 export default function ProductsScreen() {
+  const router = useRouter();
   const session = useSession();
   const { user } = session.data;
   const [name, setName] = useState('');
@@ -18,13 +20,12 @@ export default function ProductsScreen() {
   const [stock, setStock] = useState(1);
   const [price, setPrice] = useState(1);
   const [description, setDescription] = useState('');
-  const [imagesUrl, setImagesUrl] = useState([]);
+  let imagesUrl = [];
   const [colors, setColors] = useState([]);
   const [sizes, setSizes] = useState([]);
   const [images, setImages] = useState([]);
   const [colorField, setColorField] = useState('');
   const [sizeField, setSizeField] = useState('');
-
   const [imageError, setImageError] = useState(false);
   // selecting file
   const handleChange = (e) => {
@@ -116,10 +117,7 @@ export default function ProductsScreen() {
     );
     // getting the downloadUrl
     const downloadURL = await getDownloadURL(storageRef);
-    console.log('generated urls are ', downloadURL);
-    setImagesUrl((state) => {
-      return state.concat(downloadURL);
-    });
+    imagesUrl.push(downloadURL);
   }
 
   // submitHandler function
@@ -131,7 +129,7 @@ export default function ProductsScreen() {
     });
 
     if (noError) {
-      setImagesUrl([]);
+      imagesUrl = [];
       await toast.promise(
         Promise.all(
           images.map(async (image, index) => {
@@ -160,7 +158,10 @@ export default function ProductsScreen() {
           }),
           { pending: 'Saving Product please wait...' }
         );
-        if (status === 200) toast.success(data);
+        if (status === 200) {
+          toast.success(data);
+          router.push('/admin/products');
+        }
         if (status === 400) toast.error(data);
       }
     }
@@ -192,7 +193,7 @@ export default function ProductsScreen() {
           </h1>
           {/* name */}
           <label
-            for="name"
+            htmlFor="name"
             className="block mb-2  mt-2 font-medium text-blue-500 dark:text-gray-300"
           >
             Product Name
@@ -207,7 +208,7 @@ export default function ProductsScreen() {
           ></input>
           {/* Slug */}
           <label
-            for="Slug"
+            htmlFor="Slug"
             className="block mb-2  mt-2 font-medium text-blue-500 dark:text-gray-300"
           >
             Product Slug
@@ -222,7 +223,7 @@ export default function ProductsScreen() {
           ></input>
           {/* Brand */}
           <label
-            for="Brand"
+            htmlFor="Brand"
             className="block mb-2  mt-2 font-medium text-blue-500 dark:text-gray-300"
           >
             Product Brand
@@ -238,7 +239,7 @@ export default function ProductsScreen() {
 
           {/* category */}
           <label
-            for="Category"
+            htmlFor="Category"
             className="block mb-2  mt-2 font-medium text-blue-500 dark:text-gray-300"
           >
             Product Category
@@ -253,7 +254,7 @@ export default function ProductsScreen() {
           ></input>
           {/* Quantity of Stock */}
           <label
-            for="Stock"
+            htmlFor="Stock"
             className="block mb-2  mt-2 font-medium text-blue-500 dark:text-gray-300"
           >
             Quantity of Stock
@@ -270,7 +271,7 @@ export default function ProductsScreen() {
           ></input>
           {/* Price */}
           <label
-            for="Stock"
+            htmlFor="Stock"
             className="block mb-2  mt-2 font-medium text-blue-500 dark:text-gray-300"
           >
             Product Price
@@ -287,7 +288,7 @@ export default function ProductsScreen() {
           ></input>
           {/* Description */}
           <label
-            for="Description"
+            htmlFor="Description"
             className="block mb-2   mt-2 font-medium text-blue-500 dark:text-gray-300"
           >
             Product Description
@@ -302,7 +303,7 @@ export default function ProductsScreen() {
           ></textarea>
           {/* Image */}
           <label
-            for="Product Image"
+            htmlFor="Product Image"
             className="block mb-2  mt-2 font-medium text-blue-500 dark:text-gray-300"
           >
             Product Image(s)
@@ -344,7 +345,7 @@ export default function ProductsScreen() {
           </div>
           {/* Color */}
           <label
-            for="Product Color"
+            htmlFor="Product Color"
             className="block mb-2  mt-2 font-medium text-blue-500 dark:text-gray-300"
           >
             Product Color(s)
