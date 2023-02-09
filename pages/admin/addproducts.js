@@ -9,6 +9,7 @@ import { getError } from '../../utils/getError';
 import storage from '../../utils/firebase';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { useRouter } from 'next/router';
+import AdminLayout from '../../components/adminLayout';
 export default function ProductsScreen() {
   const router = useRouter();
   const session = useSession();
@@ -160,178 +161,235 @@ export default function ProductsScreen() {
         );
         if (status === 200) {
           toast.success(data);
-          router.push('/admin/products');
+          router.replace('/admin/products');
         }
-        if (status === 400) toast.error(data);
+        if (status === 400) toast.error(data + ' Retry');
       }
     }
   }
 
   if (user?.isAdmin)
     return (
-      <div className="w-full my-8   flex justify-center">
-        <ToastContainer
-          position="bottom-center"
-          autoClose={2000}
-          hideProgressBar={false}
-          newestOnTop={true}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="dark"
-        />
-        <form
-          className="mx-3 grow max-w-md mx-6 sm:mx-0 p-4 shadow-md shadow-amber-400 rounded-lg "
-          onSubmit={(e) => {
-            submitHandler(e);
-          }}
-        >
-          <h1 className="text-lg text-blue-500 font-semibold">
-            Add New Product
-          </h1>
-          {/* name */}
-          <label
-            htmlFor="name"
-            className="block mb-2  mt-2 font-medium text-blue-500 dark:text-gray-300"
-          >
-            Product Name
-          </label>
-          <input
-            name="name"
-            value={name}
-            onChange={(e) => {
-              setName(e.target.value);
+      <AdminLayout title="Add New Product">
+        <div className="w-full my-2 mx-4  flex justify-center">
+          <ToastContainer
+            position="bottom-center"
+            autoClose={2000}
+            hideProgressBar={false}
+            newestOnTop={true}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="dark"
+          />
+          <form
+            className="mx-3 grow max-w-md mx-6 sm:mx-0 p-4 shadow-md shadow-amber-400 rounded-lg "
+            onSubmit={(e) => {
+              submitHandler(e);
             }}
-            className="input-style"
-          ></input>
-          {/* Slug */}
-          <label
-            htmlFor="Slug"
-            className="block mb-2  mt-2 font-medium text-blue-500 dark:text-gray-300"
           >
-            Product Slug
-          </label>
-          <input
-            name="Slug"
-            value={slug}
-            onChange={(e) => {
-              setSlug(e.target.value);
-            }}
-            className="input-style"
-          ></input>
-          {/* Brand */}
-          <label
-            htmlFor="Brand"
-            className="block mb-2  mt-2 font-medium text-blue-500 dark:text-gray-300"
-          >
-            Product Brand
-          </label>
-          <input
-            name="Brand"
-            value={brand}
-            onChange={(e) => {
-              setBrand(e.target.value);
-            }}
-            className="input-style"
-          ></input>
+            <h1 className="text-lg text-blue-500 font-semibold">
+              Add New Product
+            </h1>
+            {/* name */}
+            <label
+              htmlFor="name"
+              className="block mb-2  mt-2 font-medium text-blue-500 dark:text-gray-300"
+            >
+              Product Name
+            </label>
+            <input
+              name="name"
+              value={name}
+              onChange={(e) => {
+                setName(e.target.value);
+              }}
+              className="input-style"
+            ></input>
+            {/* Slug */}
+            <label
+              htmlFor="Slug"
+              className="block mb-2  mt-2 font-medium text-blue-500 dark:text-gray-300"
+            >
+              Product Slug
+            </label>
+            <input
+              name="Slug"
+              value={slug}
+              onChange={(e) => {
+                setSlug(e.target.value);
+              }}
+              className="input-style"
+            ></input>
+            {/* Brand */}
+            <label
+              htmlFor="Brand"
+              className="block mb-2  mt-2 font-medium text-blue-500 dark:text-gray-300"
+            >
+              Product Brand
+            </label>
+            <input
+              name="Brand"
+              value={brand}
+              onChange={(e) => {
+                setBrand(e.target.value);
+              }}
+              className="input-style"
+            ></input>
 
-          {/* category */}
-          <label
-            htmlFor="Category"
-            className="block mb-2  mt-2 font-medium text-blue-500 dark:text-gray-300"
-          >
-            Product Category
-          </label>
-          <input
-            name="Category"
-            value={category}
-            onChange={(e) => {
-              setCategory(e.target.value);
-            }}
-            className="input-style"
-          ></input>
-          {/* Quantity of Stock */}
-          <label
-            htmlFor="Stock"
-            className="block mb-2  mt-2 font-medium text-blue-500 dark:text-gray-300"
-          >
-            Quantity of Stock
-          </label>
-          <input
-            name="Stock"
-            type="text"
-            pattern="[0-9]*"
-            value={stock}
-            onChange={(e) =>
-              setStock((v) => (e.target.validity.valid ? e.target.value : v))
-            }
-            className="input-style"
-          ></input>
-          {/* Price */}
-          <label
-            htmlFor="Stock"
-            className="block mb-2  mt-2 font-medium text-blue-500 dark:text-gray-300"
-          >
-            Product Price
-          </label>
-          <input
-            name="Stock"
-            type="text"
-            pattern="[0-9]*"
-            value={price}
-            onChange={(e) =>
-              setPrice((v) => (e.target.validity.valid ? e.target.value : v))
-            }
-            className="input-style"
-          ></input>
-          {/* Description */}
-          <label
-            htmlFor="Description"
-            className="block mb-2   mt-2 font-medium text-blue-500 dark:text-gray-300"
-          >
-            Product Description
-          </label>
-          <textarea
-            name="Description"
-            type="textarea"
-            value={description}
-            placeholder="Enter the Product description"
-            onChange={(e) => setDescription(e.target.value)}
-            className="input-style "
-          ></textarea>
-          {/* Image */}
-          <label
-            htmlFor="Product Image"
-            className="block mb-2  mt-2 font-medium text-blue-500 dark:text-gray-300"
-          >
-            Product Image(s)
-          </label>
-          <div className="">
-            <div className="flex">
-              <input type="file" onChange={handleChange} accept="image/*" />
+            {/* category */}
+            <label
+              htmlFor="Category"
+              className="block mb-2  mt-2 font-medium text-blue-500 dark:text-gray-300"
+            >
+              Product Category
+            </label>
+            <input
+              name="Category"
+              value={category}
+              onChange={(e) => {
+                setCategory(e.target.value);
+              }}
+              className="input-style"
+            ></input>
+            {/* Quantity of Stock */}
+            <label
+              htmlFor="Stock"
+              className="block mb-2  mt-2 font-medium text-blue-500 dark:text-gray-300"
+            >
+              Quantity of Stock
+            </label>
+            <input
+              name="Stock"
+              type="text"
+              pattern="[0-9]*"
+              value={stock}
+              onChange={(e) =>
+                setStock((v) => (e.target.validity.valid ? e.target.value : v))
+              }
+              className="input-style"
+            ></input>
+            {/* Price */}
+            <label
+              htmlFor="Stock"
+              className="block mb-2  mt-2 font-medium text-blue-500 dark:text-gray-300"
+            >
+              Product Price
+            </label>
+            <input
+              name="Stock"
+              type="text"
+              pattern="[0-9]*"
+              value={price}
+              onChange={(e) =>
+                setPrice((v) => (e.target.validity.valid ? e.target.value : v))
+              }
+              className="input-style"
+            ></input>
+            {/* Description */}
+            <label
+              htmlFor="Description"
+              className="block mb-2   mt-2 font-medium text-blue-500 dark:text-gray-300"
+            >
+              Product Description
+            </label>
+            <textarea
+              name="Description"
+              type="textarea"
+              value={description}
+              placeholder="Enter the Product description"
+              onChange={(e) => setDescription(e.target.value)}
+              className="input-style "
+            ></textarea>
+            {/* Image */}
+            <label
+              htmlFor="Product Image"
+              className="block mb-2  mt-2 font-medium text-blue-500 dark:text-gray-300"
+            >
+              Product Image(s)
+            </label>
+            <div className="">
+              <div className="flex">
+                <input type="file" onChange={handleChange} accept="image/*" />
+              </div>
+              <div className="flex">
+                {images.length === 0 ? (
+                  <p className="py-1 text-red-500">no images selected</p>
+                ) : (
+                  <div>
+                    <p> Selected Product Images are </p>
+                    <div className="flex  flex-wrap">
+                      {images.map((image, index) => (
+                        <div key={index} className="p-1">
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img
+                            className="w-16  h-16"
+                            key={index}
+                            src={URL.createObjectURL(image)}
+                            alt={image.name}
+                          ></img>
+                          <button
+                            onClick={() => removeSelectedImage(image)}
+                            type="button"
+                            className="text-sm text-center 
+                        bg-amber-200 w-full
+                         hover:bg-amber-300 acitive:bg-amber-400"
+                          >
+                            remove
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
-            <div className="flex">
-              {images.length === 0 ? (
-                <p className="py-1 text-red-500">no images selected</p>
+            {/* Color */}
+            <label
+              htmlFor="Product Color"
+              className="block mb-2  mt-2 font-medium text-blue-500 dark:text-gray-300"
+            >
+              Product Color(s)
+            </label>
+            <div>
+              <div className="flex">
+                <input
+                  name="Product Color"
+                  value={colorField}
+                  onChange={(e) => setColorField(e.target.value)}
+                  className="input-style"
+                  placeholder="enter text color and press Add Color"
+                ></input>
+                <button
+                  type="button"
+                  className="w-fit ml-2 primary-button  text-sm"
+                  onClick={(e) => {
+                    console.log(e.target.value);
+                    if (colorField !== '') {
+                      setColors((state) => [...state, colorField]);
+                      setColorField('');
+                    }
+                  }}
+                >
+                  Add Color
+                </button>
+              </div>
+              {colors.length === 0 ? (
+                <p className="py-1 text-red-500">no color selected</p>
               ) : (
                 <div>
-                  <p> Selected Product Images are </p>
+                  <p> Selected colors are </p>
                   <div className="flex  flex-wrap">
-                    {images.map((image, index) => (
+                    {colors.map((color, index) => (
                       <div key={index} className="p-1">
-                        <img
-                          className="w-16  h-16"
-                          key={index}
-                          src={URL.createObjectURL(image)}
-                          alt={image.name}
-                        ></img>
+                        <p>{color}</p>
                         <button
-                          onClick={() => removeSelectedImage(image)}
+                          onClick={() => removeSelectedColor(color)}
                           type="button"
                           className="text-sm text-center 
-                        bg-amber-200 w-full
+                        bg-amber-200 w-full px-1
                          hover:bg-amber-300 acitive:bg-amber-400"
                         >
                           remove
@@ -342,124 +400,70 @@ export default function ProductsScreen() {
                 </div>
               )}
             </div>
-          </div>
-          {/* Color */}
-          <label
-            htmlFor="Product Color"
-            className="block mb-2  mt-2 font-medium text-blue-500 dark:text-gray-300"
-          >
-            Product Color(s)
-          </label>
-          <div>
-            <div className="flex">
-              <input
-                name="Product Color"
-                value={colorField}
-                onChange={(e) => setColorField(e.target.value)}
-                className="input-style"
-                placeholder="enter text color and press Add Color"
-              ></input>
-              <button
-                type="button"
-                className="w-fit ml-2 primary-button  text-sm"
-                onClick={(e) => {
-                  console.log(e.target.value);
-                  if (colorField !== '') {
-                    setColors((state) => [...state, colorField]);
-                    setColorField('');
-                  }
-                }}
-              >
-                Add Color
-              </button>
-            </div>
-            {colors.length === 0 ? (
-              <p className="py-1 text-red-500">no color selected</p>
-            ) : (
-              <div>
-                <p> Selected colors are </p>
-                <div className="flex  flex-wrap">
-                  {colors.map((color, index) => (
-                    <div key={index} className="p-1">
-                      <p>{color}</p>
-                      <button
-                        onClick={() => removeSelectedColor(color)}
-                        type="button"
-                        className="text-sm text-center 
-                        bg-amber-200 w-full px-1
-                         hover:bg-amber-300 acitive:bg-amber-400"
-                      >
-                        remove
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
 
-          {/* Size */}
-          <label
-            htmlFor="Product Size"
-            className="block mb-2  mt-2 font-medium text-blue-500 dark:text-gray-300"
-          >
-            Product Size
-          </label>
-          <div>
-            <div className="flex">
-              <input
-                name="Product Size"
-                value={sizeField}
-                onChange={(e) => {
-                  setSizeField(e.target.value);
-                }}
-                placeholder="enter prodcuts sizes and press Add Size"
-                className="input-style"
-              ></input>
-              <button
-                type="button"
-                className="w-fit ml-2 primary-button  text-sm"
-                onClick={(e) => {
-                  console.log(e.target.value);
-                  if (sizeField !== '') {
-                    setSizes((state) => [...state, sizeField]);
-                    setSizeField('');
-                  }
-                }}
-              >
-                Add Size
-              </button>
-            </div>
-            {sizes.length === 0 ? (
-              <p className="py-1 text-red-500">no Size selected</p>
-            ) : (
-              <div>
-                <p className="mt-1"> Selected Sizes are </p>
-                <div className="flex  flex-wrap">
-                  {sizes.map((size, index) => (
-                    <div key={index} className="p-1">
-                      <p>{size}</p>
-                      <button
-                        onClick={() => removeSelectedSize(size)}
-                        type="button"
-                        className="text-sm text-center 
+            {/* Size */}
+            <label
+              htmlFor="Product Size"
+              className="block mb-2  mt-2 font-medium text-blue-500 dark:text-gray-300"
+            >
+              Product Size
+            </label>
+            <div>
+              <div className="flex">
+                <input
+                  name="Product Size"
+                  value={sizeField}
+                  onChange={(e) => {
+                    setSizeField(e.target.value);
+                  }}
+                  placeholder="enter prodcuts sizes and press Add Size"
+                  className="input-style"
+                ></input>
+                <button
+                  type="button"
+                  className="w-fit ml-2 primary-button  text-sm"
+                  onClick={(e) => {
+                    console.log(e.target.value);
+                    if (sizeField !== '') {
+                      setSizes((state) => [...state, sizeField]);
+                      setSizeField('');
+                    }
+                  }}
+                >
+                  Add Size
+                </button>
+              </div>
+              {sizes.length === 0 ? (
+                <p className="py-1 text-red-500">no Size selected</p>
+              ) : (
+                <div>
+                  <p className="mt-1"> Selected Sizes are </p>
+                  <div className="flex  flex-wrap">
+                    {sizes.map((size, index) => (
+                      <div key={index} className="p-1">
+                        <p>{size}</p>
+                        <button
+                          onClick={() => removeSelectedSize(size)}
+                          type="button"
+                          className="text-sm text-center 
                         bg-amber-200 w-full px-1
                          hover:bg-amber-300 acitive:bg-amber-400"
-                      >
-                        remove
-                      </button>
-                    </div>
-                  ))}
+                        >
+                          remove
+                        </button>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            )}
-          </div>
-          {/* Button */}
-          <button type="submit" className="primary-button mt-4">
-            Add Product
-          </button>
-        </form>
-      </div>
+              )}
+            </div>
+            {/* Button */}
+            <button type="submit" className="primary-button mt-4">
+              Add Product
+            </button>
+          </form>
+        </div>
+      </AdminLayout>
     );
   return (
     <Layout title="only Admin Page">
