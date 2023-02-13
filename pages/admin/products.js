@@ -84,42 +84,70 @@ export default function AllProducts({ products }) {
             <a className=" primary-button text-black"> Add new Product</a>
           </Link>
         </div>
-        {/* div for products table */}
-        <div>
-          {/* heading div */}
-          <div className="flex mt-3 bg-gray-100 p-1">
-            <p className="text-blue-500  font-bold w-1/6">Name</p>
-            <p className="text-blue-500  text-center font-bold w-1/6">Slug</p>
-            <p className="text-blue-500 text-center font-bold w-1/6">price</p>
 
-            <p className="text-blue-500 text-center font-bold w-1/6">Stock</p>
-            <p className="text-blue-500 text-center font-bold w-1/6">Color</p>
-            <p className="text-blue-500 text-center font-bold w-1/6">size</p>
-          </div>
+        <div className="  ">
           {products.map((product) => (
-            <div key={product.slug}>
-              <div className="flex">
-                <p className="mx-2   w-1/6">{product.name}</p>
-                <p className="mx-2 text-center  w-1/6">{product.slug}</p>
-                <p className="mx-2 text-center  w-1/6">{product.price}</p>
-                <p className="mx-2 text-center w-1/6">{product.countInStock}</p>
-                <div className="flex text-center items-center w-1/6 flex-col">
-                  {product.color.map((color, index) => (
-                    <p key={color}>
-                      {color} {index < product.color.length - 1 ? ' ,' : null}
-                    </p>
-                  ))}
+            <div key={product.slug} className="shadow-lg sm:px-4  py-3 mb-2">
+              <div className="grid mt-4 grid-cols-4 grid-flow-row gap-1">
+                <div className="text-center">
+                  <p className="text-blue-500 bg-gray-100 font-semibold ">
+                    Name
+                  </p>
+                  <p> {product.name}</p>
                 </div>
-                <div className="flex text-center items-center w-1/6 flex-col">
-                  {product.size.map((size, index) => (
-                    <p key={size}>
-                      {size}
-                      {index < product.size.length - 1 ? ' ,' : null}
-                    </p>
-                  ))}
+                <div className="text-center">
+                  <p className="text-blue-500 bg-gray-100 font-semibold ">
+                    Slug
+                  </p>
+                  {product.slug}
+                </div>
+                <div className="text-center">
+                  <p className="text-blue-500 bg-gray-100 font-semibold ">
+                    Price
+                  </p>
+                  {product.price}
+                </div>
+                <div className="text-center">
+                  <p className="text-blue-500 bg-gray-100 font-semibold text-center ">
+                    Stock
+                  </p>
+                  {product.countInStock}
+                </div>
+                {/* div for colors */}
+                <div>
+                  <p className="text-blue-500 bg-gray-100 font-semibold text-center ">
+                    Color
+                  </p>
+                  <div className="flex text-center justify-center flex-wrap">
+                    {product.color.map((color, index) => (
+                      <p key={color}>
+                        {color} {index < product.color.length - 1 ? ' ,' : null}
+                      </p>
+                    ))}
+                  </div>
+                </div>
+                {/* div for sizes */}
+                <div>
+                  <p className="text-blue-500 bg-gray-100 font-semibold text-center ">
+                    Size
+                  </p>
+                  <div className="flex text-center justify-center flex-wrap">
+                    {product.size.map((size, index) => (
+                      <div key={size} className="flex flex-wrap">
+                        {size} {index < product.size.length - 1 ? ' ,' : null}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div className="text-center col-span-2">
+                  <p className="text-blue-500 bg-gray-100 font-semibold ">
+                    Created At
+                  </p>
+                  <p> {product.createdAt.slice(0, 16)}</p>
                 </div>
               </div>
-              <div className="flex">
+              {/* div for buttons */}
+              <div className="flex mt-4 mx-2">
                 <button
                   onClick={() => deleteHandler(product)}
                   className="border-gray-400 border-2 
@@ -133,19 +161,20 @@ export default function AllProducts({ products }) {
                   ></img>{' '}
                   Delete
                 </button>
-
-                <button
-                  className="border-gray-400 border-2 
+                <Link href={`/admin/updateproduct/${product.slug}`}>
+                  <button
+                    className="border-gray-400 border-2 
                   flex items-center px-2 py-1 ml-6 rounded hover:bg-gray-200"
-                >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    alt=""
-                    src="/icons/update.png"
-                    className="h-5 mr-1"
-                  ></img>{' '}
-                  update
-                </button>
+                  >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      alt=""
+                      src="/icons/update.png"
+                      className="h-5 mr-1"
+                    ></img>{' '}
+                    update
+                  </button>
+                </Link>
               </div>
             </div>
           ))}

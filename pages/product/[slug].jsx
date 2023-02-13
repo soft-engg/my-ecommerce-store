@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 import Layout from '../../components/layout';
@@ -99,14 +98,15 @@ export default function ProductScreen(props) {
       </div>
       <div className="grid md:grid-cols-4 md:gap-3">
         <div className="md:col-span-2 ">
-          <Image
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
             src={product.image}
-            alt={product.image}
+            alt={product.name}
             width={500}
-            height={500}
+            height={400}
             layout="responsive"
             className="object-contain"
-          ></Image>
+          ></img>
         </div>
         {/* discription section */}
         <div className="flex justify-center md:block">
@@ -123,12 +123,8 @@ export default function ProductScreen(props) {
               <span className="font-semibold">Brand : </span> {product.brand}
             </li>
             <li>
-              <span className="font-semibold">Rating : </span> {product.rating}{' '}
-              of {product.numReviews}
-            </li>
-            <li>
+              <p className="font-semibold">Size(s)</p>
               <div className="flex">
-                <span className="font-semibold">Size(s) : </span>
                 {product.size.map((size) => (
                   <div key={size} className="ml-1">
                     <input
@@ -146,8 +142,8 @@ export default function ProductScreen(props) {
               </div>
             </li>
             <li>
+              <p className="font-semibold">Colors(s)</p>
               <div className="flex">
-                <span className="font-semibold">Colors(s)</span>
                 {product.color.map((color) => (
                   <div key={color} className="ml-1">
                     <input
