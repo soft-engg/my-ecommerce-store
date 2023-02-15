@@ -54,7 +54,7 @@ export default function Home({ products }) {
             placeholder="Search products"
             className="shadow-ld  relative px-1 placeholder:text-sm tex-sm h-8 w-56
              bg-blue-100 px-1
-           outline-none border-b-2 rounded shadow-lg border-gray-300 "
+           outline-none border-b-2 rounded-l shadow-lg border-gray-300 "
           />
           {/* div for showing search result */}
           {searchFlag ? (
@@ -114,12 +114,11 @@ export default function Home({ products }) {
           {/* button for search */}
           <button
             type="submit"
-            className="border-2 items-center px-2 h-8 flex mx-1 bg-amber-300
-             hover:bg-amber-400 active:bg-amber-500 rounded"
+            className=" items-center  h-8 flex px-2 bg-amber-400
+             hover:bg-amber-300 active:bg-amber-500 rounded-r"
           >
             {/*  eslint-disable-next-line @next/next/no-img-element */}
             <img src="/icons/search.png" alt="" className="h-5 w-5 mr-1 "></img>
-            <p>Search</p>
           </button>
         </form>
         {/* this is div for products */}

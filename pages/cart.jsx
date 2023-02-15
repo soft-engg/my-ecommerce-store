@@ -41,11 +41,13 @@ function Cart() {
         <div className="flex flex-col">
           <div className="default-link">
             <Link href="/">
-              <a>Back to products</a>
+              <a className="text-amber-400 hover:text-amber-300">
+                Back to products
+              </a>
             </Link>
           </div>
 
-          <h1 className="font-semibold text-black pb-2 mx-3 text-lg">
+          <h1 className="font-semibold text-amber-400  pb-2  text-xl">
             Shopping cart
           </h1>
         </div>
@@ -55,9 +57,9 @@ function Cart() {
          justify-center items-center sm:flex-row w-full"
         >
           {/* this is div for the item table*/}
-          <div className="flex flex-grow sm:w-3/4 flex-shrink-0 flex-col w-full">
+          <div className="flex mb-2 flex-grow border-gray-400 border-2 bg-gray-500 rounded sm:w-3/4 flex-shrink-0 flex-col w-full">
             <div
-              className="flex pb-2 font-semibold  border-b-2
+              className="flex pb-2 bg-black text-amber-400 font-semibold  border-b-2
              border-gray-300 "
             >
               <h2 className="w-4/12 text-center ">Item(s)</h2>
@@ -84,20 +86,23 @@ function Cart() {
           </div>
           {/* this is subtotal div */}
           <div
-            className="flex self-center sm:self-start justify-center
+            className="flex self-center bg-white rounded sm:self-start justify-center
            sm:w-1/4 mx-2  shadow-lg  max-h-fit items-center sm:ml-3"
           >
             <div
-              className="flex h-fit mb-2 flex-grow-0 w-80 flex-col w-full gap-4 
+              className="flex
+               h-fit mb-1 flex-grow-0 w-80 flex-col w-full gap-3 
             rounded border p-4"
             >
-              <div className="flex text-lg w-full">
-                Subtotal ( {quantity} ) :
-                <span className="tex-lg  pl-1 ">
-                  {' '}
-                  Rs <span className="font-bold">{subTotal}</span>{' '}
+              <div className="flex  w-full justify-between items-center">
+                <span className="font-bold">Subtotal ( {quantity} ) : </span>
+                <span className="text-lg  pl-1 ">
+                  Rs.<span className="font-bold">{subTotal} </span>{' '}
                 </span>
               </div>
+              <p className="text-sm font-semibold">
+                Free Home Delivery for products upto 2000!!!
+              </p>
               <button
                 onClick={checkoutHandler}
                 className="bg-amber-400 py-1 px-2 w-50

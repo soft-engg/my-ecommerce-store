@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import React from 'react';
+import React, { useState } from 'react';
 import AdminLayout from '../../components/adminLayout';
 import Product from '../../models/prodcut';
 import db from '../../utils/db';
@@ -12,6 +12,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 export default function AllProducts({ products }) {
+  const [search, setSearch] = useState('');
+  const [searchFlag, setSearchFlag] = useState(false);
+  const [searchData, setSearchData] = useState([]);
   const router = useRouter();
   let imageDeleteError = false;
   // function to delete one image
@@ -35,7 +38,7 @@ export default function AllProducts({ products }) {
         toast.success('record deleted successfuly!!');
         router.replace('/admin/products');
       }
-      if (status == 400) {
+      if (status == 300) {
         toast.error(data);
       }
     }
@@ -63,6 +66,18 @@ export default function AllProducts({ products }) {
     });
   };
 
+  async function searcHandler(e) {
+    e.preventDefault();
+    setSearchFlag(true);
+    if (search) {
+      setSearchData('searching');
+      const { data } = await axios.get(`/api/products/search/${search}`);
+      setSearchData(data);
+    } else {
+      toast.error('search box is empty');
+    }
+  }
+
   return (
     <AdminLayout title="AllProducts">
       <ToastContainer
@@ -78,44 +93,169 @@ export default function AllProducts({ products }) {
         theme="dark"
       />
       <div className="mx-4 sm:mx-0 ">
-        <div className="flex justify-between">
-          <h1 className="text-lg font-semibold text-blue-500 mb-2">Products</h1>
+        <div className="flex justify-between flex-wrap">
+          <form
+            onSubmit={(e) => searcHandler(e)}
+            className="flex justify-center relative sm:justify-start mb-2"
+          >
+            {/* button for showing input */}
+            <input
+              value={search}
+              onChange={(e) => {
+                if (searchFlag === true) setSearchFlag(false);
+                setSearch(e.target.value);
+              }}
+              placeholder="Search products"
+              className="shadow-ld  relative px-1 placeholder:text-sm tex-sm h-8 w-56
+             bg-gray-200 black/bg-black/80 mb-1     outline-none border-b-2 rounded shadow-lg border-gray-300 "
+            />
+            {/* div for showing search result */}
+            {searchFlag ? (
+              <div
+                className={`absolute m-2 top-8 pl-2 rounded-lg bg-gray-100 
+            w-96 border-1 border-gray-300 max-h-80 overflow-y-scroll  shadow-lg `}
+              >
+                {/* div for close button */}
+                <div className="flex justify-end">
+                  <button onClick={() => setSearchFlag(false)}>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src="/icons/cross.png"
+                      className="h-6 w-6 m-1 hover:scale-105"
+                      alt="close"
+                    ></img>
+                  </button>
+                </div>
+                {/* div for searched products */}
+                {searchData === 'searching' ? (
+                  <p>searching please wait....</p>
+                ) : searchData.length == 0 ? (
+                  <p className="p-4 font-semibold">No Product is found</p>
+                ) : (
+                  searchData.map((product) => (
+                    <div key={product.slug} className="flex  mb-2    ">
+                      <Link
+                        href={`product/${product.slug}`}
+                        className="cursor-pointer w-2/6"
+                      >
+                        <a>
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img
+                            src={product.image}
+                            alt={product.name}
+                            className="object-contain ml-2 h-16 w-16"
+                          ></img>
+                        </a>
+                      </Link>
+                      {/* div to show data*/}
+                      <div className=" ml-2  p-2 grid grid-flow-row grid-cols-3 gap-3">
+                        <Link
+                          href={`/product/${product.slug}`}
+                          className="cursor-pointer col-span-2 "
+                        >
+                          <a className="text-black font-semibold col-span-2 font-serif">
+                            {product.name}
+                          </a>
+                        </Link>
+                        <p>Rs.{product.price}</p>
+                        <p>stock {product.countInStock}</p>
+
+                        {/* div for button */}
+                        <div className="flex col-span-2">
+                          <button
+                            onClick={() => deleteHandler(product)}
+                            className="border-gray-300 
+                            flex items-center  rounded hover:bg-gray-200"
+                          >
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img
+                              alt=""
+                              src="/icons/delete.png"
+                              className="h-5 mr-1"
+                            ></img>{' '}
+                            Delete
+                          </button>
+                          <Link href={`/admin/updateproduct/${product.slug}`}>
+                            <button
+                              className="border-gray-300 
+                  flex items-center ml-2 rounded hover:bg-gray-200"
+                            >
+                              {/* eslint-disable-next-line @next/next/no-img-element */}
+                              <img
+                                alt=""
+                                src="/icons/update.png"
+                                className="h-5 mr-1"
+                              ></img>
+                              update
+                            </button>
+                          </Link>
+                        </div>
+                      </div>
+                    </div>
+                  ))
+                )}
+              </div>
+            ) : null}
+            {/* button for search */}
+            <button
+              type="submit"
+              className=" items-center px-2 h-8 flex mx-1 bg-amber-300
+             hover:bg-amber-400 transition-all active:bg-amber-500 rounded"
+            >
+              {/*  eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/icons/search.png"
+                alt=""
+                className="h-5 w-5 mr-1 "
+              ></img>
+              <p className="font-bold">Search</p>
+            </button>
+          </form>
           <Link href="/admin/addproducts">
-            <a className=" primary-button text-black"> Add new Product</a>
+            <a
+              className=" mb-2 bg-amber-300 my-auto px-2 py-1 rounded font-bold
+             hover:bg-amber-400 transition-all active:bg-amber-500 text-black  hover:text-black"
+            >
+              Add New Product
+            </a>
           </Link>
         </div>
-
+        {/* div to show items */}
         <div className="  ">
           {products.map((product) => (
-            <div key={product.slug} className="shadow-lg sm:px-4  py-3 mb-2">
-              <div className="grid mt-4 grid-cols-4 grid-flow-row gap-1">
+            <div
+              key={product.slug}
+              className="shadow-lg  font-bold
+               bg-gray-400 rounded-lg  py-3 mb-2"
+            >
+              <div className="grid mt-4 grid-cols-4 grid-flow-row">
                 <div className="text-center">
-                  <p className="text-blue-500 bg-gray-100 font-semibold ">
+                  <p className="text-amber-300 bg-black/80 mb-1 font-semibold ">
                     Name
                   </p>
                   <p> {product.name}</p>
                 </div>
                 <div className="text-center">
-                  <p className="text-blue-500 bg-gray-100 font-semibold ">
+                  <p className="text-amber-300 bg-black/80 mb-1 font-semibold ">
                     Slug
                   </p>
                   {product.slug}
                 </div>
                 <div className="text-center">
-                  <p className="text-blue-500 bg-gray-100 font-semibold ">
+                  <p className="text-amber-300 bg-black/80 mb-1 font-semibold ">
                     Price
                   </p>
                   {product.price}
                 </div>
                 <div className="text-center">
-                  <p className="text-blue-500 bg-gray-100 font-semibold text-center ">
+                  <p className="text-amber-300 bg-black/80 mb-1 font-semibold text-center ">
                     Stock
                   </p>
                   {product.countInStock}
                 </div>
                 {/* div for colors */}
                 <div>
-                  <p className="text-blue-500 bg-gray-100 font-semibold text-center ">
+                  <p className="text-amber-300 bg-black/80 mb-1 font-semibold text-center ">
                     Color
                   </p>
                   <div className="flex text-center justify-center flex-wrap">
@@ -128,7 +268,7 @@ export default function AllProducts({ products }) {
                 </div>
                 {/* div for sizes */}
                 <div>
-                  <p className="text-blue-500 bg-gray-100 font-semibold text-center ">
+                  <p className="text-amber-300 bg-black/80 mb-1 font-semibold text-center ">
                     Size
                   </p>
                   <div className="flex text-center justify-center flex-wrap">
@@ -140,7 +280,7 @@ export default function AllProducts({ products }) {
                   </div>
                 </div>
                 <div className="text-center col-span-2">
-                  <p className="text-blue-500 bg-gray-100 font-semibold ">
+                  <p className="text-amber-300 bg-black/80 mb-1 font-semibold ">
                     Created At
                   </p>
                   <p> {product.createdAt.slice(0, 16)}</p>
@@ -150,8 +290,8 @@ export default function AllProducts({ products }) {
               <div className="flex mt-4 mx-2">
                 <button
                   onClick={() => deleteHandler(product)}
-                  className="border-gray-400 border-2 
-                  flex items-center px-2 py-1 rounded hover:bg-gray-200"
+                  className="border-gray-300 border-2 bg-black text-white rounded-lg
+                  flex items-center px-3 py-2 hover:bg-gray-700 transition-all"
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
@@ -163,8 +303,8 @@ export default function AllProducts({ products }) {
                 </button>
                 <Link href={`/admin/updateproduct/${product.slug}`}>
                   <button
-                    className="border-gray-400 border-2 
-                  flex items-center px-2 py-1 ml-6 rounded hover:bg-gray-200"
+                    className="border-gray-300 border-2 bg-black text-white rounded-lg
+                    flex items-center px-3 py-2 hover:bg-gray-700 transition-all"
                   >
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img

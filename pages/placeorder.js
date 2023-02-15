@@ -86,7 +86,7 @@ export default function PlaceOrderScreen() {
         theme="dark"
       />
       <CheckoutWizard activeStep={3} className="mx-2" />
-      <h1 className="mx-5  mb-1 text-lg text-blue-500 font-semibold">
+      <h1 className="mx-5  mb-1 text-lg text-amber-400 font-semibold">
         Place Order
       </h1>
       {cartItems.length === 0 ? (
@@ -98,44 +98,52 @@ export default function PlaceOrderScreen() {
           <div className="w-full md:w-3/4">
             {/* div for shipping address */}
             <div
-              className="overflow-x-auto mx-2 md:col-span-3 flex flex-col p-4 
+              className="overflow-x-auto text-white bg-gray-600  mx-2 md:col-span-3 flex flex-col p-4 
            shadow-lg mb-2 rounded-lg"
             >
-              <h2 className="mb-2 text-lg text-blue-500 font-semibold ">
+              <h2 className="mb-2 text-lg text-amber-400 font-semibold ">
                 Shipping Address
               </h2>
-              <div className="mb-1 texl-sm">
+              <div className="mb-1 text-sm">
                 {ShippingAddress.fullName},{ShippingAddress.address},
-                {ShippingAddress.city},{ShippingAddress.postalCode},
-                {ShippingAddress.country}
+                {ShippingAddress.city},{ShippingAddress.country}
+                <br />
+                Phone# {ShippingAddress.phone}
               </div>
               <div className="font-medium">
-                <Link href="/shipping">Edit</Link>
+                <Link href="/shipping">
+                  <a className="text-amber-400 hover:text-white/90">Edit</a>
+                </Link>
               </div>
             </div>
             {/* div for payment Method */}
             <div
-              className="overflow-x-auto mx-2 md:col-span-3 flex flex-col p-4 
+              className="overflow-x-auto  bg-gray-600 mx-2 md:col-span-3 flex flex-col p-4 
            shadow-lg mb-2 rounded-lg"
             >
-              <h2 className="mb-2 text-lg text-blue-500 font-semibold ">
+              <h2 className="mb-2  text-lg text-amber-400 font-semibold ">
                 paymentMethod
               </h2>
-              <div className="mb-1 text-sm">{selectedPaymentMethod}</div>
+              <div className="mb-1 text-sm text-white">
+                {selectedPaymentMethod}
+              </div>
               <div className="font-medium">
-                <Link href="/payment">Edit</Link>
+                <Link href="/payment">
+                  <a className="text-amber-400 hover:text-white/90">Edit</a>
+                </Link>
               </div>
             </div>
             {/* div for items table */}
             <div
-              className="overflow-x-hidden mx-2 w-full  flex flex-col p-4 
-             shadow-lg  rounded-lg"
+              className="overflow-x-auto bg-gray-600  mx-2 md:col-span-3 flex flex-col p-4 
+               shadow-lg mb-2 rounded-lg"
             >
-              <h2 className="mb-2 text-lg text-blue-500 font-semibold">
+              <h2 className="mb-2 text-lg text-amber-400 font-semibold">
                 Order items
               </h2>
               <div
-                className="flex w-full pb-2 mb-1 text-sm font-semibold  border-b-2
+                className="flex w-full bg-black text-white pb-1 mb-1 
+                text-[14] font-semibold  border-b-2
              border-gray-300 "
               >
                 <div className=" px-1  w-5/12 ">
@@ -154,19 +162,14 @@ export default function PlaceOrderScreen() {
               {cartItems.map((item) => (
                 <div
                   key={item.name + item.size + item.color}
-                  className="flex w-full border-b pb-2 text-sm  "
+                  className="flex w-full border-b pb-2 text-[14px] text-white "
                 >
                   <div className=" flex w-5/12  flex-wrap">
                     <Link href={`/product/${item.slug}`}>
-                      <img
-                        src={item.image}
-                        alt={item.name}
-                        className="h-12 w-12 object-contain cursor-pointer 
-                        ease-in-out duration-300 hover:scale-110"
-                      />
-                    </Link>
-                    <Link href={`/product/${item.slug}`}>
-                      <div className="ml-2 text-center cursor-pointer font-semibold text-blue-600 hover:text-gray-700">
+                      <div
+                        className="ml-2 text-center cursor-pointer 
+                      font-bold text-amber-400 hover:text-white"
+                      >
                         {item.name} {item.color} {item.size}
                       </div>
                     </Link>
@@ -186,13 +189,15 @@ export default function PlaceOrderScreen() {
               ))}
 
               <div className="font-medium font-bold mt-2">
-                <Link href="/cart">Edit</Link>
+                <Link href="/cart">
+                  <a className="text-amber-400 hover:text-white/90">Edit</a>
+                </Link>
               </div>
             </div>
           </div>
           {/* div for order summary */}
-          <div className=" md:w-1/4   mx-2 px-3 py-2 rounded-lg border-2 h-fit ">
-            <h2 className="text-lg font-bold text-blue-500">Order Summary</h2>
+          <div className=" md:w-1/4 bg-white  mx-2 px-3 py-2 rounded-lg border-2 h-fit ">
+            <h2 className="text-lg font-bold text-amber-400">Order Summary</h2>
             <div className="flex justify-between">
               <p className="">Subtotal :</p>
               <p>{subtotalPrice}</p>
@@ -203,11 +208,11 @@ export default function PlaceOrderScreen() {
             </div>
             <div className="flex justify-between border-b-2 mb-2 ">
               <p className="">total :</p>
-              <p>{totalPrice}</p>
+              <p>Rs. {totalPrice}</p>
             </div>
             <div className="flex justify-center">
               <button
-                className="primary-button"
+                className="primary-button hover:bg-amber-300 transition-all"
                 disabled={loading}
                 onClick={placeOrderHanldler}
               >

@@ -13,8 +13,9 @@ const handler = async (req, res) => {
     ...req.body,
     user: user._id,
   });
-  db.disconnect();
+
   const order = await newOrder.save();
   res.status(201).send(order);
+  await db.disconnect();
 };
 export default handler;

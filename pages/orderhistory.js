@@ -27,47 +27,57 @@ export default function OrderHistoryScreen() {
 
   return (
     <Layout title="Order History">
-      <h1 className="mx-5  mb-2 text-lg text-blue-500 font-semibold">
+      <h1 className="mx-5  mb-2 text-lg text-amber-400 font-bold">
         Order History
       </h1>
       <div className="mx-5">
         {loading ? (
-          <p>please wait loading......</p>
+          <p className="text-white">please wait loading......</p>
         ) : data.length === 0 ? (
           <div>
             <p className="text-red-400">No Order History Available</p>
             <Link href="/">
-              <a>Go to Shopping</a>
+              <a className="text-amber-400">Go to Shopping</a>
             </Link>
           </div>
         ) : (
-          <div className="text-sm">
-            <div className="flex mb-2 w-full font-semibold p-1 rounded ">
-              <p className="w-2/12 ">Items</p>
-              <p className="w-3/12 text-center">Date</p>
-              <p className="w-3/12 text-center">Shipped</p>
-              <p className="w-3/12 text-center">Total</p>
-              <p className="w-1/12 text-center"></p>
+          <div className=" bg-gray-500 min-h-[70vh] rounded ">
+            <div className="flex mb-1 w-full font-semibold p-1">
+              <p className="w-2/12 text-amber-400 font-bold text-center ">
+                Items
+              </p>
+              <p className="w-3/12 text-center text-amber-400 font-bold">
+                Date
+              </p>
+              <p className="w-2/12 text-center text-amber-400 font-bold">
+                Shipped
+              </p>
+              <p className="w-3/12 text-center text-amber-400 font-bold">
+                Total
+              </p>
+              <p className="w-1/12 text-center text-amber-400 font-bold"></p>
             </div>
             {data.map((order) => (
               <div
                 key={order._id}
-                className="flex mb-2 w-full bg-gray-100 p-1 rounded"
+                className="flex flex-wrap mb-2 text-[14px] 
+                font-bold  w-full bg-gray-100 p-1
+                 "
               >
-                <p className="w-2/12">{order.orderItems.length}</p>
+                <p className="w-2/12 text-center">{order.orderItems.length}</p>
                 <p className="w-3/12  text-center">
                   {order.createdAt.substr(0, 10)}
                 </p>
 
                 {order.delivered ? (
-                  <p className="text-blue-500 w-3/12  text-center">Yes</p>
+                  <p className="text-blue-500 w-2/12  text-center">Yes</p>
                 ) : (
-                  <p className="text-red-500 w-3/12  text-center">No</p>
+                  <p className="text-red-500 w-2/12  text-center">No</p>
                 )}
                 <p className="w-3/12 text-center">Rs.{order.totalPrice}</p>
 
                 <Link href={`order/${order._id} `}>
-                  <a className="w-1/12  text-center pl-1">view</a>
+                  <a className="w-1/12  text-center ">view</a>
                 </Link>
               </div>
             ))}

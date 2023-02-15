@@ -16,15 +16,34 @@ export default function AdminLayout({ title, children }) {
           <meta name="description" content="Ecommerce-website" />
           <link rel="icon" href="/favicon.ico" />
         </Head>
-        <div className="flex flex-col min-h-screen justify-between">
+        <div className="flex flex-col min-h-screen justify-between bg-black">
           <header>
-            <nav className="flex h-12 justify-between shadow-md items-center px-4">
-              <h1 className="text-lg text-blue-500 font-bold">Admin Panel</h1>
+            <nav
+              className="flex h-10 justify-between bg-amber-400
+             shadow-md items-center px-6"
+            >
+              <div className="flex">
+                <h1 className=" text-black font-extrabold">Admin Panel</h1>
+              </div>
+              <div className="flex">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/icons/user.png"
+                  alt="Admin"
+                  className="h-7 w-7 mx-2"
+                ></img>
+                <p
+                  className=" text-black font-sarif
+               font-extrabold flex items-center"
+                >
+                  {user.name.toUpperCase()}
+                </p>
+              </div>
             </nav>
           </header>
           <main className="container m-auto mt-4  ">{children}</main>
           <footer className="flex justify-center items-center h-10 shadow-inner">
-            <p className="text-sm">
+            <p className="text-sm text-white">
               copyright Ⓒ designed and developed by Shahbaz Ali
             </p>
           </footer>

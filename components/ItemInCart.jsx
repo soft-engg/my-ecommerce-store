@@ -64,17 +64,10 @@ export default function ItemInCart({ item, toast }) {
   }
 
   return (
-    <div className="flex justify-between py-2 w-full md:mr-2  ">
+    <div className="flex justify-between py-2 text-white w-full md:mr-2  ">
       <div className="w-4/12 flex flex-wrap">
         <Link href={`/product/${item.slug}`}>
-          <img
-            src={item.image}
-            alt={item.name}
-            className="h-14 w-14 object-contain cursor-pointer ease-in-out duration-300 hover:scale-125"
-          />
-        </Link>
-        <Link href={`/product/${item.slug}`}>
-          <a className="ml-2 text-center cursor-pointer font-bold text-blue-600 hover:text-gray-700">
+          <a className="ml-2 text-amber-400 text-center cursor-pointer font-bold text-blue-600 hover:text-amber-400">
             {item.name} {item.color} {item.size}
           </a>
         </Link>
@@ -83,31 +76,31 @@ export default function ItemInCart({ item, toast }) {
         <div
           onClick={decreaseProduct}
           className=" grow-0  
-           border shadow-lg width-1/4"
+            shadow-lg width-1/4"
         >
           <button
             className="flex justify-center  font-bold text-center
-           md:text-2xl border-gray-400 sm:rounded-lg leading-none 
-           border-2 items-center  border-gray-400 
-           rounded leading-none  shadow text-gray-700 hover:scale-110 
+           md:text-2xl border-amber-400 sm:rounded-lg leading-none 
+           border-2 items-center  border-amber-400 
+           rounded leading-none  shadow text-amber-400 hover:scale-110 
            active:scale-125  w-4 h-4 md:w-6 md:h-6 "
           >
             -
           </button>
         </div>
-        <div className="w-2/4 flex justify-center  text-lg ">
+        <div className="w-2/4 flex justify-center text-amber-400  font-bold text-lg ">
           {item.quantity}
         </div>
         <div
           onClick={increaseProduct}
           className="bg-transparent grow-0  
-           border shadow-lg width-1/4"
+            shadow-lg width-1/4"
         >
           <button
             className="flex justify-center font-bold text-center
-           md:text-2xl border-gray-400 rounded sm:rounded-lg leading-none 
-           border-2 items-center md:text-2xl border-gray-400 
-            leading-none  shadow text-gray-700 hover:scale-110 
+           md:text-2xl border-amber-400 rounded sm:rounded-lg leading-none 
+           border-2 items-center md:text-2xl border-amber-400 
+            leading-none  shadow text-amber-400 hover:scale-110 
            active:scale-125  w-4 h-4 md:w-6 md:h-6 "
           >
             +
@@ -120,7 +113,7 @@ export default function ItemInCart({ item, toast }) {
         <img
           src="/icons/bin.png"
           alt=""
-          className="h-5 w-5 hover:scale-105 active:scale-110 cursor-pointer"
+          className="h-9 w-9 hover:scale-110 active:scale-110 cursor-pointer"
           onClick={() => removeFromCart()}
         />
       </div>

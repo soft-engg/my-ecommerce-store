@@ -93,9 +93,16 @@ export default function ProductScreen(props) {
         pauseOnHover
         theme="dark"
       />
-      <div className="default-link">
-        <Link href="/">Back to products</Link>
-      </div>
+
+      <Link href="/">
+        <a
+          className="text-amber-400 
+          font-semibold hover:text-white mb-1 transition-all"
+        >
+          Back to Products
+        </a>
+      </Link>
+
       <div className="grid md:grid-cols-4 md:gap-3">
         <div className="md:col-span-2 ">
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -103,7 +110,7 @@ export default function ProductScreen(props) {
             src={product.image}
             alt={product.name}
             width={500}
-            height={400}
+            height={500}
             layout="responsive"
             className="object-contain"
           ></img>
@@ -112,25 +119,29 @@ export default function ProductScreen(props) {
         <div className="flex justify-center md:block">
           <ul>
             <li>
-              <h1 className="text-2xl  text-blue-700">{product.name}</h1>
+              <h1 className="text-2xl mb-2 text-amber-400 font-bold">
+                {product.name}
+              </h1>
             </li>
-            <li>
+            <li className="flex">
               {' '}
-              <span className="font-semibold">Category : </span>
-              {product.category}
+              <span className="font-semibold text-amber-400">Category :</span>
+              <p className="text-white mx-2"> {product.category}</p>
+            </li>
+            <li className="flex">
+              {' '}
+              <span className="font-semibold text-amber-400">Brand :</span>
+              <p className="text-white mx-2"> {product.brand}</p>
             </li>
             <li>
-              <span className="font-semibold">Brand : </span> {product.brand}
-            </li>
-            <li>
-              <p className="font-semibold">Size(s)</p>
+              <p className="font-semibold text-amber-400">Size(s)</p>
               <div className="flex">
                 {product.size.map((size) => (
-                  <div key={size} className="ml-1">
+                  <div key={size} className="ml-1 text-white">
                     <input
                       type="radio"
                       id={size}
-                      className="p-2 outline-none focus:ring-0 cursor-pointer"
+                      className="p-2 accent-amber-400 outline-none focus:ring-0 cursor-pointer"
                       checked={givenSize === size}
                       onChange={() => setGivenSize(size)}
                     />
@@ -142,14 +153,14 @@ export default function ProductScreen(props) {
               </div>
             </li>
             <li>
-              <p className="font-semibold">Colors(s)</p>
+              <p className="font-semibold text-amber-400">Colors(s)</p>
               <div className="flex">
                 {product.color.map((color) => (
-                  <div key={color} className="ml-1">
+                  <div key={color} className="ml-1 text-white">
                     <input
                       type="radio"
                       id={color}
-                      className="p-2 outline-none focus:ring-0 cursor-pointer"
+                      className="p-2 accent-amber-400 outline-none focus:ring-0 cursor-pointer"
                       checked={givenColor === color}
                       onChange={() => setGivenColor(color)}
                     />
@@ -161,8 +172,8 @@ export default function ProductScreen(props) {
               </div>
             </li>
             {/* start */}
-            <span className="font-semibold">Quantity :</span>
-            <div className=" p-1 flex justify-between items-start w-2/5 ">
+            <span className="font-semibold text-amber-400">Quantity :</span>
+            <div className=" text-amber-400 p-1 flex justify-between items-start w-2/5 ">
               <button
                 onClick={() => {
                   setQuantity((quantity) => {
@@ -170,11 +181,11 @@ export default function ProductScreen(props) {
                     return (quantity = 1);
                   });
                 }}
-                className="bg-transparent flex justify-center items-center font-bold text-center border-2
-           md:text-2xl border-gray-400 rounded-lg leading-none 
-           border w-6 h-6  shadow text-gray-700 hover:scale-110 active:scale-125"
+                className="bg-transparent text-amber-400 flex justify-center items-center font-bold text-center border-2
+           md:text-2xl border-amber-400 rounded-lg leading-none 
+           border w-6 h-6  shadow  hover:scale-110 active:scale-125"
               >
-                <p>-</p>
+                <p className="text-amber-400">-</p>
               </button>
               <div className="mx-2 p-0 flex items-center  text-xl">
                 {givenQuantity}
@@ -184,8 +195,8 @@ export default function ProductScreen(props) {
                   setQuantity((quantity) => quantity + 1);
                 }}
                 className="bg-transparent flex justify-center items-center font-bold text-center border-2
-          md:text-2xl border-gray-400 rounded-lg leading-none 
-          border w-6 h-6  shadow text-gray-700 hover:scale-110 active:scale-125"
+          md:text-2xl border-amber-400 rounded-lg leading-none 
+          border w-6 h-6  shadow text-amber-400 hover:scale-110 active:scale-125"
               >
                 +
               </button>
@@ -195,20 +206,23 @@ export default function ProductScreen(props) {
           </ul>
         </div>
         {/* price card */}
-        <div className="flex justify-center mt-2 sm:justify-center md:mt-0 md:block">
-          <div className=" border rounded-md shadow p-4 w-1/2 md:w-auto">
+        <div
+          className="flex justify-center mt-2 sm:justify-center
+         md:mt-0 md:block"
+        >
+          <div className=" border bg-white rounded-md shadow p-4 w-1/2 md:w-auto">
             <div className="mb-2 flex justify-evenly md:justify-between">
-              <p>Price</p>
+              <p className="font-bold">Price :</p>
               <p className="font-bold">Rs. {product.price}</p>
             </div>
 
             <div className="mb-2 flex justify-evenly md:justify-between">
-              <div>Status</div>
+              <h2 className="font-bold">Status :</h2>
               <div>{product.countInStock > 0 ? 'In Stock' : 'Unavailable'}</div>
             </div>
             <div className="flex  justify-center">
               <button
-                className="primary-button  md:w-full "
+                className="primary-button hover:bg-amber-300 transition-all  md:w-full "
                 onClick={addToCartHandler}
               >
                 Add to Cart

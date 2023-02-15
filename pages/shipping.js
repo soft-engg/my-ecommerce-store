@@ -11,7 +11,7 @@ export default function ShippingScreen() {
   const dispatch = useDispatch();
   const [address, setAddress] = useState('');
   const [fullName, setFullName] = useState('');
-  const [postalCode, setPostalCode] = useState('');
+  const [phone, setphone] = useState('');
   const [city, setCity] = useState('');
   const [country, setCountry] = useState('');
   const router = useRouter();
@@ -23,22 +23,20 @@ export default function ShippingScreen() {
       setFullName(cart.ShippingAddress.fullName);
       setCity(cart.ShippingAddress.city);
       setCountry(cart.ShippingAddress.country);
-      setPostalCode(cart.ShippingAddress.postalCode);
+      setphone(cart.ShippingAddress.postalCode);
     }
   }, [cart.ShippingAddress, router]);
 
   // handling the submit functions
   function submitHandler(e) {
     e.preventDefault();
-    dispatch(
-      SaveShippingAddress({ fullName, address, postalCode, city, country })
-    );
+    dispatch(SaveShippingAddress({ fullName, address, phone, city, country }));
 
     Cookies.set(
       'cart',
       JSON.stringify({
         ...cart,
-        ShippingAddress: { fullName, address, postalCode, city, country },
+        ShippingAddress: { fullName, address, phone, city, country },
       })
     );
     router.push('/payment').finally(() => {
@@ -64,19 +62,19 @@ export default function ShippingScreen() {
       <CheckoutWizard activeStep="1" />
       <div className="w-full  flex justify-center">
         <form
-          className="mx-3 grow max-w-md p-4 shadow-md shadow-amber-400 rounded-lg "
+          className="mx-3 bg-gray-600 grow max-w-md p-4 shadow-md shadow-amber-400 rounded-lg "
           onSubmit={(e) => {
             submitHandler(e);
           }}
         >
-          <h1 className="text-lg text-blue-500 font-semibold">
+          <h1 className="text-lg text-amber-400 font-semibold">
             Shipping address
           </h1>
 
           <div className="mb-2">
             <label
               htmlFor="Full Name"
-              className="block mb-2  font-medium text-blue-500 dark:text-gray-300"
+              className="block mb-2  font-medium text-amber-400 dark:text-gray-300"
             >
               Your Full Name
             </label>
@@ -91,7 +89,7 @@ export default function ShippingScreen() {
               required
             />
             {fullName === '' ? (
-              <p className="text-red-600 text-md peer-valid:hidden peer-invalid:visible">
+              <p className="text-red-500 text-md peer-valid:hidden peer-invalid:visible">
                 please your Full Name !!!
               </p>
             ) : null}
@@ -101,7 +99,7 @@ export default function ShippingScreen() {
           <div className="mb-2">
             <label
               htmlFor="address"
-              className="block mb-2  font-medium text-blue-500 dark:text-gray-300"
+              className="block mb-2  font-medium text-amber-400 dark:text-gray-300"
             >
               Your address
             </label>
@@ -115,7 +113,7 @@ export default function ShippingScreen() {
               required
             />
             {address === '' ? (
-              <p className="text-red-600 text-md peer-valid:hidden peer-invalid:visible">
+              <p className="text-red-500 text-md peer-valid:hidden peer-invalid:visible">
                 please enter shipping address !!!
               </p>
             ) : null}
@@ -124,7 +122,7 @@ export default function ShippingScreen() {
           <div className="mb-2">
             <label
               htmlFor="city"
-              className="block mb-2  font-medium text-blue-500 dark:text-gray-300"
+              className="block mb-2  font-medium text-amber-400 dark:text-gray-300"
             >
               Your city
             </label>
@@ -138,31 +136,31 @@ export default function ShippingScreen() {
               required
             />
             {city === '' ? (
-              <p className="text-red-600 text-md peer-valid:hidden peer-invalid:visible">
+              <p className="text-red-500 text-md peer-valid:hidden peer-invalid:visible">
                 please enter your city !!!
               </p>
             ) : null}
           </div>
-          {/* Postal code */}
+          {/* Phone number */}
           <div className="mb-2">
             <label
-              htmlFor="Postal code"
-              className="block mb-2  font-medium text-blue-500 dark:text-gray-300"
+              htmlFor="Phone number"
+              className="block mb-2  font-medium text-amber-400 dark:text-gray-300"
             >
-              Your Postal code
+              Your Phone number
             </label>
             <input
               type="text"
-              value={postalCode}
-              id="Postal code"
-              onChange={(e) => setPostalCode(e.target.value)}
+              value={phone}
+              id="Phone Number"
+              onChange={(e) => setphone(e.target.value)}
               className=" input-style"
-              placeholder="Enter your Area postal code"
+              placeholder="Enter your Area Phone Number"
               required
             />
-            {postalCode === '' ? (
-              <p className="text-red-600 text-md peer-valid:hidden peer-invalid:visible">
-                please enter Postal code!!!
+            {phone === '' ? (
+              <p className="text-red-500 text-md peer-valid:hidden peer-invalid:visible">
+                please enter Phone number!!!
               </p>
             ) : null}
           </div>
@@ -170,7 +168,7 @@ export default function ShippingScreen() {
           <div className="mb-2">
             <label
               htmlFor="country"
-              className="block mb-2  font-medium text-blue-500 dark:text-gray-300"
+              className="block mb-2  font-medium text-amber-400 dark:text-gray-300"
             >
               Your country
             </label>
@@ -180,11 +178,11 @@ export default function ShippingScreen() {
               value={country}
               onChange={(e) => setCountry(e.target.value)}
               className=" input-style"
-              placeholder="your area postal code"
+              placeholder="your countr name"
               required
             />
             {country === '' ? (
-              <p className="text-red-600 text-md peer-valid:hidden peer-invalid:visible">
+              <p className="text-red-500 text-md peer-valid:hidden peer-invalid:visible">
                 please enter your country!!!
               </p>
             ) : null}

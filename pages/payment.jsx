@@ -84,23 +84,25 @@ export default function PaymentScreen() {
       <CheckoutWizard activeStep="2" />
       <div className="flex justify-center">
         <form
-          className="mx-3 max-w-xs grow shadow-md shadow-amber-400 p-4 rounded-lg"
+          className="mx-3 max-w-xs grow bg-gray-600 shadow-md shadow-amber-400 p-4 rounded-lg"
           onSubmit={(e) => {
             submitHandler(e);
           }}
         >
-          <h1 className="mb-4 text-xl text-blue-600">Payment Method</h1>
+          <h1 className="mb-4 text-xl font-semibold text-amber-400">
+            Payment Method
+          </h1>
 
-          {['CashOnDelivery', 'CreditCard'].map((payment) => (
+          {['CashOnDelivery'].map((payment) => (
             <div key={payment} className="mb-4">
               <input
                 type="radio"
                 id={payment}
-                className="p-2 outline-none focus:ring-0"
+                className="p-2 outline-none focus:ring-0 accent-amber-400"
                 checked={selectedPaymentMethod === payment}
                 onChange={() => setSelectedPaymentMethod(payment)}
               />
-              <label htmlFor={payment} className="p-2">
+              <label htmlFor={payment} className="p-2 text-white">
                 {payment}
               </label>
             </div>

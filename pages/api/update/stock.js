@@ -2,12 +2,14 @@ import Product from '../../../models/prodcut';
 import db from '../../../utils/db';
 
 const handler = async (req, res) => {
+  console.log(req.body);
   await db.connect();
-  await req.body.orderItems.forEach(async (item) => {
-    const product = await Product.findOne({ _id: item._id });
+  const orderItems = req.body.orderItems;
+  for (let i = 0; i < orderItems.length; i++) {
+    const product = await Product.findOne({ _id: orderItems[i]._id });
+    console.log('product', product);
     let newQuantity;
-    if (req.body.order) newQuantity = product.countInStock - item.quantity;
-    else newQuantity = product.countInStock + item.quantity;
+    newQuantity = product.countInStock - orderItems[i].quantity;
     await Product.updateOne(
       { id: Product._id },
       { $set: { countInStock: newQuantity } },
@@ -17,7 +19,7 @@ const handler = async (req, res) => {
         } else res.status(200).send('sent');
       }
     ).clone();
-  });
+  }
 
   await db.disconnect();
 };

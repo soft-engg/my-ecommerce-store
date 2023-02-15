@@ -185,18 +185,19 @@ export default function ProductsScreen() {
             theme="dark"
           />
           <form
-            className="mx-3 grow max-w-md mx-6 sm:mx-0 p-4 shadow-md shadow-amber-400 rounded-lg "
+            className="mx-3 grow max-w-md
+             bg-gray-600 mx-6 sm:mx-0 p-4 shadow-md shadow-amber-400 rounded-lg "
             onSubmit={(e) => {
               submitHandler(e);
             }}
           >
-            <h1 className="text-lg text-blue-500 font-semibold">
+            <h1 className="text-lg text-amber-400 font-bold">
               Add New Product
             </h1>
             {/* name */}
             <label
               htmlFor="name"
-              className="block mb-2  mt-2 font-medium text-blue-500 dark:text-gray-300"
+              className="block mb-2  mt-2 font-bold text-amber-400 dark:-gray-300"
             >
               Product Name
             </label>
@@ -211,7 +212,7 @@ export default function ProductsScreen() {
             {/* Slug */}
             <label
               htmlFor="Slug"
-              className="block mb-2  mt-2 font-medium text-blue-500 dark:text-gray-300"
+              className="block mb-2  mt-2 font-bold text-amber-400 dark:-gray-300"
             >
               Product Slug
             </label>
@@ -226,7 +227,7 @@ export default function ProductsScreen() {
             {/* Brand */}
             <label
               htmlFor="Brand"
-              className="block mb-2  mt-2 font-medium text-blue-500 dark:text-gray-300"
+              className="block mb-2  mt-2 font-bold text-amber-400 dark:-gray-300"
             >
               Product Brand
             </label>
@@ -242,7 +243,7 @@ export default function ProductsScreen() {
             {/* category */}
             <label
               htmlFor="Category"
-              className="block mb-2  mt-2 font-medium text-blue-500 dark:text-gray-300"
+              className="block mb-2  mt-2 font-bold text-amber-400 dark:-gray-300"
             >
               Product Category
             </label>
@@ -257,7 +258,7 @@ export default function ProductsScreen() {
             {/* Quantity of Stock */}
             <label
               htmlFor="Stock"
-              className="block mb-2  mt-2 font-medium text-blue-500 dark:text-gray-300"
+              className="block mb-2  mt-2 font-bold text-amber-400 dark:-gray-300"
             >
               Quantity of Stock
             </label>
@@ -274,7 +275,7 @@ export default function ProductsScreen() {
             {/* Price */}
             <label
               htmlFor="Stock"
-              className="block mb-2  mt-2 font-medium text-blue-500 dark:text-gray-300"
+              className="block mb-2  mt-2 font-bold text-amber-400 dark:-gray-300"
             >
               Product Price
             </label>
@@ -291,7 +292,7 @@ export default function ProductsScreen() {
             {/* Description */}
             <label
               htmlFor="Description"
-              className="block mb-2   mt-2 font-medium text-blue-500 dark:text-gray-300"
+              className="block mb-2   mt-2 font-bold text-amber-400 dark:-gray-300"
             >
               Product Description
             </label>
@@ -306,7 +307,7 @@ export default function ProductsScreen() {
             {/* Image */}
             <label
               htmlFor="Product Image"
-              className="block mb-2  mt-2 font-medium text-blue-500 dark:text-gray-300"
+              className="block mb-2  mt-2 font-bold text-amber-400 dark:-gray-300"
             >
               Product Image(s)
             </label>
@@ -319,7 +320,7 @@ export default function ProductsScreen() {
                   <p className="py-1 text-red-500">no images selected</p>
                 ) : (
                   <div>
-                    <p> Selected Product Images are </p>
+                    <p className="text-white "> Selected Product Images are </p>
                     <div className="flex  flex-wrap">
                       {images.map((image, index) => (
                         <div key={index} className="p-1">
@@ -334,8 +335,8 @@ export default function ProductsScreen() {
                             onClick={() => removeSelectedImage(image)}
                             type="button"
                             className="text-sm text-center 
-                        bg-amber-200 w-full
-                         hover:bg-amber-300 acitive:bg-amber-400"
+                        bg-amber-400 w-full
+                       hover:bg-amber-400 acitive:g-amber-400"
                           >
                             remove
                           </button>
@@ -349,7 +350,7 @@ export default function ProductsScreen() {
             {/* Color */}
             <label
               htmlFor="Product Color"
-              className="block mb-2  mt-2 font-medium text-blue-500 dark:text-gray-300"
+              className="block mb-2  mt-2 font-bold text-amber-400 dark:-gray-300"
             >
               Product Color(s)
             </label>
@@ -380,17 +381,17 @@ export default function ProductsScreen() {
                 <p className="py-1 text-red-500">no color selected</p>
               ) : (
                 <div>
-                  <p> Selected colors are </p>
+                  <p className="text-white "> Selected colors are </p>
                   <div className="flex  flex-wrap">
                     {colors.map((color, index) => (
                       <div key={index} className="p-1">
-                        <p>{color}</p>
+                        <p className="text-white font-bold">{color}</p>
                         <button
                           onClick={() => removeSelectedColor(color)}
                           type="button"
                           className="text-sm text-center 
-                        bg-amber-200 w-full px-1
-                         hover:bg-amber-300 acitive:bg-amber-400"
+                        bg-amber-400 w-full -1
+                         hover:bg-amber-400 acitive:g-amber-400"
                         >
                           remove
                         </button>
@@ -404,7 +405,7 @@ export default function ProductsScreen() {
             {/* Size */}
             <label
               htmlFor="Product Size"
-              className="block mb-2  mt-2 font-medium text-blue-500 dark:text-gray-300"
+              className="block mb-2  mt-2 font-bold text-amber-400 dark:-gray-300"
             >
               Product Size
             </label>
@@ -437,17 +438,19 @@ export default function ProductsScreen() {
                 <p className="py-1 text-red-500">no Size selected</p>
               ) : (
                 <div>
-                  <p className="mt-1"> Selected Sizes are </p>
+                  <p className="mt-1 text-white"> Selected Sizes are </p>
                   <div className="flex  flex-wrap">
                     {sizes.map((size, index) => (
                       <div key={index} className="p-1">
-                        <p>{size}</p>
+                        <p className="text-center font-bold text-white">
+                          {size}
+                        </p>
                         <button
                           onClick={() => removeSelectedSize(size)}
                           type="button"
                           className="text-sm text-center 
-                        bg-amber-200 w-full px-1
-                         hover:bg-amber-300 acitive:bg-amber-400"
+                        bg-amber-400 w-full px-1
+                         hover:bg-amber-400 acitive:g-amber-400"
                         >
                           remove
                         </button>
