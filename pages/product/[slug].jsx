@@ -16,13 +16,7 @@ export default function ProductScreen(props) {
   const [givenColor, setGivenColor] = useState();
   const itemsInCart = useSelector((state) => state.cart.cartItems);
   const [givenQuantity, setQuantity] = useState(1);
-  // // varable to store the query data from path
-  // const { query } = useRouter();
-  // // getting the slug part from the query
-  // const { slug } = query;
-  // //finding the query product from data available
-  // const product = data.products.find((x) => x.slug === slug);
-  //getting the dispatch function to dispatch an action
+
   const dispatch = useDispatch();
   // handle the onclick function of add to cart
   const addToCartHandler = async () => {
@@ -116,12 +110,15 @@ export default function ProductScreen(props) {
           ></img>
         </div>
         {/* discription section */}
-        <div className="flex justify-center md:block">
+        <div className="flex  md:block">
           <ul>
             <li>
-              <h1 className="text-2xl mb-2 text-amber-400 font-bold">
+              <h1 className="text-2xl mt-2 mb-1 text-amber-400 font-bold">
                 {product.name}
               </h1>
+            </li>
+            <li className="flex">
+              <h2 className="text-white"> {product.description}</h2>
             </li>
             <li className="flex">
               {' '}
@@ -202,7 +199,6 @@ export default function ProductScreen(props) {
               </button>
             </div>
             {/* END */}
-            <li>{product.description}</li>
           </ul>
         </div>
         {/* price card */}

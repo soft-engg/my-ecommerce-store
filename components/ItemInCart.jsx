@@ -67,12 +67,18 @@ export default function ItemInCart({ item, toast }) {
     <div className="flex justify-between py-2 text-white w-full md:mr-2  ">
       <div className="w-4/12 flex flex-wrap">
         <Link href={`/product/${item.slug}`}>
-          <a className="ml-2 text-amber-400 text-center cursor-pointer font-bold text-blue-600 hover:text-amber-400">
+          <a
+            className="ml-2 text-amber-400 text-center cursor-pointer 
+          font-bold text-amber-400 hover:text-amber-400"
+          >
             {item.name} {item.color} {item.size}
           </a>
         </Link>
       </div>
-      <div className="w-3/12 p-0 flex justify-between sm:justify-around h-1/6 items-center">
+      <div
+        className="w-2/12 p-0 flex
+       justify-between sm:justify-around h-1/6 items-center"
+      >
         <div
           onClick={decreaseProduct}
           className=" grow-0  
@@ -108,12 +114,13 @@ export default function ItemInCart({ item, toast }) {
         </div>
       </div>
 
-      <h2 className="w-3/12 text-center text-lg">Rs. {item.price}</h2>
+      <h2 className="w-4/12 text-center text-lg">Rs. {item.price}</h2>
       <div className="w-2/12   flex justify-center">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src="/icons/bin.png"
           alt=""
-          className="h-9 w-9 hover:scale-110 active:scale-110 cursor-pointer"
+          className="h-7 w-7 hover:scale-110 active:scale-110 cursor-pointer"
           onClick={() => removeFromCart()}
         />
       </div>

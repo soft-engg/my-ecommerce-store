@@ -6,6 +6,7 @@ import { getError } from '../utils/getError';
 import 'react-toastify/dist/ReactToastify.css';
 import { toast, ToastContainer } from 'react-toastify';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 export default function RegisterScreen() {
   const router = useRouter();
@@ -18,7 +19,7 @@ export default function RegisterScreen() {
   const [otpInput, sendOtpInput] = useState('');
   const [showForm, setShowForm] = useState(true);
   const [otp, setOtp] = useState('');
-  const [sendAgainFlag, setSendAgainFlag] = useState(true);
+  const [sendAgainFlag] = useState(true);
 
   const pattern = new RegExp(
     "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"
@@ -30,92 +31,66 @@ export default function RegisterScreen() {
     }
   }, [redirect, session, router]);
 
-  async function sendOTP() {
-    try {
-      const { data } = await toast.promise(axios.get(`/api/email/${email}`), {
-        pending: 'Sending OTP...',
-      });
-
-      if (data === 'error') {
-        toast.error('error sending otp...');
-        return;
-      }
-      if (data === 'notValidEmail') {
-        toast.error('Please enter a valid Email Address!!');
-        return;
-      }
-      toast.success('OTP Sent Successfully!!');
-
-      setOtp(data);
-      setShowForm(false);
-    } catch (error) {
-      toast.error('Error Sending OTP...');
-    }
-    setSendAgainFlag(false);
-    await new Promise((resolve) => {
-      setTimeout(() => {
-        setSendAgainFlag(true);
-        resolve('send again');
-      }, 18000);
-    });
-  }
-  async function vaidatingFields() {
-    try {
-      if (password.length > 6) {
-        // here we are signing in the user using credentials
-        try {
-          const result = await toast.promise(
-            axios.post('/api/auth/signup', {
-              name,
-              email,
-              password,
-            }),
-            {
-              pending: 'Registration in progress...',
-            }
-          );
-          if (result.status === 422) {
-            toast.error(result.body.message);
-            return false;
-          } else if (result.status === 201) {
-            return true;
-          }
-          if (result.error) {
-            toast.error(result.error);
-            return false;
-          }
-        } catch (error) {
-          // if any error signing in we are going to show error
-          toast.error(getError(error));
-        }
-      }
-    } catch (error) {
-      toast.error(getError(error));
-    }
-  }
-  const register = async () => {
+  async function RegisterUser() {
     if (otpInput === '') {
       toast.error('please enter an OTP...');
-      return;
-    }
-    if (otp == otpInput) {
+      return false;
+    } else {
       try {
-        if (password.length > 6) {
+        {
           // here we are signing in the user using credentials
           try {
-            // logging in after signup
-            await toast.promise(
-              signIn('credentials', {
-                redirect: false,
+            const result = await toast.promise(
+              axios.post('/api/auth/signup', {
+                name,
                 email,
                 password,
               }),
-              { pending: 'Signing you in!!!' }
+              {
+                pending: 'Registration in progress...',
+              }
             );
+            if (result.status === 422) {
+              toast.error(result.body.message);
+              return false;
+            } else if (result.status === 201) {
+              toast.success('User Registered Successfully!!');
+              return true;
+            }
+            if (result.error) {
+              toast.error(result.error);
+              return false;
+            }
           } catch (error) {
             // if any error signing in we are going to show error
             toast.error(getError(error));
+            return false;
           }
+        }
+      } catch (error) {
+        toast.error(getError(error));
+        return false;
+      }
+    }
+  }
+  //this function is used to signin user
+  const signInUser = async () => {
+    if (otp == otpInput) {
+      try {
+        // here we are signing in the user using credentials
+        try {
+          // logging in after signup
+          await toast.promise(
+            signIn('credentials', {
+              redirect: false,
+              email,
+              password,
+            }),
+            { pending: 'Signing you in!!!' }
+          );
+        } catch (error) {
+          // if any error signing in we are going to show error
+          toast.error(getError(error));
         }
       } catch (error) {
         toast.error(getError(error));
@@ -124,10 +99,62 @@ export default function RegisterScreen() {
       toast.error('OTP is Not correct');
     }
   };
+  const submitOtpHandler = async () => {
+    const userRegistered = await RegisterUser();
+    if (userRegistered) {
+      signInUser();
+    }
+  };
+  // this function send the otp
+  async function sendOTP() {
+    try {
+      const { data } = await toast.promise(axios.get(`/api/email/${email}`), {
+        pending: 'Sending OTP...',
+      });
+
+      if (data === 'error') {
+        toast.error('error sending otp...');
+        return false;
+      }
+      if (data === 'notValidEmail') {
+        toast.error('Please enter a valid Email Address!!');
+        return false;
+      }
+      toast.success('OTP Sent Successfully!!');
+      setOtp(data);
+      setShowForm(false);
+      return true;
+    } catch (error) {
+      toast.error('Error Sending OTP...');
+      return false;
+    }
+    // setSendAgainFlag(false);
+    // await new Promise((resolve) => {
+    //   setTimeout(() => {
+    //     setSendAgainFlag(true);
+    //     resolve('send again');
+    //   }, 100000);
+    // });
+  }
+
+  const checkingForExisitingUser = async () => {
+    const { data, status } = await toast.promise(
+      axios.get(`/api/auth/check/${email}`),
+      { pending: 'checking for existing Account' }
+    );
+    if (status == 201) {
+      toast.error(data);
+      return true;
+    }
+    if (status === 200) return false; //user exist
+  };
+  // handling submit
   const submitHandler = async (e) => {
     e.preventDefault();
-    const validateResult = await vaidatingFields();
-    if (validateResult) sendOTP();
+    const userExist = await checkingForExisitingUser();
+    if (!userExist) {
+      await sendOTP();
+    }
   };
 
   return (
@@ -148,31 +175,41 @@ export default function RegisterScreen() {
       <div className="w-full  flex justify-center">
         {/* This is div for Otp */}
         <div
-          className={`${showForm ? 'hidden' : 'flex'}  flex-col items-center`}
+          className={`${
+            showForm ? 'hidden' : 'flex'
+          } text-white flex-col items-center`}
         >
+          <h1 className="text-center font-bold text-xl mb-2 text-amber-400">
+            Enter OTP{' '}
+          </h1>
           <input
             placeholder=" 4 Digit OTP"
             value={otpInput}
             onChange={(e) => sendOtpInput(e.target.value)}
             className=" focus:bg-blue-100 bg-gray-50 border
-            border-gray-300  text-sm rounded-lg
-             focus:ring-amber-500  
-             block w-full p-2.5 dark:bg-gray-400 dark:border-gray-600
-              dark:placeholder-gray-400 dark:text-white outline-none"
+            border-gray-300 text-2xl w-48 text-center rounded-lg
+             text-black  tracking-widest
+             focus:ring-amber-500  placeholder:font-normal 
+             block  p-2 outline-none"
           ></input>
-          <button onClick={register} className="primary-button mt-2 w-fit">
+          <button
+            onClick={() => submitOtpHandler()}
+            className="primary-button text-black hover:bg-amber-500 transition-all mt-2 w-fit"
+          >
             submit
           </button>
           <p>OTP is sent on your Email.</p>
           <p>Enter OTP to Register.</p>
           {!sendAgainFlag ? (
-            <p>you can retry sending OTP in 2 minutes.</p>
+            <p className="text-white">
+              you can retry sending OTP in 2 minutes.
+            </p>
           ) : (
             <div className="flex">
-              <p>Not received ?</p>
+              <p className="text-white">Not received ?</p>
               <button
                 onClick={sendOTP}
-                className="ml-2 text-blue-500 hover:text-blue-600"
+                className="ml-2 text-amber-400 hover:text-amber-500 active:text-amber-600"
               >
                 Send Again
               </button>
@@ -181,9 +218,10 @@ export default function RegisterScreen() {
           <button
             onClick={() => setShowForm(true)}
             className="bg-gray-100 hover:bg-gray-200
-           active:bg-gray-200 px-2 py-1 rounded text-blue-500 hover:text-blue-600"
+           active:bg-gray-200 px-2 text-amber-400 py-1 rounded  
+           text-black active:-bg-gray-400 "
           >
-            {`<< Back`}
+            {`Go Back`}
           </button>
         </div>
         {/* This is div for form */}
@@ -197,7 +235,7 @@ export default function RegisterScreen() {
           <div className="mb-2">
             <label
               htmlFor="fullname"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+              className="block mb-2  font-medium text-amber-400 dark:text-amber-500"
             >
               Your Full Name
             </label>
@@ -216,7 +254,7 @@ export default function RegisterScreen() {
               required
             />
             {name === '' ? (
-              <p className="text-red-600 text-sm peer-valid:hidden peer-invalid:visible">
+              <p className="text-white text-sm peer-valid:hidden peer-invalid:visible">
                 please enter your FullName !!!
               </p>
             ) : null}
@@ -226,14 +264,14 @@ export default function RegisterScreen() {
           <div className="mb-2">
             <label
               htmlFor="email"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+              className="block mb-2  font-medium text-amber-400 dark:text-amber-500"
             >
               Your Email
             </label>
             <input
               type="email"
               id="email"
-              pattern="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"
+              pattern="[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className=" peer focus:bg-blue-100 bg-gray-50 border
@@ -246,11 +284,11 @@ export default function RegisterScreen() {
               required
             />
             {email === '' ? (
-              <p className="text-red-600 text-sm peer-valid:hidden peer-invalid:visible">
+              <p className="text-white text-sm peer-valid:hidden peer-invalid:visible">
                 please enter an email !!!
               </p>
             ) : pattern.test(email) ? null : (
-              <p className="text-red-600 text-sm peer-valid:hidden peer-invalid:visible">
+              <p className="text-white text-sm peer-valid:hidden peer-invalid:visible">
                 enter a valid email !!
               </p>
             )}
@@ -259,18 +297,18 @@ export default function RegisterScreen() {
           <div className="mb-2">
             <label
               htmlFor="password"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+              className="block mb-2  font-medium text-amber-400 dark:text-amber-500"
             >
               Your Password
             </label>
             <input
-              type="text"
+              type="password"
               id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className=" peer focus:bg-blue-100 bg-gray-50 border
               border-gray-300  text-sm rounded-lg
-               focus:ring-amber-500  
+               focus:ring-amber-500  font-bold
                block w-full p-2.5 dark:bg-gray-400 dark:border-gray-600
                 dark:placeholder-gray-400 dark:text-white outline-none
                  "
@@ -278,11 +316,11 @@ export default function RegisterScreen() {
               placeholder="Password must contain 6 characters"
             />
             {password === '' ? (
-              <div className="text-red-600 text-sm">
+              <div className="text-white text-sm">
                 please enter the password
               </div>
             ) : password.length < 6 ? (
-              <p className="text-red-600 text-sm">
+              <p className="text-white text-sm">
                 password must be of six characters
               </p>
             ) : null}
@@ -291,17 +329,17 @@ export default function RegisterScreen() {
           <div className="mb-2">
             <label
               htmlFor="text"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+              className="block mb-2  font-medium text-amber-400 dark:text-amber-500"
             >
               Confirm Password
             </label>
             <input
-              type="text"
+              type="password"
               id="confirmpassword"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               className=" peer focus:bg-blue-100 bg-gray-50 border
-              border-gray-300  text-sm rounded-lg
+              border-gray-300 font-bold  text-sm rounded-lg
                focus:ring-amber-500  
                block w-full p-2.5 dark:bg-gray-400 dark:border-gray-600
                 dark:placeholder-gray-400 dark:text-white outline-none
@@ -310,20 +348,30 @@ export default function RegisterScreen() {
               required
             />
             {confirmPassword === '' ? (
-              <div className="text-red-600 text-sm">
+              <div className="text-white text-sm">
                 please enter the password to confirm
               </div>
             ) : confirmPassword !== password ? (
-              <p className="text-red-600 text-sm">password does match..</p>
+              <p className="text-white text-sm">password does match..</p>
             ) : null}
           </div>
-
+          <p className="mb-2 text-white">
+            Already have a account yet?
+            <Link href={`/login?redirect=${redirect || '/'}`}>
+              <a
+                className="text-amber-400 ml-2 italic hover:text-white
+             font-semibold hover:underline"
+              >
+                Log In
+              </a>
+            </Link>
+          </p>
           <button
             type="submit"
-            className=" font-bold bg-amber-400 hover:bg-amber-500 
+            className=" font-semibold bg-amber-400 hover:bg-amber-500 
             active focus:outline-none focus:ring-amber-300 active:bg-amber-300
-            font-medium rounded-lg text-sm w-1/2
-             sm:w-auto px-5 py-2.5 text-center
+            rounded-lg  w-1/2
+             sm:w-auto px-5 py-2 text-center
               dark:bg-amber-600 dark:hover:bg-amber-400 dark:focus:ring-amber-500"
           >
             Register

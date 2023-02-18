@@ -57,15 +57,18 @@ function Cart() {
          justify-center items-center sm:flex-row w-full"
         >
           {/* this is div for the item table*/}
-          <div className="flex mb-2 flex-grow border-gray-400 border-2 bg-gray-500 rounded sm:w-3/4 flex-shrink-0 flex-col w-full">
+          <div
+            className="flex mb-2 flex-grow border-gray-400 border-2 bg-gray-500 
+          rounded sm:w-3/4 flex-shrink-0 flex-col w-full"
+          >
             <div
               className="flex pb-2 bg-black text-amber-400 font-semibold  border-b-2
              border-gray-300 "
             >
               <h2 className="w-4/12 text-center ">Item(s)</h2>
               <h2 className="w-3/12 text-center">Qty.</h2>
-              <h2 className="w-3/12 text-center">Price</h2>
-              <h2 className="w-2/12 text-center">Action</h2>
+              <h2 className="w-4/12 text-center">Price</h2>
+              <h2 className="w-2/12 text-center"></h2>
             </div>
             {itemsInCart.length > 0 ? (
               itemsInCart.map((item) => (

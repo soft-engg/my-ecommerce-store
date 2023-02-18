@@ -17,7 +17,7 @@ export default function ProductItem({ product }) {
         <img
           src={product.image[0]}
           alt={product.name}
-          className="object-contain h-[180px] rounded-lg   cursor-pointer "
+          className="object-contain h-[180px]   cursor-pointer "
           onClick={goToProdctScreen}
         ></img>
       </div>
@@ -26,11 +26,12 @@ export default function ProductItem({ product }) {
           {product.name}
         </h2>
       </Link>
+      <p className=" text-sm text-white font-semibold"> {product.brand}</p>
       <h2 className="  cursor-pointer text-white">Rs. {product.price}</h2>
-      <p className="text-black text-sm text-white">Brand . {product.brand}</p>
       <Link href={`/product/${product.slug}`}>
         <button
-          className="bg-amber-400 h-8 hover:bg-amber-200 transition-all w-full font-bold text-black  text-center"
+          className="bg-amber-400 h-8 hover:bg-amber-200 transition-all w-full
+           font-semibold text-black  text-center"
           type="button"
         >
           View Details

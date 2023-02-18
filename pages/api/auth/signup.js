@@ -17,12 +17,6 @@ async function handler(req, res) {
     return;
   }
   await db.connect();
-  const existingUser = await User.findOne({ email: email });
-  if (existingUser) {
-    res.status(422).json({ message: 'Already account of this email exist' });
-    await db.disconnect();
-    return;
-  }
   const newUser = new User({
     name,
     email,

@@ -38,12 +38,14 @@ export default function Layout({ title, children }) {
           justify-between bg-amber-400 shadow-md items-center px-4"
           >
             <Link href={'/'}>
-              <a className="text-lg text-black font-black">MySports</a>
+              <a className="text-lg text-black hover;text-white font-bold">
+                MySports
+              </a>
             </Link>
             <div className="flex items-center text-lg font-semibold">
               <Link href={'/cart'}>
                 <a className="p-2 pr-0  hover:underline hover:decoration-amber-400  ">
-                  {/* / eslint-disable-next-line @next/next/no-img-element */}
+                  {/* eslint-disable-next-line @next/next/no-img-element, @next/next/no-img-element */}
                   <img
                     src="/icons/carts.png"
                     alt="cart"
@@ -110,8 +112,12 @@ export default function Layout({ title, children }) {
                 </Menu>
               ) : (
                 <Link href="/login">
-                  <a className=" p-2 hover:underline hover:decoration-amber-400">
-                    Login
+                  <a
+                    className=" p-2 text-black 
+                    transition-all text-lg hover:text-white
+                    "
+                  >
+                    LogIn
                   </a>
                 </Link>
               )}
@@ -119,10 +125,12 @@ export default function Layout({ title, children }) {
           </nav>
         </header>
 
-        <main className="container m-auto mt-4 ">{children}</main>
+        <main className="container px-4 sm:px-0 m-auto mt-4 ">{children}</main>
 
         <footer className="flex justify-center items-center h-10 shadow-inner">
-          <p className="text-sm">copyright Ⓒ 2022 MyECommerceStore</p>
+          <p className="text-sm mt-4 text-white">
+            copyright Ⓒ 2022 MyECommerceStore
+          </p>
         </footer>
       </div>
     </>
