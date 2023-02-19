@@ -108,24 +108,29 @@ export default function RegisterScreen() {
   // this function send the otp
   async function sendOTP() {
     try {
-      const { data } = await toast.promise(axios.get(`/api/email/${email}`), {
-        pending: 'Sending OTP...',
-      });
+      const { data, status } = await toast.promise(
+        axios.post(`/api/email/${email}`),
+        {
+          pending: 'Sending OTP...',
+        }
+      );
 
-      if (data === 'error') {
-        toast.error('error sending otp...');
+      if (status === 422) {
+        toast.error(data);
         return false;
       }
-      if (data === 'notValidEmail') {
-        toast.error('Please enter a valid Email Address!!');
+      if (status === 400) {
+        toast.error(data);
         return false;
       }
-      toast.success('OTP Sent Successfully!!');
-      setOtp(data);
-      setShowForm(false);
-      return true;
+      if (status == 200) {
+        toast.success('OTP Sent Successfully!!');
+        setOtp(data);
+        setShowForm(false);
+        return true;
+      }
     } catch (error) {
-      toast.error('Error Sending OTP...');
+      toast.error(getError(error));
       return false;
     }
     // setSendAgainFlag(false);
@@ -356,7 +361,7 @@ export default function RegisterScreen() {
             ) : null}
           </div>
           <p className="mb-2 text-white">
-            Already have a account yet?
+            Already have an Account ?
             <Link href={`/login?redirect=${redirect || '/'}`}>
               <a
                 className="text-amber-400 ml-2 italic hover:text-white

@@ -41,15 +41,19 @@ export default async function handler(req, res) {
 
   async function sendmail() {}
   {
-    await transporter.sendMail(mailOptions, function (error, info) {
-      if (error) {
-        console.log(getError(error));
-        res.status(422).send('Unable to send Email', error);
-      } else {
-        console.log('Email sent: ' + info.response);
-        res.send(200).send('email sent successfully');
-      }
-    });
+    try {
+      await transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+          console.log(getError(error));
+          res.status(422).send('Unable to send Email', error);
+        } else {
+          console.log('Email sent: ' + info.response);
+          res.send(200).send('email sent successfully');
+        }
+      });
+    } catch (error) {
+      res.status(400).send(getError(error));
+    }
   }
   await sendmail();
 }
