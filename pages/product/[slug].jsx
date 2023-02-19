@@ -12,11 +12,12 @@ import axios from 'axios';
 
 export default function ProductScreen(props) {
   const { product } = props;
+  console.log(product);
   const [givenSize, setGivenSize] = useState();
   const [givenColor, setGivenColor] = useState();
   const itemsInCart = useSelector((state) => state.cart.cartItems);
   const [givenQuantity, setQuantity] = useState(1);
-
+  const [imageToShow, setImageToShow] = useState(product.image[0]);
   const dispatch = useDispatch();
   // handle the onclick function of add to cart
   const addToCartHandler = async () => {
@@ -68,7 +69,7 @@ export default function ProductScreen(props) {
   if (!product)
     return (
       <Layout title="product not found">
-        <div>product not found</div>
+        <h1 className="text-xl text-amber-400 mt-4 ">product not found</h1>
       </Layout>
     );
 
@@ -101,13 +102,28 @@ export default function ProductScreen(props) {
         <div className="md:col-span-2 ">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src={product.image}
+            src={imageToShow}
             alt={product.name}
-            width={500}
-            height={500}
-            layout="responsive"
-            className="object-contain"
+            className="object-contain h-[340px]  w-full rounded bg-white/50"
           ></img>
+          {product.image.length > 1 ? (
+            <div className="flex h-24 w-52  mt-2">
+              {product.image.map((givenImage, index) => (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  alt=""
+                  key={index}
+                  src={givenImage}
+                  className={`h-24 w-24 mx-1 ${
+                    imageToShow == givenImage ? 'ring-amber-400 ring-2' : ''
+                  } hover:scale-105 transition-all`}
+                  onClick={() => {
+                    if (imageToShow !== givenImage) setImageToShow(givenImage);
+                  }}
+                ></img>
+              ))}
+            </div>
+          ) : null}
         </div>
         {/* discription section */}
         <div className="flex  md:block">
@@ -116,9 +132,6 @@ export default function ProductScreen(props) {
               <h1 className="text-2xl mt-2 mb-1 text-amber-400 font-bold">
                 {product.name}
               </h1>
-            </li>
-            <li className="flex">
-              <h2 className="text-white"> {product.description}</h2>
             </li>
             <li className="flex">
               {' '}
@@ -199,6 +212,9 @@ export default function ProductScreen(props) {
               </button>
             </div>
             {/* END */}
+            <li className="flex">
+              <h2 className="text-white"> {product.description}</h2>
+            </li>
           </ul>
         </div>
         {/* price card */}
