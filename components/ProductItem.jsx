@@ -12,12 +12,12 @@ export default function ProductItem({ product }) {
   }
 
   return (
-    <div className="card mx-2 md:mx-0 items-center bg-black">
-      <div>
+    <div className="card ">
+      <div className="">
         <img
           src={product.image[0]}
           alt={product.name}
-          className="object-contain h-[180px]   cursor-pointer "
+          className="object-contain h-[150px]  cursor-pointer "
           onClick={goToProdctScreen}
         ></img>
       </div>
@@ -26,12 +26,15 @@ export default function ProductItem({ product }) {
           {product.name}
         </h2>
       </Link>
-      <p className=" text-sm text-white font-semibold"> {product.brand}</p>
-      <h2 className="  cursor-pointer text-white">Rs. {product.price}</h2>
+      <p className=" text-sm cursor-default text-white font-semibold">
+        {product.brand}
+      </p>
+      <h2 className="  cursor-default text-white">Rs. {product.price}</h2>
       <Link href={`/product/${product.slug}`}>
         <button
-          className="bg-amber-400 h-8 hover:bg-amber-200 transition-all w-full
-           font-semibold text-black  text-center rounded-b-lg"
+          className="bg-gray-600 h-8 hover:bg-amber-400 hover:text-black
+           transition-all w-full ease-out 
+           font-semibold text-white  text-center rounded-b-lg"
           type="button"
         >
           View Details

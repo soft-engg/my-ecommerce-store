@@ -16,9 +16,15 @@ a {
 * {
   box-sizing: border-box;
 }
+
+/* Hide the horizontal scrollbar */
+::-webkit-scrollbar-horizontal {
+  display: none;
+}
+
 .card {
-  @apply mb-5 h-fit  h-[280px]  flex  flex-col 
-  rounded-lg  shadow-lg border border-amber-400;
+  @apply mb-4 h-fit  h-[250px] w-[200px]  flex  flex-col shrink-0
+  rounded-lg  shadow-lg border-x border-t border-gray-600 items-center bg-black;
 }
 .primary-button {
   @apply rounded bg-amber-400 py-1 px-3 shadow outline-none hover:bg-amber-400 active:bg-amber-500;

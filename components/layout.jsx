@@ -125,7 +125,7 @@ export default function Layout({ title, children }) {
           </nav>
         </header>
 
-        <main className="container px-4 sm:px-0 m-auto mt-4 ">{children}</main>
+        <main className="container px-4  md:px-0 m-auto mt-4 ">{children}</main>
 
         <footer className="flex justify-center items-center h-10 shadow-inner">
           <p className="text-sm mt-4 text-white">

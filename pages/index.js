@@ -1,18 +1,20 @@
+/* eslint-disable @next/next/no-img-element */
 import Layout from '../components/layout';
 import ProductItem from '../components/ProductItem';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import db from '../utils/db';
 import Product from '../models/prodcut';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import axios from 'axios';
 import Link from 'next/link';
 
 export default function Home({ products }) {
+  const divRefs = useRef([]);
+
   const [search, setSearch] = useState('');
   const [searchFlag, setSearchFlag] = useState(false);
   const [searchData, setSearchData] = useState([]);
-
   async function searcHandler(e) {
     e.preventDefault();
     setSearchFlag(true);
@@ -24,6 +26,20 @@ export default function Home({ products }) {
       toast.error('search box is empty');
     }
   }
+  function handleRightScroll(index) {
+    divRefs.current[index].scrollBy({
+      left: +216,
+      behavior: 'smooth',
+    });
+  }
+  function handleLeftScroll(index) {
+    divRefs.current[index].scrollBy({
+      left: -216,
+      behavior: 'smooth',
+    });
+  }
+
+  // returning data
   return (
     <Layout title={'Home'}>
       <ToastContainer
@@ -79,8 +95,8 @@ export default function Home({ products }) {
               ) : searchData.length == 0 ? (
                 <p className="p-4 font-semibod">No Product is found</p>
               ) : (
-                searchData.map((product) => (
-                  <div key={product.slug} className="flex mb-2  ">
+                searchData.map((product, index) => (
+                  <div key={index} className="flex mb-2  ">
                     <Link
                       href={`product/${product.slug}`}
                       className="cursor-pointer w-2/6"
@@ -122,13 +138,49 @@ export default function Home({ products }) {
           </button>
         </form>
         {/* this is div for products */}
-        <div className="grid grid-cols-2 md:gap-4 md:grid-cols-4 lg:grid-col-4">
-          {products.map((product) => (
-            <ProductItem
-              product={product}
-              toast={toast}
-              key={product.slug + product.color + product.size}
-            ></ProductItem>
+        <div className="">
+          {products.map((sortedProducts, index) => (
+            <div key={index} className="h-[290px] relative    mt-4  rounded  ">
+              {/* category heading */}
+              <h2 className="text-xl mx-2 my-2  text-amber-400 font-medium">
+                {sortedProducts[0].category}
+              </h2>
+              {/* previous button */}
+              <button
+                onClick={() => handleRightScroll(index)}
+                className="absolute bg-white/60 active:scale-110 p-1 transition-all
+                hover:bg-white/90 rounded-full right-0 top-1/3"
+              >
+                <img
+                  alt="previous"
+                  src="/icons/right-arrow.png"
+                  className="h-8 w-8 opacity-50 hover:opacity-90"
+                />
+              </button>
+              {/* next button */}
+              <button
+                onClick={() => handleLeftScroll(index)}
+                className="absolute p-1 bg-white/60 active:scale-110 transition-all
+                hover:bg-white/90 rounded-full left-0 top-1/3"
+              >
+                <img
+                  alt="previous"
+                  src="/icons/left-arrow.png"
+                  className="h-8 w-8 opacity-50 hover:opacity-90"
+                />
+              </button>
+              {/* div to show products of same category */}
+              <div
+                className="flex gap-4 overflow-x-auto overflow-x-hidden"
+                ref={(el) => (divRefs.current[index] = el)}
+              >
+                {sortedProducts.map((product, index) => {
+                  return (
+                    <ProductItem product={product} toast={toast} key={index} />
+                  );
+                })}
+              </div>
+            </div>
           ))}
         </div>
       </div>
@@ -140,9 +192,29 @@ export async function getServerSideProps() {
   await db.connect();
   const products = await Product.find().lean();
   await db.disconnect();
+  // sorting products wrt categories
+  const distinctMap = new Map();
+  products.forEach((obj) => {
+    const fieldValue = obj.category;
+    if (distinctMap.has(fieldValue)) {
+      if (distinctMap.get(fieldValue).length < 10) {
+        // limit to 10 objects
+        distinctMap.get(fieldValue).push(obj);
+      }
+    } else {
+      distinctMap.set(fieldValue, [obj]);
+    }
+  });
+
+  const resultArray = Array.from(distinctMap.values()).map((array) => [
+    ...array,
+  ]);
+  // returning the sorted products
   return {
     props: {
-      products: products.map((product) => db.convertDocToObj(product)),
+      products: resultArray.map((products) => {
+        return products.map((product) => db.convertDocToObj(product));
+      }),
     },
   };
 }

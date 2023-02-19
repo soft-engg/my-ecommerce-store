@@ -12,7 +12,7 @@ import axios from 'axios';
 
 export default function ProductScreen(props) {
   const { product } = props;
-  console.log(product);
+
   const [givenSize, setGivenSize] = useState();
   const [givenColor, setGivenColor] = useState();
   const itemsInCart = useSelector((state) => state.cart.cartItems);
