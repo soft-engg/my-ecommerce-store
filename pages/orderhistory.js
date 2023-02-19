@@ -23,7 +23,7 @@ export default function OrderHistoryScreen() {
       }
     }
     getData();
-  }, []);
+  }, [session.data.user]);
 
   return (
     <Layout title="Order History">
