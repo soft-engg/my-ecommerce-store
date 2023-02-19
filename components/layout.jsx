@@ -38,7 +38,7 @@ export default function Layout({ title, children }) {
           justify-between bg-amber-400 shadow-md items-center px-4"
           >
             <Link href={'/'}>
-              <a className="text-lg text-black hover;text-white font-bold">
+              <a className="text-lg text-black hover:text-white font-bold">
                 MySports
               </a>
             </Link>

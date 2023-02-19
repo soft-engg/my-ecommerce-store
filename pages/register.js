@@ -16,9 +16,9 @@ export default function RegisterScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [otpInput, sendOtpInput] = useState('');
+  const [otpInput, setOtpInput] = useState('');
   const [showForm, setShowForm] = useState(true);
-  const [otp, setOtp] = useState('');
+  const [otp, setOtp] = useState(1);
   const [sendAgainFlag] = useState(true);
 
   const pattern = new RegExp(
@@ -35,7 +35,9 @@ export default function RegisterScreen() {
     if (otpInput === '') {
       toast.error('please enter an OTP...');
       return false;
-    } else {
+    }
+    console.log(otp, otpInput);
+    if (otp === Number.parseInt(otpInput)) {
       try {
         {
           // here we are signing in the user using credentials
@@ -71,6 +73,8 @@ export default function RegisterScreen() {
         toast.error(getError(error));
         return false;
       }
+    } else {
+      toast.error('otp dont match');
     }
   }
   //this function is used to signin user
@@ -156,9 +160,13 @@ export default function RegisterScreen() {
   // handling submit
   const submitHandler = async (e) => {
     e.preventDefault();
-    const userExist = await checkingForExisitingUser();
-    if (!userExist) {
-      await sendOTP();
+    if (password === confirmPassword) {
+      const userExist = await checkingForExisitingUser();
+      if (!userExist) {
+        await sendOTP();
+      }
+    } else {
+      toast.error('passwords does not match!!');
     }
   };
 
@@ -189,12 +197,17 @@ export default function RegisterScreen() {
           </h1>
           <input
             placeholder=" 4 Digit OTP"
+            pattern="[0-9]*"
+            maxLength={4}
+            // minLength={4}
             value={otpInput}
-            onChange={(e) => sendOtpInput(e.target.value)}
+            onChange={(e) =>
+              setOtpInput((v) => (e.target.validity.valid ? e.target.value : v))
+            }
             className=" focus:bg-blue-100 bg-gray-50 border
             border-gray-300 text-2xl w-48 text-center rounded-lg
              text-black  tracking-widest
-             focus:ring-amber-500  placeholder:font-normal 
+             focus:ring-amber-500  placeholder:text-base 
              block  p-2 outline-none"
           ></input>
           <button
@@ -259,7 +272,7 @@ export default function RegisterScreen() {
               required
             />
             {name === '' ? (
-              <p className="text-white text-sm peer-valid:hidden peer-invalid:visible">
+              <p className="text-red-400 text-sm peer-valid:hidden peer-invalid:visible">
                 please enter your FullName !!!
               </p>
             ) : null}
@@ -289,7 +302,7 @@ export default function RegisterScreen() {
               required
             />
             {email === '' ? (
-              <p className="text-white text-sm peer-valid:hidden peer-invalid:visible">
+              <p className="text-red-500 text-sm peer-valid:hidden peer-invalid:visible">
                 please enter an email !!!
               </p>
             ) : pattern.test(email) ? null : (
@@ -353,11 +366,11 @@ export default function RegisterScreen() {
               required
             />
             {confirmPassword === '' ? (
-              <div className="text-white text-sm">
+              <div className="text-red-500 text-sm">
                 please enter the password to confirm
               </div>
             ) : confirmPassword !== password ? (
-              <p className="text-white text-sm">password does match..</p>
+              <p className="text-red-500 text-sm">password does match..</p>
             ) : null}
           </div>
           <p className="mb-2 text-white">

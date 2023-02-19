@@ -48,7 +48,7 @@ export default async function handler(req, res) {
           res.status(422).send('Unable to send Email', error);
         } else {
           console.log('Email sent: ' + info.response);
-          res.send(200).send('sent successfully');
+          res.status(200).send(code).send('sent successfully');
         }
       });
     } catch (error) {
