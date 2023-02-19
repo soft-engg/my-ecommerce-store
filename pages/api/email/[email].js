@@ -1,5 +1,5 @@
 import NodeMailer from 'nodemailer';
-import validate from 'email-validator';
+import validate from 'deep-email-validator';
 import { getError } from '../../../utils/getError';
 export default async function handler(req, res) {
   const { valid } = await validate(req.body.email);
