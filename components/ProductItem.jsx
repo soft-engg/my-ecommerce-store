@@ -31,7 +31,7 @@ export default function ProductItem({ product }) {
       <Link href={`/product/${product.slug}`}>
         <button
           className="bg-amber-400 h-8 hover:bg-amber-200 transition-all w-full
-           font-semibold text-black  text-center"
+           font-semibold text-black  text-center rounded-b-lg"
           type="button"
         >
           View Details
