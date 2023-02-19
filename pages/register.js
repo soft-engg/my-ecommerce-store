@@ -109,7 +109,7 @@ export default function RegisterScreen() {
   async function sendOTP() {
     try {
       const { data, status } = await toast.promise(
-        axios.post(`/api/email/${email}`),
+        axios.post(`/api/otp`, { email: email.trim() }, { timeout: 180000 }),
         {
           pending: 'Sending OTP...',
         }
