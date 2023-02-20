@@ -23,7 +23,7 @@ export default function ShippingScreen() {
       setFullName(cart.ShippingAddress.fullName);
       setCity(cart.ShippingAddress.city);
       setCountry(cart.ShippingAddress.country);
-      setphone(cart.ShippingAddress.postalCode);
+      setphone(cart.ShippingAddress.phone);
     }
   }, [cart.ShippingAddress, router]);
 
@@ -62,7 +62,7 @@ export default function ShippingScreen() {
       <CheckoutWizard activeStep="1" />
       <div className="w-full  flex justify-center">
         <form
-          className="mx-3 bg-gray-600 grow max-w-md p-4 shadow-md shadow-amber-400 rounded-lg "
+          className="mx-3  grow max-w-md p-4 shadow-md shadow-amber-400 rounded-lg "
           onSubmit={(e) => {
             submitHandler(e);
           }}
@@ -152,7 +152,7 @@ export default function ShippingScreen() {
             <input
               type="text"
               value={phone}
-              id="Phone Number"
+              id="PhoneNumber"
               onChange={(e) => setphone(e.target.value)}
               className=" input-style"
               placeholder="Enter your Area Phone Number"

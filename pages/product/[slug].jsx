@@ -183,7 +183,11 @@ export default function ProductScreen(props) {
             </li>
             {/* start */}
             <span className="font-semibold text-amber-400">Quantity :</span>
-            <div className=" text-amber-400 p-1 flex justify-between items-start w-2/5 ">
+            <div
+              className=" text-amber-400 p-1 flex justify-between 
+            items-center w-3/5 "
+            >
+              {/* div for decrease button */}
               <button
                 onClick={() => {
                   setQuantity((quantity) => {
@@ -191,22 +195,26 @@ export default function ProductScreen(props) {
                     return (quantity = 1);
                   });
                 }}
-                className="bg-transparent text-amber-400 flex justify-center items-center font-bold text-center border-2
-           md:text-2xl border-amber-400 rounded-lg leading-none 
+                className="bg-transparent text-amber-400 flex justify-center 
+                items-center font-bold text-center border-2
+           text-2xl border-amber-400 rounded-lg leading-none 
            border w-6 h-6  shadow  hover:scale-110 active:scale-125"
               >
                 <p className="text-amber-400">-</p>
               </button>
-              <div className="mx-2 p-0 flex items-center  text-xl">
+              {/* div for selected quantity */}
+              <div className="mx-2 p-0 flex items-center font-bold font-mono   text-2xl">
                 {givenQuantity}
               </div>
+              {/* div for increase button */}
               <button
                 onClick={() => {
                   setQuantity((quantity) => quantity + 1);
                 }}
-                className="bg-transparent flex justify-center items-center font-bold text-center border-2
-          md:text-2xl border-amber-400 rounded-lg leading-none 
-          border w-6 h-6  shadow text-amber-400 hover:scale-110 active:scale-125"
+                className="bg-transparent text-amber-400 flex justify-center 
+                items-center font-bold text-center border-2
+           text-2xl border-amber-400 rounded-lg leading-none 
+           border w-6 h-6  shadow  hover:scale-110 active:scale-125"
               >
                 +
               </button>
@@ -222,13 +230,13 @@ export default function ProductScreen(props) {
           className="flex justify-center mt-2 sm:justify-center
          md:mt-0 md:block"
         >
-          <div className=" border bg-white rounded-md shadow p-4 w-1/2 md:w-auto">
-            <div className="mb-2 flex justify-evenly md:justify-between">
+          <div className=" border bg-white rounded-md shadow p-4 w-3/4 md:w-auto">
+            <div className="mb-2 flex justify-between ">
               <p className="font-bold">Price :</p>
               <p className="font-bold">Rs. {product.price}</p>
             </div>
-
-            <div className="mb-2 flex justify-evenly md:justify-between">
+            {/* div for status */}
+            <div className="mb-2 flex justify-between ">
               <h2 className="font-bold">Status :</h2>
               <div>{product.countInStock > 0 ? 'In Stock' : 'Unavailable'}</div>
             </div>

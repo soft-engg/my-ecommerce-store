@@ -6,7 +6,6 @@ import { Menu } from '@headlessui/react';
 import { useSelector } from 'react-redux';
 import DropdownLink from './DropdownLink';
 import Cookies from 'js-cookie';
-
 export default function Layout({ title, children }) {
   const { status, data: session } = useSession();
 
@@ -44,18 +43,18 @@ export default function Layout({ title, children }) {
             </Link>
             <div className="flex items-center text-lg font-semibold">
               <Link href={'/cart'}>
-                <a className="p-2 pr-0  hover:underline hover:decoration-amber-400  ">
+                <a className="pl-2   hover:underline hover:decoration-amber-400  ">
                   {/* eslint-disable-next-line @next/next/no-img-element, @next/next/no-img-element */}
                   <img
                     src="/icons/carts.png"
                     alt="cart"
-                    className="w-9 h-9"
+                    className="w-8 h-8"
                   ></img>
                 </a>
               </Link>
               <div
-                className="ml-1 text-base text-center min-w-[25px]
-               px-2 font-mono rounded-full bg-black  text-white  "
+                className="ml-1 text-xl text-center min-w-[25px]
+                font-mono rounded-full bg-gray-200  text-black  "
               >
                 {cartItemCount}
               </div>

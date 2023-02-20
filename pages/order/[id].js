@@ -69,53 +69,51 @@ const OrderScreen = () => {
         </div>
       ) : (
         <div className="flex flex-col md:flex-row mx-1 sm:mx-0.5">
+          {/* div for all data */}
           <div className="w-full md:w-3/4">
             {/* div for items table */}
             <div
-              className="overflow-x-hidden mb-2 bg-gray-500 w-full  flex flex-col p-4 
-           shadow-lg  rounded-lg"
+              className="overflow-x-auto bg-gray-500 md:col-span-3 flex flex-col p-4 
+             shadow-lg mb-2 rounded-lg"
             >
               <h2 className="mb-2 text-lg text-amber-400 font-semibold">
                 Order items
               </h2>
-              {/* div for table headings */}
               <div
-                className="flex w-full bg-black text-white  px-1 py-1 mb-1 text-sm font-semibold   border-b-2
-           border-gray-300 "
+                className="flex w-full bg-black text-white pb-1 mb-1 
+                text-[14]   border-b-2
+             border-gray-300 "
               >
                 <div className=" px-1  w-5/12 ">
                   <p>Item(s)</p>
                 </div>
-                <div className=" text-center w-2/12 ">
-                  <p>Quantity</p>
+                <div className=" text-center w-3/12 ">
+                  <p>Qty.</p>
                 </div>
-                <div className="text-center w-3/12">
-                  <p>Price</p>
+                <div className="text-center w-4/12">
+                  <p>Price/p</p>
                 </div>
-
-                <div className=" text-center w-2/12">Subtotal</div>
               </div>
 
               {orderItems.map((item) => (
                 <div
                   key={item.name + item.size + item.color}
-                  className="flex w-full border-b pb-2 text-[14px] text-white "
+                  className="flex w-full border-b pb-2 text-[14px] sm:text-base text-white "
                 >
-                  <div className=" flex w-5/12  ">
-                    <div className="ml-2 text-center cursor-pointer font-semibold text-amber-400 hover:text-gray-700">
+                  <div className=" flex w-5/12  flex-wrap">
+                    <div
+                      className=" text-center cursor-pointer 
+                      font-bold text-amber-400 hover:text-white"
+                    >
                       {item.name} {item.color} {item.size}
                     </div>
                   </div>
 
-                  <div className=" w-2/12 text-center  ">
-                    <p>{item.quantity}</p>
+                  <div className=" w-3/12 text-center  ">
+                    <p className="font-mono">{item.quantity}</p>
                   </div>
-                  <div className=" w-3/12 text-center">
-                    <p>{item.price} Rs</p>
-                  </div>
-
-                  <div className="text-center w-2/12">
-                    <p>{item.quantity * item.price} Rs</p>
+                  <div className=" w-4/12 flex justify-center text-center">
+                    Rs. <p className="font-mono"> {item.price}</p>
                   </div>
                 </div>
               ))}
@@ -153,7 +151,7 @@ const OrderScreen = () => {
               ) : (
                 <div
                   className="my-3 
-                rounded-lg bg-white text-sm p-3 font-bold text-red-700
+                rounded-lg bg-white text-sm p-3 font-bold text-red-600
                 "
                 >
                   Not Confirmed
@@ -206,7 +204,7 @@ const OrderScreen = () => {
               ) : (
                 <div
                   className="my-3 
-                rounded-lg bg-white text-sm p-3 font-bold text-red-700
+                rounded-lg bg-white text-sm p-3 font-bold text-red-600
                 "
                 >
                   Not Delivered
@@ -215,7 +213,7 @@ const OrderScreen = () => {
             </div>
           </div>
           {/* div for orderSummary */}
-          <div className="md:w-1/4 bg-white  mx-2 px-3 py-2 rounded-lg border-2 h-fit ">
+          <div className="md:w-1/4 mt-2 sm:mt-0 bg-white  mx-2 px-3 py-2 rounded-lg border-2 h-fit ">
             <h2 className="text-lg font-bold text-amber-400">Order Summary</h2>
             <div className="flex justify-between">
               <p className=" font-bold">Subtotal :</p>
@@ -227,7 +225,7 @@ const OrderScreen = () => {
             </div>
             <div className="flex justify-between border-b-2 mb-2 ">
               <p className=" font-bold">Total :</p>
-              <p>Rs . {totalPrice}</p>
+              <p>Rs. {totalPrice}</p>
             </div>
           </div>
         </div>

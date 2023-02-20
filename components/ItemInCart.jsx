@@ -69,14 +69,15 @@ export default function ItemInCart({ item, toast }) {
         <Link href={`/product/${item.slug}`}>
           <a
             className="ml-2 text-amber-400 text-center cursor-pointer 
-          font-bold text-amber-400 hover:text-amber-400"
+          font-semibold text-amber-400 hover:text-amber-400"
           >
             {item.name} {item.color} {item.size}
           </a>
         </Link>
       </div>
+      {/* div for quantity */}
       <div
-        className="w-2/12 p-0 flex
+        className="w-3/12 p-0 flex px-1
        justify-between sm:justify-around h-1/6 items-center"
       >
         <div
@@ -94,7 +95,10 @@ export default function ItemInCart({ item, toast }) {
             -
           </button>
         </div>
-        <div className="w-2/4 flex justify-center text-amber-400  font-bold text-lg ">
+        <div
+          className="w-2/4 flex justify-center
+        font-mono   text-2xl text-white  font-semibold text-2xl "
+        >
           {item.quantity}
         </div>
         <div
@@ -113,14 +117,14 @@ export default function ItemInCart({ item, toast }) {
           </button>
         </div>
       </div>
-
+      {/* div for price */}
       <h2 className="w-4/12 text-center text-lg">Rs. {item.price}</h2>
-      <div className="w-2/12   flex justify-center">
+      <div className="w-1/12 item-center  flex justify-center">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/icons/bin.png"
+          src="/icons/white-bin.png"
           alt=""
-          className="h-7 w-7 hover:scale-110 active:scale-110 cursor-pointer"
+          className="h-6 w-6 mr-1 hover:scale-110 active:scale-110 cursor-pointer"
           onClick={() => removeFromCart()}
         />
       </div>

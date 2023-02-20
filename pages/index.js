@@ -11,7 +11,6 @@ import Link from 'next/link';
 
 export default function Home({ products }) {
   const divRefs = useRef([]);
-
   const [search, setSearch] = useState('');
   const [searchFlag, setSearchFlag] = useState(false);
   const [searchData, setSearchData] = useState([]);
@@ -75,8 +74,8 @@ export default function Home({ products }) {
           {/* div for showing search result */}
           {searchFlag ? (
             <div
-              className={`absolute m-1 top-8 rounded-lg bg-gray-100 
-            w-80 border-1 border-gray-400 max-h-80 overflow-y-scroll  shadow-lg`}
+              className={`absolute  top-8 -left-6 bg-gray-100 
+            w-80 border-1 border-gray-400 max-h-80 overflow-y-scroll z-10 shadow-lg`}
             >
               {/* div for close button */}
               <div className="flex justify-end">
@@ -134,39 +133,53 @@ export default function Home({ products }) {
              hover:bg-amber-300 active:bg-amber-500 rounded-r"
           >
             {/*  eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/icons/search.png" alt="" className="h-5 w-5 mr-1 "></img>
+            <img src="/icons/search.png" alt="" className="h-5 w-5 mr-1 " />
           </button>
         </form>
-        {/* this is div for products */}
+
+        {/* this is div for all products */}
         <div className="">
           {products.map((sortedProducts, index) => (
-            <div key={index} className="h-[290px] relative    mt-4  rounded  ">
+            <div key={index} className="h-[300px] relative    mt-4  rounded  ">
               {/* category heading */}
-              <h2 className="text-xl mx-2 my-2  text-amber-400 font-medium">
-                {sortedProducts[0].category}
-              </h2>
+              <div
+                className="text-lg  relative flex items-center w-fit 
+                justify-center mb-2
+                font-extrabold   items-center"
+              >
+                <img
+                  src="/icons/white-paint-stroke.png"
+                  className="h-10 w-full "
+                  alt=""
+                ></img>
+                <h2 className="absolute text-amber-400 left-auto">
+                  {sortedProducts[0].category.toUpperCase()}
+                </h2>
+              </div>
               {/* previous button */}
               <button
                 onClick={() => handleRightScroll(index)}
-                className="absolute bg-white/60 active:scale-110 p-1 transition-all
-                hover:bg-white/90 rounded-full right-0 top-1/3"
+                className="absolute peer bg-black/60  p-2
+                hover:scale-110 transition-all
+                hover:bg-black/90 rounded-full right-0 top-1/2"
               >
                 <img
                   alt="previous"
                   src="/icons/right-arrow.png"
-                  className="h-8 w-8 opacity-50 hover:opacity-90"
+                  className="h-6 w-6 opacity-50 hover:opacity-90"
                 />
               </button>
               {/* next button */}
               <button
                 onClick={() => handleLeftScroll(index)}
-                className="absolute p-1 bg-white/60 active:scale-110 transition-all
-                hover:bg-white/90 rounded-full left-0 top-1/3"
+                className="absolute peer bg-black/60  p-2
+                hover:scale-110 transition-all
+                hover:bg-black/90 rounded-full left-0 top-1/2"
               >
                 <img
                   alt="previous"
                   src="/icons/left-arrow.png"
-                  className="h-8 w-8 opacity-50 hover:opacity-90"
+                  className="h-6 w-6 opacity-50  hover:opacity-90"
                 />
               </button>
               {/* div to show products of same category */}

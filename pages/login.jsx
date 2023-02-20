@@ -30,7 +30,7 @@ export default function Login() {
     // this is pattern to check email
 
     if (pattern.test(email)) {
-      if (password.length > 6) {
+      if (password.length >= 6) {
         // here we are signing in the user using credentials
         try {
           const result = await toast.promise(
@@ -55,7 +55,7 @@ export default function Login() {
         }
       }
       // this triggers when password is less then 6 characters
-      else toast.error('Enter the valid password');
+      else toast.error(password.length);
     }
     // this triggers if the password is greater than 6 characters
     else toast.error('enter the valid email');
@@ -102,8 +102,8 @@ export default function Login() {
               please enter an email !!!
             </p>
           ) : pattern.test(email) ? null : (
-            <p className="text-white mt-1 text-sm peer-valid:hidden peer-invalid:visible">
-              enter a valid email !!
+            <p className="text-red-500 mt-1 text-sm peer-valid:hidden peer-invalid:visible">
+              enter a valid email !!1
             </p>
           )}
         </div>
@@ -120,6 +120,7 @@ export default function Login() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             className="peer input-style"
+            placeholder="enter your password"
             required
           />
           {password === '' ? (
@@ -127,7 +128,7 @@ export default function Login() {
               please enter the password
             </div>
           ) : password.length < 6 ? (
-            <p className="text-white mt-1 text-sm">
+            <p className="text-red-500 mt-1 text-sm">
               password must be of six characters
             </p>
           ) : null}
@@ -146,10 +147,10 @@ export default function Login() {
         </p>
         <button
           type="submit"
-          className=" font-bold bg-amber-300 hover:bg-amber-400
-           focus:ring-4 focus:outline-none focus:ring-amber-300 
+          className=" font-bold bg-amber-400 hover:bg-amber-500
+           focus:ring-4 focus:outline-none 
            rounded-lg w-full sm:w-auto px-5 py-2 text-center
-            dark:bg-amber-500 d"
+            dark:bg-amber-300 "
         >
           Login
         </button>

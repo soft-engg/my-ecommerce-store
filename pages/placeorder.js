@@ -57,7 +57,11 @@ export default function PlaceOrderScreen() {
           })
         );
         toast.success('order placed');
-        router.push(`order/${data._id}`);
+        toast.onChange((v) => {
+          if (v.status === 'removed') {
+            router.push(`order/${data._id}`);
+          }
+        });
       } else toast.error('error in placing the order..');
     } catch (err) {
       setLoading(false);
@@ -142,32 +146,30 @@ export default function PlaceOrderScreen() {
                 Order items
               </h2>
               <div
-                className="flex w-full bg-black text-white pb-1 mb-1 
-                text-[14] font-semibold  border-b-2
+                className="flex w-full bg-black rounded text-white pb-1 mb-1 
+                text-[14]   border-b-2
              border-gray-300 "
               >
                 <div className=" px-1  w-5/12 ">
                   <p>Item(s)</p>
                 </div>
-                <div className=" text-center w-2/12 ">
+                <div className=" text-center w-3/12 ">
                   <p>Qty.</p>
                 </div>
-                <div className="text-center w-3/12">
-                  <p>Price</p>
+                <div className="text-center w-4/12">
+                  <p>Price/p</p>
                 </div>
-
-                <div className=" text-center w-2/12 ">Subtotal</div>
               </div>
 
               {cartItems.map((item) => (
                 <div
                   key={item.name + item.size + item.color}
-                  className="flex w-full border-b pb-2 text-[14px] text-white "
+                  className="flex w-full border-b pb-2 text-[14px] sm:text-base text-white "
                 >
                   <div className=" flex w-5/12  flex-wrap">
                     <Link href={`/product/${item.slug}`}>
                       <div
-                        className="ml-2 text-center cursor-pointer 
+                        className=" text-center cursor-pointer 
                       font-bold text-amber-400 hover:text-white"
                       >
                         {item.name} {item.color} {item.size}
@@ -175,15 +177,11 @@ export default function PlaceOrderScreen() {
                     </Link>
                   </div>
 
-                  <div className=" w-2/12 text-center  ">
-                    <p>{item.quantity}</p>
+                  <div className=" w-3/12 text-center  ">
+                    <p className="font-mono">{item.quantity}</p>
                   </div>
-                  <div className=" w-3/12 text-center">
-                    <p>{item.price} Rs</p>
-                  </div>
-
-                  <div className="text-center w-2/12">
-                    <p>{item.quantity * item.price} Rs</p>
+                  <div className=" w-4/12 flex justify-center text-center">
+                    Rs. <p className="font-mono"> {item.price}</p>
                   </div>
                 </div>
               ))}
@@ -200,21 +198,25 @@ export default function PlaceOrderScreen() {
             <h2 className="text-lg font-bold text-amber-400">Order Summary</h2>
             <div className="flex justify-between">
               <p className="">Subtotal :</p>
-              <p>{subtotalPrice}</p>
+              <p className="font-mono">{subtotalPrice}</p>
             </div>
             <div className="flex justify-between border-b-2 ">
               <p className="">Shipping :</p>
-              <p>{shippingPrice}</p>
+              <p className="font-mono">{shippingPrice}</p>
             </div>
             <div className="flex justify-between border-b-2 mb-2 ">
               <p className="">total :</p>
-              <p>Rs. {totalPrice}</p>
+              <p className="font-mono">Rs. {totalPrice}</p>
             </div>
             <div className="flex justify-center">
               <button
                 className="primary-button hover:bg-amber-300 transition-all"
                 disabled={loading}
-                onClick={placeOrderHanldler}
+                onClick={async () => {
+                  await toast.promise(placeOrderHanldler(), {
+                    pending: 'placing order please wait...!',
+                  });
+                }}
               >
                 {loading ? 'loading..' : 'Place Order'}
               </button>

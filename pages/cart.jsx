@@ -39,14 +39,18 @@ function Cart() {
       />
       <main>
         <div className="flex flex-col">
-          <div className="default-link">
+          {/* div for link */}
+          <div>
             <Link href="/">
-              <a className="text-amber-400 hover:text-amber-300">
+              <a
+                className="text-amber-400
+               hover:text-white underline active:text-amber-500"
+              >
                 Back to products
               </a>
             </Link>
           </div>
-
+          {/* heading */}
           <h1 className="font-semibold text-amber-400  pb-2  text-xl">
             Shopping cart
           </h1>
@@ -68,7 +72,7 @@ function Cart() {
               <h2 className="w-4/12 text-center ">Item(s)</h2>
               <h2 className="w-3/12 text-center">Qty.</h2>
               <h2 className="w-4/12 text-center">Price</h2>
-              <h2 className="w-2/12 text-center"></h2>
+              <h2 className="w-1/12 text-center"></h2>
             </div>
             {itemsInCart.length > 0 ? (
               itemsInCart.map((item) => (
@@ -82,25 +86,32 @@ function Cart() {
               <div className="w-full text-center mt-5">
                 cart is empty.
                 <span className="font-bold">
-                  <Link href="/"> Go shopping</Link>
+                  <Link href="/">
+                    <a className="text-amber-400 mx-2 hover:text-white">
+                      Go shopping
+                    </a>
+                  </Link>
                 </span>
               </div>
             )}
           </div>
           {/* this is subtotal div */}
           <div
-            className="flex self-center bg-white rounded sm:self-start justify-center
-           sm:w-1/4 mx-2  shadow-lg  max-h-fit items-center sm:ml-3"
+            className="flex self-center bg-white rounded-lg sm:self-start justify-center
+           sm:w-1/4 mx-2 w-3/4  max-h-fit items-center sm:ml-3"
           >
             <div
               className="flex
                h-fit mb-1 flex-grow-0 w-80 flex-col w-full gap-3 
-            rounded border p-4"
+            rounded border p-2 "
             >
               <div className="flex  w-full justify-between items-center">
-                <span className="font-bold">Subtotal ( {quantity} ) : </span>
-                <span className="text-lg  pl-1 ">
-                  Rs.<span className="font-bold">{subTotal} </span>{' '}
+                <span className="">Subtotal ( {quantity} ) : </span>
+                <span className="text-xl  pl-1 ">
+                  Rs.
+                  <span className="font-medium font-mono">
+                    {subTotal}{' '}
+                  </span>{' '}
                 </span>
               </div>
               <p className="text-sm font-semibold">
