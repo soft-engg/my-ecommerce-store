@@ -46,8 +46,12 @@ export default function PaymentScreen() {
           PaymenMethod: selectedPaymentMethod,
         })
       );
-      toast.success('payment method is saved..', {
-        onClose: () => router.push('/placeorder'),
+      toast.success('payment method is saved..');
+
+      toast.onChange((v) => {
+        if (v.status === 'removed') {
+          router.push('/placeorder');
+        }
       });
     }
   }

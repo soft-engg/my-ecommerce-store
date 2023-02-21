@@ -226,7 +226,7 @@ export default function AllProducts({ products }) {
             <div
               key={product.slug}
               className="shadow-lg  font-bold
-               bg-gray-400 rounded-lg  py-3 mb-2"
+               bg-gray-400 rounded-lg  py-3 mb-2 text-sm"
             >
               <div className="grid mt-4 grid-cols-4 grid-flow-row">
                 <div className="text-center">
@@ -287,7 +287,7 @@ export default function AllProducts({ products }) {
                 </div>
               </div>
               {/* div for buttons */}
-              <div className="flex mt-4 mx-2">
+              <div className="flex mt-1 mx-2">
                 <button
                   onClick={() => deleteHandler(product)}
                   className="border-gray-300 border-2 bg-black text-white rounded-lg
@@ -296,7 +296,7 @@ export default function AllProducts({ products }) {
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     alt=""
-                    src="/icons/delete.png"
+                    src="/icons/bin.png"
                     className="h-5 mr-1"
                   ></img>{' '}
                   Delete
@@ -330,7 +330,9 @@ export async function getServerSideProps() {
   await db.disconnect();
   return {
     props: {
-      products: products.map((product) => db.convertDocToObj(product)),
+      products: products
+        .map((product) => db.convertDocToObj(product))
+        .reverse(),
     },
   };
 }

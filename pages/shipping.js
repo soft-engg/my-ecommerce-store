@@ -39,8 +39,11 @@ export default function ShippingScreen() {
         ShippingAddress: { fullName, address, phone, city, country },
       })
     );
-    router.push('/payment').finally(() => {
-      toast.success('Shipping address is Saved!!');
+    toast.success('Shipping address is Saved!!');
+    toast.onChange((v) => {
+      if (v.status === 'removed') {
+        router.push('/payment');
+      }
     });
   }
 

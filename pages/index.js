@@ -8,6 +8,7 @@ import Product from '../models/prodcut';
 import { useState, useRef } from 'react';
 import axios from 'axios';
 import Link from 'next/link';
+import HeroSection from '../components/hero';
 
 export default function Home({ products }) {
   const divRefs = useRef([]);
@@ -53,7 +54,9 @@ export default function Home({ products }) {
         pauseOnHover
         theme="dark"
       />
-      <div>
+      <HeroSection></HeroSection>
+      {/* this is div for data */}
+      <div id="main">
         {/* this is div for search*/}
         <form
           onSubmit={(e) => searcHandler(e)}
@@ -68,7 +71,7 @@ export default function Home({ products }) {
             }}
             placeholder="Search products"
             className="shadow-ld  relative px-1 placeholder:text-sm tex-sm h-8 w-56
-             bg-blue-100 px-1
+              px-1
            outline-none border-b-2 rounded-l shadow-lg border-gray-300 "
           />
           {/* div for showing search result */}
@@ -129,7 +132,7 @@ export default function Home({ products }) {
           {/* button for search */}
           <button
             type="submit"
-            className=" items-center  h-8 flex px-2 bg-amber-400
+            className=" items-center  h-8 flex px-2 bg-white border-l-2
              hover:bg-amber-300 active:bg-amber-500 rounded-r"
           >
             {/*  eslint-disable-next-line @next/next/no-img-element */}
@@ -152,39 +155,47 @@ export default function Home({ products }) {
                   className="h-10 w-full "
                   alt=""
                 ></img>
-                <h2 className="absolute text-amber-400 left-auto">
-                  {sortedProducts[0].category.toUpperCase()}
-                </h2>
+                <Link href={`/category/${sortedProducts[0].category}`}>
+                  <a className="absolute text-amber-400 hover:text-black active:text-amber-500 left-auto">
+                    {sortedProducts[0].category.toUpperCase()}
+                  </a>
+                </Link>
               </div>
               {/* previous button */}
               <button
-                onClick={() => handleRightScroll(index)}
-                className="absolute peer bg-black/60  p-2
-                hover:scale-110 transition-all
-                hover:bg-black/90 rounded-full right-0 top-1/2"
-              >
-                <img
-                  alt="previous"
-                  src="/icons/right-arrow.png"
-                  className="h-6 w-6 opacity-50 hover:opacity-90"
-                />
-              </button>
-              {/* next button */}
-              <button
                 onClick={() => handleLeftScroll(index)}
-                className="absolute peer bg-black/60  p-2
-                hover:scale-110 transition-all
-                hover:bg-black/90 rounded-full left-0 top-1/2"
+                className={`absolute peer bg-white/60 hidden sm:block 
+                hover:scale-110 transition-all ${
+                  sortedProducts.length < 5 ? 'md:hidden' : 'block'
+                }
+                hover:bg-white/80 rounded-full left-0 top-1/2`}
               >
                 <img
                   alt="previous"
                   src="/icons/left-arrow.png"
-                  className="h-6 w-6 opacity-50  hover:opacity-90"
+                  className="h-8 w-8 opacity-50 hover:opacity-90"
+                />
+              </button>
+              {/* next button */}
+              <button
+                onClick={() => handleRightScroll(index)}
+                className={`absolute peer bg-white/60 hidden sm:block 
+                hover:scale-110 transition-all ${
+                  sortedProducts.length < 5 ? 'md:hidden' : 'block'
+                }
+                hover:bg-white/80 rounded-full right-0 top-1/2`}
+              >
+                <img
+                  alt="previous"
+                  src="/icons/right-arrow.png"
+                  className="h-8 w-8 opacity-50  hover:opacity-90"
                 />
               </button>
               {/* div to show products of same category */}
               <div
-                className="flex gap-4 overflow-x-auto overflow-x-hidden"
+                className="flex gap-4 overflow-x-scroll webkit-overflow-scrolling-touch 
+                sm:overflow-x-auto 
+                sm:overflow-x-hidden"
                 ref={(el) => (divRefs.current[index] = el)}
               >
                 {sortedProducts.map((product, index) => {

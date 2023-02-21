@@ -94,7 +94,11 @@ export default function UpdateProductScreen({ product }) {
       if (status === 200) {
         console.log('data is ', data);
         toast.success(data);
-        router.replace('/admin/products');
+        toast.onChange((v) => {
+          if (v.status === 'removed') {
+            router.replace('/admin/products');
+          }
+        });
       }
       if (status === 400) toast.error(data + ' Retry');
     }
@@ -109,7 +113,7 @@ export default function UpdateProductScreen({ product }) {
       );
     return (
       <AdminLayout title="Add New Product">
-        <div className="w-full my-2 mx-4  flex justify-center">
+        <div className="w-full my-2   flex justify-center">
           <ToastContainer
             position="bottom-center"
             autoClose={2000}
@@ -123,18 +127,18 @@ export default function UpdateProductScreen({ product }) {
             theme="dark"
           />
           <form
-            className="mx-3 grow max-w-md mx-6 sm:mx-0 p-4 shadow-md shadow-amber-400 rounded-lg "
+            className="mx-3 grow max-w-md sm:mx-0 p-4  rounded-lg "
             onSubmit={(e) => {
               submitHandler(e);
             }}
           >
-            <h1 className="text-lg text-blue-500 font-semibold">
+            <h1 className="text-lg text-amber-400 font-semibold">
               Add New Product
             </h1>
             {/* name */}
             <label
               htmlFor="name"
-              className="block mb-2  mt-2 font-medium text-blue-500 dark:text-gray-300"
+              className="block mb-2  mt-2 font-medium text-amber-400 dark:text-gray-300"
             >
               Product Name
             </label>
@@ -150,7 +154,7 @@ export default function UpdateProductScreen({ product }) {
             {/* Brand */}
             <label
               htmlFor="Brand"
-              className="block mb-2  mt-2 font-medium text-blue-500 dark:text-gray-300"
+              className="block mb-2  mt-2 font-medium text-amber-400 dark:text-gray-300"
             >
               Product Brand
             </label>
@@ -166,7 +170,7 @@ export default function UpdateProductScreen({ product }) {
             {/* category */}
             <label
               htmlFor="Category"
-              className="block mb-2  mt-2 font-medium text-blue-500 dark:text-gray-300"
+              className="block mb-2  mt-2 font-medium text-amber-400 dark:text-gray-300"
             >
               Product Category
             </label>
@@ -181,7 +185,7 @@ export default function UpdateProductScreen({ product }) {
             {/* Quantity of Stock */}
             <label
               htmlFor="Stock"
-              className="block mb-2  mt-2 font-medium text-blue-500 dark:text-gray-300"
+              className="block mb-2  mt-2 font-medium text-amber-400 dark:text-gray-300"
             >
               Quantity of Stock
             </label>
@@ -198,7 +202,7 @@ export default function UpdateProductScreen({ product }) {
             {/* Price */}
             <label
               htmlFor="Stock"
-              className="block mb-2  mt-2 font-medium text-blue-500 dark:text-gray-300"
+              className="block mb-2  mt-2 font-medium text-amber-400 dark:text-gray-300"
             >
               Product Price
             </label>
@@ -215,7 +219,7 @@ export default function UpdateProductScreen({ product }) {
             {/* Description */}
             <label
               htmlFor="Description"
-              className="block mb-2   mt-2 font-medium text-blue-500 dark:text-gray-300"
+              className="block mb-2   mt-2 font-medium text-amber-400 dark:text-gray-300"
             >
               Product Description
             </label>
@@ -231,7 +235,7 @@ export default function UpdateProductScreen({ product }) {
             {/* Color */}
             <label
               htmlFor="Product Color"
-              className="block mb-2  mt-2 font-medium text-blue-500 dark:text-gray-300"
+              className="block mb-2  mt-2 font-medium text-amber-400 dark:text-gray-300"
             >
               Product Color(s)
             </label>
@@ -265,13 +269,13 @@ export default function UpdateProductScreen({ product }) {
                   <p> Selected colors are </p>
                   <div className="flex  flex-wrap">
                     {colors.map((color, index) => (
-                      <div key={index} className="p-1">
+                      <div key={index} className="p-1 text-white text-lg">
                         <p>{color}</p>
                         <button
                           onClick={() => removeSelectedColor(color)}
                           type="button"
                           className="text-sm text-center 
-                      bg-amber-200 w-full px-1
+                      bg-amber-200 w-full px-1 text-black
                        hover:bg-amber-300 acitive:bg-amber-400"
                         >
                           remove
@@ -286,7 +290,7 @@ export default function UpdateProductScreen({ product }) {
             {/* Size */}
             <label
               htmlFor="Product Size"
-              className="block mb-2  mt-2 font-medium text-blue-500 dark:text-gray-300"
+              className="block mb-2  mt-2 font-medium text-amber-400 dark:text-gray-300"
             >
               Product Size
             </label>
@@ -322,13 +326,13 @@ export default function UpdateProductScreen({ product }) {
                   <p className="mt-1"> Selected Sizes are </p>
                   <div className="flex  flex-wrap">
                     {sizes.map((size, index) => (
-                      <div key={index} className="p-1">
+                      <div key={index} className="p-1 text-white text-lg">
                         <p>{size}</p>
                         <button
                           onClick={() => removeSelectedSize(size)}
                           type="button"
                           className="text-sm text-center 
-                      bg-amber-200 w-full px-1
+                      bg-amber-200 w-full px-1 text-black
                        hover:bg-amber-300 acitive:bg-amber-400"
                         >
                           remove

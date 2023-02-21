@@ -161,7 +161,11 @@ export default function ProductsScreen() {
         );
         if (status === 200) {
           toast.success(data);
-          router.replace('/admin/products');
+          toast.onChange((v) => {
+            if (v.status === 'removed') {
+              router.replace('/admin/products');
+            }
+          });
         }
         if (status === 400) toast.error(data + ' Retry');
       }
@@ -171,7 +175,7 @@ export default function ProductsScreen() {
   if (user?.isAdmin)
     return (
       <AdminLayout title="Add New Product">
-        <div className="w-full my-2 mx-4  flex justify-center">
+        <div className="w-full  flex justify-center">
           <ToastContainer
             position="bottom-center"
             autoClose={2000}
@@ -185,8 +189,7 @@ export default function ProductsScreen() {
             theme="dark"
           />
           <form
-            className="mx-3 grow max-w-md
-             bg-gray-600 mx-6 sm:mx-0 p-4 shadow-md shadow-amber-400 rounded-lg "
+            className=""
             onSubmit={(e) => {
               submitHandler(e);
             }}

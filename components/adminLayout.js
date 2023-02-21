@@ -41,7 +41,9 @@ export default function AdminLayout({ title, children }) {
               </div>
             </nav>
           </header>
-          <main className="container m-auto mt-4  ">{children}</main>
+          <main className="container px-4  md:px-0 m-auto mt-4 ">
+            {children}
+          </main>
           <footer className="flex justify-center items-center h-10 shadow-inner">
             <p className="text-sm text-white">
               copyright Ⓒ designed and developed by Shahbaz Ali

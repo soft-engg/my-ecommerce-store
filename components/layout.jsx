@@ -31,10 +31,11 @@ export default function Layout({ title, children }) {
       </Head>
 
       <div className="flex flex-col min-h-screen justify-between bg-black">
+        {/* div for header nav bar */}
         <header>
           <nav
             className="flex h-10 
-          justify-between bg-amber-400 shadow-md items-center px-4"
+          justify-between bg-amber-400 shadow shadow-md items-center px-4"
           >
             <Link href={'/'}>
               <a className="text-lg text-black hover:text-white font-bold">
@@ -42,21 +43,21 @@ export default function Layout({ title, children }) {
               </a>
             </Link>
             <div className="flex items-center text-lg font-semibold">
-              <Link href={'/cart'}>
-                <a className="pl-2   hover:underline hover:decoration-amber-400  ">
-                  {/* eslint-disable-next-line @next/next/no-img-element, @next/next/no-img-element */}
-                  <img
-                    src="/icons/carts.png"
-                    alt="cart"
-                    className="w-8 h-8"
-                  ></img>
-                </a>
-              </Link>
-              <div
-                className="ml-1 text-xl text-center min-w-[25px]
-                font-mono rounded-full bg-gray-200  text-black  "
-              >
-                {cartItemCount}
+              {/* div for cart bag and  cart count */}
+              <div className="relative pr-2 flex items-center">
+                <Link href={'/cart'}>
+                  <a className="pl-2   hover:underline hover:decoration-amber-400  ">
+                    {/* eslint-disable-next-line @next/next/no-img-element, @next/next/no-img-element */}
+                    <img
+                      src="/icons/bag.png"
+                      alt="cart"
+                      className="w-8 h-8"
+                    ></img>
+                  </a>
+                </Link>
+                <p className="absolute text-black font-mono -top-2 right-0">
+                  {cartItemCount}
+                </p>
               </div>
               <p className="py-2 px-1  font-thin text-black">|</p>
 
