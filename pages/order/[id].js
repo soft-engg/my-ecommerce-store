@@ -128,8 +128,13 @@ const OrderScreen = () => {
               </h2>
               <div className="mb-1 tex-sm text-white">
                 {shippingAddress.fullName},{shippingAddress.address},
-                {shippingAddress.city},{shippingAddress.phone},
-                {shippingAddress.country}
+                {shippingAddress.city},{shippingAddress.country}
+                <p>
+                  phone#{' '}
+                  <span className="text-amber-400 font-semibold">
+                    {shippingAddress.phone}
+                  </span>
+                </p>
               </div>
             </div>
             {/* div for Confirmation */}

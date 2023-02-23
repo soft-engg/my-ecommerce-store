@@ -48,5 +48,19 @@ function convertDocToObj(doc) {
   doc.updatedAt = doc.updatedAt.toString();
   return doc;
 }
-const db = { connect, disconnect, convertDocToObj };
+function convertOrderItemToObj(doc) {
+  doc._id = doc._id.toString();
+
+  return doc;
+}
+
+function convertOrderToObj(doc) {
+  doc._id = doc._id.toString();
+  doc.createdAt = doc.createdAt.toString();
+  doc.updatedAt = doc.updatedAt.toString();
+  doc.user = doc.user.toString();
+  doc.orderitems = doc.orderItems.map((item) => convertOrderItemToObj(item));
+  return doc;
+}
+const db = { connect, disconnect, convertDocToObj, convertOrderToObj };
 export default db;

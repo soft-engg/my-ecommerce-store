@@ -25,7 +25,7 @@ export default function AdminLayout({ title, children }) {
               <div className="flex">
                 <h1 className=" text-black font-extrabold">Admin Panel</h1>
               </div>
-              <div className="flex">
+              <div className="flex items-center">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src="/icons/user.png"
@@ -34,7 +34,7 @@ export default function AdminLayout({ title, children }) {
                 ></img>
                 <p
                   className=" text-black font-sarif
-               font-extrabold flex items-center"
+               font-bold flex items-center"
                 >
                   {user.name.toUpperCase()}
                 </p>

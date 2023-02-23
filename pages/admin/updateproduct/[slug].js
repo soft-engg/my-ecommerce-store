@@ -127,7 +127,7 @@ export default function UpdateProductScreen({ product }) {
             theme="dark"
           />
           <form
-            className="mx-3 grow max-w-md sm:mx-0 p-4  rounded-lg "
+            className=" w-full md:w-2/3"
             onSubmit={(e) => {
               submitHandler(e);
             }}
@@ -266,7 +266,7 @@ export default function UpdateProductScreen({ product }) {
                 <p className="py-1 text-red-500">no color selected</p>
               ) : (
                 <div>
-                  <p> Selected colors are </p>
+                  <p className="py-1 text-white"> Selected colors are </p>
                   <div className="flex  flex-wrap">
                     {colors.map((color, index) => (
                       <div key={index} className="p-1 text-white text-lg">
@@ -323,7 +323,7 @@ export default function UpdateProductScreen({ product }) {
                 <p className="py-1 text-red-500">no Size selected</p>
               ) : (
                 <div>
-                  <p className="mt-1"> Selected Sizes are </p>
+                  <p className="mt-1 text-white"> Selected Sizes are </p>
                   <div className="flex  flex-wrap">
                     {sizes.map((size, index) => (
                       <div key={index} className="p-1 text-white text-lg">

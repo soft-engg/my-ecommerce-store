@@ -189,7 +189,7 @@ export default function ProductsScreen() {
             theme="dark"
           />
           <form
-            className=""
+            className=" w-full md:w-2/3"
             onSubmit={(e) => {
               submitHandler(e);
             }}

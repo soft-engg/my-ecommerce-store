@@ -112,7 +112,12 @@ export default function PlaceOrderScreen() {
                 {ShippingAddress.fullName},{ShippingAddress.address},
                 {ShippingAddress.city},{ShippingAddress.country}
                 <br />
-                Phone# {ShippingAddress.phone}
+                <p>
+                  phone#{' '}
+                  <span className="text-amber-400 font-semibold">
+                    {ShippingAddress.phone}
+                  </span>
+                </p>
               </div>
               <div className="font-medium">
                 <Link href="/shipping">
