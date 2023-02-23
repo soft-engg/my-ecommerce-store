@@ -6,6 +6,7 @@ import { SaveShippingAddress } from '../utils/redux/slices/cartSlice';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/router';
 import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function ShippingScreen() {
   const dispatch = useDispatch();
