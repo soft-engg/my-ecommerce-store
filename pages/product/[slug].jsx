@@ -107,7 +107,7 @@ export default function ProductScreen(props) {
             className="object-contain h-[340px]  w-full rounded bg-white/50"
           ></img>
           {product.image.length > 1 ? (
-            <div className="flex h-24 w-52  mt-2">
+            <div className="flex h-24 w-52  mt-2 ">
               {product.image.map((givenImage, index) => (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img

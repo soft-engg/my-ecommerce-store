@@ -60,7 +60,7 @@ export default function ShippingScreen() {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        theme="color"
+        theme="dark"
       />
       <CheckoutWizard activeStep="1" />
       <div className="w-full  flex justify-center">

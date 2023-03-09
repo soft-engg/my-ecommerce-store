@@ -31,14 +31,24 @@ export default function ProductItem({ product }) {
       </p>
       <h2 className="  cursor-default text-white">Rs. {product.price}</h2>
       <Link href={`/product/${product.slug}`}>
-        <button
-          className="bg-gray-600 h-8 hover:bg-amber-400 hover:text-black
+        {product.countInStock !== 0 ? (
+          <button
+            className="bg-gray-600 h-8 hover:bg-amber-400 hover:text-black
            transition-all w-full ease-out 
            font-semibold text-amber-400  text-center rounded-b-lg"
-          type="button"
-        >
-          View Details
-        </button>
+            type="button"
+          >
+            View Details
+          </button>
+        ) : (
+          <div
+            className="bg-gray-600 h-8 flex items-center justify-center
+         transition-all w-full ease-out cursor-default
+         font-semibold text-white text-center rounded-b-lg"
+          >
+            Out Of Stock
+          </div>
+        )}
       </Link>
     </div>
   );
