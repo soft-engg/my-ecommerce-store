@@ -18,7 +18,7 @@ function HeroSection() {
     >
       <div className="bg-black/60 px-4 py-28 ">
         <h1 className="text-4xl md:text-5xl font-bold text-amber-400 mb-8 font-serif">
-          Welcome to our Sports Store
+          Welcome to our M.Sports Store
         </h1>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {headings.map((heading) => (
