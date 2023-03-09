@@ -56,8 +56,8 @@ export default function AllOrders({ orders }) {
         ) : (
           <div>
             {/* div to show search and headings */}
-            <div className="flex gap-2 items-center md:gap-5">
-              <h1 className="text-amber-400 font-semibold text-xl pb-2">
+            <div className="">
+              <h1 className="text-amber-400 font-semibold text-xl mb-2">
                 All Orders
               </h1>
 
