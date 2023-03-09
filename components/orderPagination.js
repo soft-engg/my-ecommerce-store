@@ -43,7 +43,7 @@ function Pagination({ items, toast, router }) {
   };
   // rerunning the getserversideprops
   const refreshData = () => {
-    router.replace(router.asPath);
+    router.reload();
   };
   // change confirm status
   async function changeConfirmStatus(state, id) {
@@ -80,6 +80,7 @@ function Pagination({ items, toast, router }) {
     }
     if (status === 400) toast.error(data);
   }
+  // handling delete
   const deleteHandler = async (product) => {
     confirmAlert({
       title: 'Confirm to Delete',
@@ -114,6 +115,7 @@ function Pagination({ items, toast, router }) {
       toast.error(data);
     }
   };
+  // retruning the orders with pagination
   return (
     <div className="">
       {/* Render current items */}
@@ -195,6 +197,7 @@ function Pagination({ items, toast, router }) {
               <h2 className="text-amber-400 font-bold">Total</h2>
               <p>{order.totalPrice}</p>
             </div>
+            {/* div for delete and update button */}
             <div className="col-span-2 md:col-span-4 justify-center md:justify-start flex mt-1 mx-2">
               {/* delete button */}
               <button

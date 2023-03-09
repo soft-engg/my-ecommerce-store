@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { signOut, useSession } from 'next-auth/react';
 import Head from 'next/head';
 import Link from 'next/link';
@@ -23,25 +24,27 @@ export default function Layout({ title, children }) {
   return (
     <>
       <Head>
-        <title>
-          {title ? title + '-MyECommerceStore' : 'My-ecommerce-store'}
-        </title>
+        <title>{title ? title + '-M.Sports' : 'M.Sports'}</title>
         <meta name="description" content="Ecommerce-website" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <div className="flex flex-col min-h-screen justify-between bg-black">
         {/* div for header nav bar */}
-        <header>
+        <header className="w-full  bg-amber-400">
           <nav
-            className="flex h-10 
-          justify-between bg-amber-400 shadow shadow-md items-center px-4"
+            className="flex mx-auto h-10 max-w-screen-xl
+          justify-between shadow shadow-md items-center px-4"
           >
-            <Link href={'/'}>
-              <a className="text-lg text-black hover:text-white font-bold">
-                MySports
-              </a>
-            </Link>
+            <div className="flex items-center">
+              <img src="/icons/icon.png" alt="" className="h-8 w-9 m-1"></img>
+              <Link href={'/'}>
+                <a className="text-xl text-black hover:text-white font-bold">
+                  M.Sports
+                </a>
+              </Link>
+            </div>
+
             <div className="flex items-center text-lg font-semibold">
               {/* div for cart bag and  cart count */}
               <div className="relative pr-2 flex items-center">
@@ -125,7 +128,9 @@ export default function Layout({ title, children }) {
           </nav>
         </header>
 
-        <main className="container px-4  md:px-0 m-auto mt-4 ">{children}</main>
+        <main className="container px-4 2xl:px-0 m-auto mt-4 max-w-screen-xl">
+          {children}
+        </main>
 
         <footer className="flex justify-center items-center h-10 shadow-inner">
           <p className="text-sm mt-4 text-white">

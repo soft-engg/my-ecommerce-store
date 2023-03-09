@@ -36,7 +36,7 @@ export default function AllOrders({ orders }) {
 
   if (user?.isAdmin)
     return (
-      <AdminLayout title="AllProducts">
+      <AdminLayout title="All Orders">
         <ToastContainer
           position="bottom-center"
           autoClose={3000}

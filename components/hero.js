@@ -16,7 +16,7 @@ function HeroSection() {
       className="bg-[url('/images/cover-hero.jpg')] bg-cover bg-no-repeat 
    mb-4 text-center rounded-lg"
     >
-      <div className="bg-black/60 px-4 py-24 ">
+      <div className="bg-black/60 px-4 py-28 ">
         <h1 className="text-4xl md:text-5xl font-bold text-amber-400 mb-8 font-serif">
           Welcome to our Sports Store
         </h1>

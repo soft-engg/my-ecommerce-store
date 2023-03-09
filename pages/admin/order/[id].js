@@ -46,9 +46,8 @@ const OrderScreen = ({ order }) => {
         // dispatch({ type: 'FETCH_REQUEST' });
         // const { data } = await axios.get(`/api/order/${orderId.toString()}`);
         const { user: id } = order;
-        const { status, data: user } = await toast.promise(
-          axios.get(`/api/admin/getuser/${id}`),
-          { pending: 'fetching user data' }
+        const { status, data: user } = await axios.get(
+          `/api/admin/getuser/${id}`
         );
         if (status == 200) {
           setName(user.name);
