@@ -38,8 +38,8 @@ export default function AdminScreen({
         <div className="text-white">
           <h1 className="text-amber-400 font-bold text-xl">Admin Panel</h1>
           {/* div for Orders */}
-          <div>
-            <h2 className="text-amber-400 font-bold text-lg">ORDERS</h2>
+          <div className="mt-4">
+            <h2 className="text-amber-400 font-semibold text-lg">ORDERS</h2>
             <div className="grid grid-cols-4 text-center gap-2 grid-flow-row">
               <div>
                 <h2 className="text-lg  bg-gray-800 rounded text-amber-400 font-semibold">
@@ -77,9 +77,9 @@ export default function AdminScreen({
           </div>
 
           {/* div for Users */}
-          <div>
-            <h2 className="text-amber-400 font-bold text-lg">Users</h2>
-            <div className="grid grid-cols-4 text-center gap-2 grid-flow-row">
+          <div className="mt-4">
+            <h2 className="text-amber-400 font-semibold text-lg">USERS</h2>
+            <div className="grid grid-cols-3 text-center gap-2 grid-flow-row">
               <div>
                 <h2 className="text-lg  bg-gray-800 rounded text-amber-400 font-semibold">
                   Total Users
@@ -108,13 +108,13 @@ export default function AdminScreen({
           </div>
 
           {/* div for Links */}
-          <div>
-            <h2 className="text-amber-400 font-bold text-lg">MENU</h2>
-            <div className="grid grid-cols-4 text-center gap-2 grid-flow-row">
+          <div className="mt-4">
+            <h2 className="text-amber-400 font-semiq  bold text-lg">MENU</h2>
+            <div className="grid grid-cols-3 text-center gap-2 grid-flow-row">
               <Link href="/admin/orders">
                 <a
                   className="text-lg 
-                 bg-gray-800 rounded ring-2 ring-amber-500  hover:text-white active:text-white text-amber-400 font-semibold"
+                 bg-gray-800 rounded my-auto ring-2 ring-amber-500  hover:text-white active:text-white text-amber-400 font-semibold"
                 >
                   View Orders
                 </a>
@@ -122,7 +122,7 @@ export default function AdminScreen({
               <Link href="/admin/users">
                 <a
                   className="text-lg 
-                 bg-gray-800 rounded ring-2 ring-amber-500 hover:text-white active:text-white text-amber-400 font-semibold"
+                 bg-gray-800 rounded my-auto ring-2 ring-amber-500 hover:text-white active:text-white text-amber-400 font-semibold"
                 >
                   View Users
                 </a>
@@ -130,7 +130,7 @@ export default function AdminScreen({
               <Link href="/admin/products">
                 <a
                   className="text-lg 
-                 bg-gray-800 rounded ring-2 ring-amber-500 hover:text-white active:text-white text-amber-400 font-semibold"
+                 bg-gray-800 rounded my-auto ring-2 ring-amber-500 hover:text-white active:text-white text-amber-400 font-semibold"
                 >
                   View Products
                 </a>
@@ -143,7 +143,9 @@ export default function AdminScreen({
   return (
     <Layout title="only Admin Page">
       <div className="flex flex-col items-center mt-5">
-        <h1>Only Admin of Website is allowed in this Secion</h1>
+        <h1 className="text-white">
+          Only Admin of Website is allowed in this Secion
+        </h1>
         <Link href="/">
           <a>Go to Home Page</a>
         </Link>

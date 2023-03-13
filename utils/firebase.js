@@ -1,13 +1,13 @@
 import { initializeApp } from 'firebase/app';
 import { getStorage } from 'firebase/storage';
 const firebaseConfig = {
-  apiKey: 'AIzaSyCkJ3OUDKu6F1xoKNhmzs_HOH8colc2HIk',
-  authDomain: 'myecommercestore-fdf51.firebaseapp.com',
-  projectId: 'myecommercestore-fdf51',
-  storageBucket: 'myecommercestore-fdf51.appspot.com',
-  messagingSenderId: '865238895862',
-  appId: '1:865238895862:web:98801f24dd889ca2b070d7',
-  measurementId: 'G-QTT3GF01K5',
+  apiKey: process.env.FIREBASE_API_KEY,
+  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.FIREBASE_PROJECT_ID,
+  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.FIREBASE_MESSAGING_ID,
+  appId: process.env.FIREBASE_APP_ID,
+  measurementId: process.env.FIREBASE_MEASUREMENT_ID,
 };
 const app = initializeApp(firebaseConfig);
 const storage = getStorage(app);

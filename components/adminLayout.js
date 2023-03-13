@@ -55,7 +55,9 @@ export default function AdminLayout({ title, children }) {
   return (
     <Layout title="only Admin Page">
       <div className="flex flex-col items-center mt-5">
-        <h1>Only Admin of Website is allowed in this Secion</h1>
+        <h1 className="text-white">
+          Only Admin of Website is allowed in this Secion
+        </h1>
         <Link href="/">
           <a>Go to Home Page</a>
         </Link>

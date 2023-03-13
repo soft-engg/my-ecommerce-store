@@ -28,7 +28,7 @@ export default function PlaceOrderScreen() {
     cartItems.reduce((i, c) => (i += c.quantity * c.price), 0)
   );
 
-  const shippingPrice = subtotalPrice > 2000 ? 0 : 300;
+  const shippingPrice = subtotalPrice > 2000 ? 0 : process.env.SHIPPING_PRICE;
   const totalPrice = subtotalPrice + shippingPrice;
 
   const placeOrderHanldler = async () => {

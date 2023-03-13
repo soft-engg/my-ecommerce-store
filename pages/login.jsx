@@ -20,6 +20,10 @@ export default function Login() {
 
   useEffect(() => {
     if (session?.user) {
+      if (session?.user.isAdmin === true) {
+        router.push('/admin');
+        return;
+      }
       router.push(redirect || '/');
     }
   }, [router, session, redirect]);
@@ -148,7 +152,7 @@ export default function Login() {
         <button
           type="submit"
           className=" font-bold bg-amber-400 hover:bg-amber-500
-           focus:ring-4 focus:outline-none 
+           focus:ring-4 focus:outline-none focus:ring-white
            rounded-lg w-full sm:w-auto px-5 py-2 text-center
             dark:bg-amber-300 "
         >

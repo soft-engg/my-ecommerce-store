@@ -10,8 +10,8 @@ export default async function handler(req, res) {
   var transporter = NodeMailer.createTransport({
     service: 'gmail',
     auth: {
-      user: 'pshahbaz99@gmail.com',
-      pass: 'pnrmniihbjcohxsh',
+      user: process.env.WEBSITE_EMAIL,
+      pass: process.env.WEBSITE_EMAIL_PASSWORD,
     },
   });
   await new Promise((resolve, reject) => {
@@ -30,7 +30,7 @@ export default async function handler(req, res) {
   const code = Math.floor(1000 + Math.random() * 9000);
   // setting of email to send
   var mailOptions = {
-    from: 'pshahbaz99@gmail.com',
+    from: process.env.WEBSITE_EMAIL,
     to: req.body.email,
     subject: 'Your OTP for Ecommerce Store',
     html:
