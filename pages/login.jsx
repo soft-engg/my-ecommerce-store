@@ -128,7 +128,7 @@ export default function Login() {
             required
           />
           {password === '' ? (
-            <div className="text-white mt-1 text-sm">
+            <div className="text-red-500 mt-1 text-sm">
               please enter the password
             </div>
           ) : password.length < 6 ? (
